@@ -199,12 +199,7 @@ export default function CrearEventoFromScratch() {
         setErrors(prev => ({ ...prev, [name]: '' }));  // neteja errors quan sobreescrius
     };
 
-    const handleEsGratisChange = (e) => {
-
-        if (e.target.value === 'si' /* && freePlanes === 0*/) {
-            setShowModalFreePlanes(true);
-            return;
-        }
+    const handleEsGratisChange = (e) => {       
         setEsGratis(e.target.value === 'si');
         setNecesitaReserva(null);
         setCentralizarEntradas(null);
