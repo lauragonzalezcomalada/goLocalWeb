@@ -149,13 +149,13 @@ export default function MainLoggedPage() {
                     <i
                         className="bi bi-caret-left"
                         onClick={() => cambiarSemana(-7)}
-                        style={{ color: 'rgba(0, 0, 0, 0.8)', fontSize: '2rem', cursor: 'pointer' }}
+                        style={{ color: '#491a13ff', fontSize: '2rem', cursor: 'pointer' }}
                         title="Semana anterior"
                     />
                     <i
                         className="bi bi-caret-right"
                         onClick={() => cambiarSemana(7)}
-                        style={{ color: 'rgba(0, 0, 0, 0.8)', fontSize: '2rem', cursor: 'pointer', marginLeft: '2rem' }}
+                        style={{ color: '#491a13ff', fontSize: '2rem', cursor: 'pointer', marginLeft: '2rem' }}
                         title="Semana siguiente"
                     />
                 </div>

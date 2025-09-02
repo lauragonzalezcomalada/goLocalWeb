@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import noPicture from './assets/nopicture.png';
 
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -215,7 +216,7 @@ export default function EntradasPage() {
         )
     }
 
-    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto', backgroundColor: 'rgba(255,255,0,1)' }}>
+    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias).map(([fecha, listaEntradas]) => {
 
             return (<div> <div style={{
@@ -223,8 +224,8 @@ export default function EntradasPage() {
                 alignItems: 'center',
                 margin: '2rem 2rem'
             }}>
-                <div style={{ flex: 1, height: '2px', backgroundColor: 'black' }}></div>
-                <span className="fw-bold" style={{ margin: '0 1rem', whiteSpace: 'nowrap' }}>{fecha}</span>
+                <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
+                <span className="fw-bold" style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '20px' }}>{fecha}</span>
 
 
 
@@ -247,54 +248,62 @@ export default function EntradasPage() {
                         <div key={evento.event_uuid} className="card mx-3 mb-1">
                             <div class="row g-0">
                                 <div className="col-md-2">
-                                    {evento.event_imageUrl != null ? (
-                                        <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }}>
+                                    {/*{evento.event_imageUrl != null ? (*/}
+                                    <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }}>
 
 
-                                            <img
-                                                src={API_BASE_URL + evento.event_imageUrl}
-                                                className="img-fluid rounded-start"
-                                                style={{
+                                        <img
+                                            src={evento.event_imageUrl ? evento.event_imageUrl : noPicture}
+                                            className="img-fluid rounded-start"
+                                            style={evento.event_imageUrl
+                                                ? {
                                                     minHeight: '12rem',
                                                     height: '100%',
                                                     width: '100%',
                                                     objectFit: 'cover',
+                                                }
+                                                : {
+                                                    maxHeight: '12rem',
+                                                    maxWidth: '12rem',
+                                                    objectFit: 'scale-down',
+                                                    margin: '0 auto', // centrar
+                                                    display: 'block',
                                                 }}
-                                            />
-                                            {/*CAPA DE DEGRADADO PARA AÑADIR TEXTO */}
-                                            <div
-                                                style={{
-                                                    position: 'absolute',
-                                                    top: 50, left: 0, right: 0, bottom: 0,
-                                                    background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8))',
-                                                    borderRadius: '0.25rem',
-                                                    pointerEvents: 'none'  // para que no interfiera con clicks en la imagen si hay
-                                                }}
-                                            />
-                                            {/*EL TEXT */}
-                                            <div
-                                                className='d-flex justify-content-center'
-                                                style={{
-                                                    width: '90%',
-                                                    position: 'absolute',
-                                                    bottom: '0.5px',
-                                                    left: '50%',
-                                                    transform: 'translateX(-50%)',
-                                                    color: 'white',
-                                                    fontWeight: 'light',
-                                                    textAlign: 'center',
-                                                    pointerEvents: 'none',
-                                                    fontSize: '30px',
-                                                    whiteSpace: 'normal',
-                                                    overflowWrap: 'break-word',
-                                                }}
-                                            >
-                                                {/* Aquí el texto que quieras mostrar */}
-                                                {evento.event_name}
-                                            </div>
-
+                                        />
+                                        {/*CAPA DE DEGRADADO PARA AÑADIR TEXTO */}
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                top: 50, left: 0, right: 0, bottom: 0,
+                                                background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8))',
+                                                borderRadius: '0.25rem',
+                                                pointerEvents: 'none'  // para que no interfiera con clicks en la imagen si hay
+                                            }}
+                                        />
+                                        {/*EL TEXT */}
+                                        <div
+                                            className='d-flex justify-content-center'
+                                            style={{
+                                                width: '90%',
+                                                position: 'absolute',
+                                                bottom: '0.5px',
+                                                left: '50%',
+                                                transform: 'translateX(-50%)',
+                                                color: 'white',
+                                                fontWeight: 'light',
+                                                textAlign: 'center',
+                                                pointerEvents: 'none',
+                                                fontSize: '30px',
+                                                whiteSpace: 'normal',
+                                                overflowWrap: 'break-word',
+                                            }}
+                                        >
+                                            {/* Aquí el texto que quieras mostrar */}
+                                            {evento.event_name}
                                         </div>
-                                    ) : (
+
+                                    </div>
+                                    {/*}) : (
 
 
                                         <div
@@ -309,7 +318,7 @@ export default function EntradasPage() {
                                                 borderBottomLeftRadius: '0.5rem',
                                             }}
                                         >
-                                            {/* Texto centrado sobre el degradado */}
+                                            {/* Texto centrado sobre el degradado }
                                             <div
                                                 style={{
                                                     position: 'absolute',
@@ -328,16 +337,16 @@ export default function EntradasPage() {
                                             >
                                                 {evento.event_name}
                                             </div>
-                                        </div>)}
+                                        </div>)}*/}
 
                                 </div>
 
                                 {/*evento con entradas*/}
                                 {evento.tracking_tipo === 0 &&
                                     evento.entradas.map((entrada, i) => {
-                                        return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, API_BASE_URL + evento.event_imageUrl)}>
+                                        return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, evento.event_imageUrl)}>
 
-                                            <div className="card" style={{ width: '100%', height: '85%', color: 'rgba(0,0,255,1) ' }}>
+                                            <div className="card" style={{ width: '100%', height: '85%', color: '#491a13ff' }}>
                                                 <div className="card-body d-flex align-items-center">
 
 
@@ -352,7 +361,7 @@ export default function EntradasPage() {
                                                         <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={entrada.entrada_porcentajedeventas} aria-valuemin="0" aria-valuemax="100">
                                                             <div
                                                                 className="progress-bar"
-                                                                style={{ width: `${entrada.entrada_porcentajedeventas}%` }}
+                                                                style={{ width: `${entrada.entrada_porcentajedeventas}%`, backgroundColor: '#491a13ff' }}
                                                             >{entrada.entrada_porcentajedeventas + '%'}</div>
                                                         </div>
                                                         <p style={{ fontSize: '22px' }}>{'$' + Number(entrada.entrada_dinero_recaudado).toLocaleString('es-AR')}</p>
@@ -368,9 +377,9 @@ export default function EntradasPage() {
                                 {/*evento con reservas*/}
                                 {evento.tracking_tipo === 1 &&
                                     evento.reservas.map((reserva, i) => {
-                                        return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, API_BASE_URL + evento.event_imageUrl)}>
+                                        return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, evento.event_imageUrl)}>
 
-                                            <div className="card" style={{ width: '100%', height: '100%', color: 'rgba(0,0,255,1) ' }}>
+                                            <div className="card" style={{ width: '100%', height: '100%', color: '#491a13ff' }}>
                                                 <div className="card-body d-flex align-items-center">
 
 
@@ -388,11 +397,11 @@ export default function EntradasPage() {
                                                         {reserva.campos.map((campo) => {
                                                             return <div
 
-                                                                className="p-2 border rounded mb-1 mx-2"
-                                                                style={{ flex: '1 0 auto', gap: '2rem' }}
+                                                                className="p-2 mb-1 mx-2"
+                                                                style={{ flex: '2 0 auto', gap: '2rem', border: '2px solid #491a13ff', borderRadius: '10px' }}
                                                             >
 
-                                                                <span style={{ fontSize: '18px', fontWeight: 'lighter' }}>{campo.label}</span>
+                                                                <span style={{ fontSize: '18px', fontWeight: 'light' }}>{campo.label}</span>
 
                                                             </div>
                                                         })}
@@ -413,7 +422,7 @@ export default function EntradasPage() {
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}> sin</span> reservas</span>
 
                                         </div>
-                                        <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
+                                        <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center', color: '#491a13ff' }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
                                                 overlay={
@@ -422,12 +431,12 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem' }}></i>
+                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
 
 
                                             </OverlayTrigger>
 
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff'  }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -438,11 +447,11 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-send" style={{ fontSize: '2rem' }}></i>
+                                                <i class="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.shares}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
 
                                     </div>
@@ -455,12 +464,12 @@ export default function EntradasPage() {
                                     <div key={'sin_entradas_centr'} className={`col-md-8 d-flex align-items-center justify-content-center p-3`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
 
 
-                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column', color: '#491a13ff' }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> pago</span></span>
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}>ticketera</span> externa</span>
 
                                         </div>
-                                        <div className="justify-content-center p-3" style={{ display: 'flex', flexDirection: 'column', maxWidth: '85%' }}>
+                                        <div className="justify-content-center align-items-center p-3" style={{ display: 'flex', flexDirection: 'column', maxWidth: '85%' }}>
 
 
                                             <OverlayTrigger
@@ -470,14 +479,16 @@ export default function EntradasPage() {
                                                         Presiona para editar el link de compra de las entradas
                                                     </Tooltip>
                                                 }
-                                            >  <span className='fw-light fs-5' onClick={() => fetchExternalTicketsLinkDetail(evento.tipo, evento.event_dateandtime, evento.event_uuid, evento.tickets_link, API_BASE_URL + evento.event_imageUrl)}
+                                                style={{ color: '#491a13ff' }}
+                                            >  <span className='fw-light fs-3' style={{ color: '#491a13ff' }} onClick={() => fetchExternalTicketsLinkDetail(evento.tipo, evento.event_dateandtime, evento.event_uuid, evento.tickets_link, API_BASE_URL + evento.event_imageUrl)}
                                             > Link a las entradas:
 
 
 
                                                     <span className='fw-bold fs-4 px-1' style={{
                                                         wordWrap: "break-word",
-                                                        overflowWrap: "break-word"
+                                                        overflowWrap: "break-word",
+                                                        color: '#491a13ff'
                                                     }}>{evento.tickets_link}</span></span>
 
 
@@ -493,13 +504,13 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-eye-fill" style={{ fontSize: '2rem' }}></i>
+                                                        <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                                     </OverlayTrigger>
 
 
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.views}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                                 </div>
                                                 <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
 
@@ -511,11 +522,11 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-send" style={{ fontSize: '2rem' }}></i>
+                                                        <i class="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                                     </OverlayTrigger>
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.shares}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
                                                 <div id="external-link-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                                     <OverlayTrigger
@@ -526,12 +537,12 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-hand-index" style={{ fontSize: '2rem' }}></i>
+                                                        <i class="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
                                                     </OverlayTrigger>
 
 
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.shares}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
                                             </div>
 
@@ -555,11 +566,11 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem' }}></i>
+                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
 
 
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff'  }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -570,11 +581,11 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-send" style={{ fontSize: '2rem' }}></i>
+                                                <i class="bi bi-send" style={{ fontSize: '2rem' , color: '#491a13ff' }}></i>
 
 
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' }}> {evento.shares}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' , color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
                                         <i
                                             className="bi bi-chevron-down"
@@ -626,7 +637,7 @@ export default function EntradasPage() {
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                             >
-                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem' }}></i>
+                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem', color: '#FA7239'  }}></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -666,7 +677,7 @@ export default function EntradasPage() {
                                                                             <td class="text-uppercase" key={i}>{valor}</td>
                                                                         ))}
                                                                         <td>
-                                                                            <input class="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
+                                                                            <input class="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
                                                                         </td>
 
                                                                     </tr>

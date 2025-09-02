@@ -205,18 +205,8 @@ export default function EventDetailPage() {
                 ...prevEvent,
                 active: data,
             }))
-            /* setFormData({
-                 ...formData,
-                 max_disponibilidad: data.max_disponibilidad,
-                 porcentaje_ventas: data.porcentaje_reservados
- 
-             });*/
         } catch (error) { console.error('Error en fetch:', error); }
 
-
-
-        // Aquí llamas a backend:
-        // fetch(`/api/eventos/${event.id}/toggle`, { method: "POST" })
         setShowConfirmationModal(false);
     };
 
@@ -238,7 +228,7 @@ export default function EventDetailPage() {
             minHeight: '100vh',
             width: '100vw',
             overflowY: 'auto',
-            color: 'red',
+           // color: 'red',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -251,14 +241,14 @@ export default function EventDetailPage() {
         <Container fluid className="py-5 px-0" style={{ width: "90%" }}>
             <Row className="px-0 mx-0 align-items-center">
 
-                <Col md={6} className="d-flex flex-column justify-content-start mx-0 px-0" style={{ backgroundColor: 'rgba(211, 235, 124, 0.9)' }}>
-                    <h3 className="display-5 mb-3" style={{ color: 'rgba(255,149,0,1)', fontWeight: 'lighter' }}>
+                <Col md={6} className="d-flex flex-column justify-content-start mx-0 px-0">
+                    <h3 className="display-5 mb-3" style={{ fontWeight: 'lighter' }}>
                         Tu evento:
                     </h3>
-                    <h1 className="display-1 text-end px-3" style={{ color: 'rgba(255,149,0,1)', fontSize: '120px' }}>
+                    <h1 className="display-1 text-end px-3" style={{ fontSize: '120px', lineHeight:'1', fontWeight:'regular' }}>
                         {event['name']}
                     </h1>
-                    <div className='d-flex align-items-space-between px-2'>
+                    <div className='d-flex align-items-space-between px-2 mt-5'>
                         <div className="d-flex align-items-center">
                             <i className="bi bi-calendar-date-fill me-2" style={{ fontSize: '1.5rem' }} />
                             <p className='mt-3 fw-light fs-4'>{fecha}</p>
@@ -284,27 +274,25 @@ export default function EventDetailPage() {
                                     className="px-3 py-1 d-flex"
                                     style={{
                                         backgroundColor: 'rgba(255,255,255,0.8)',
-                                        border: '1.5px solid #0d6efd',
+                                        border: '1.5px solid #FA7239',
                                         borderRadius: '15px',
                                         fontSize: '18px',
-                                        color: '#0d6efd', gap: '0.5rem',
-
-
+                                        color: '#FA7239', gap: '0.5rem',
                                     }}
                                 >
                                     <div> {tag.icon}</div>
-                                    <div> {tag.name}</div>
+                                    <div className='fw-medium'> {tag.name}</div>
 
                                 </div>
                             ))}
                         </div>
                     )}
 
-                    <div className='mt-5 px-2 fst-italic fw-bold'>
+                    <div className='mt-5 px-2 fst-italic fw-bold fs-5'>
 
                         {event['shortDesc']}
                     </div>
-                    <div className='mt-3 px-2 fw-lighter fs-4'>
+                    <div className='mt-3 px-2 fw-lighter fs-3'>
 
                         {event['desc']}
                     </div>
@@ -415,7 +403,7 @@ export default function EventDetailPage() {
                     </div>
                     <img
                         src={event['image']}
-                        className="w-100 rounded"
+                        className="w-100"
                         style={{ objectFit: 'cover', height: '500px' }}
                     />
                 </Col>
@@ -435,7 +423,7 @@ export default function EventDetailPage() {
                                 <div className='row g-0' style={{ height: '100%' }}>
 
                                     <div className="col-md-4 g-0" style={{
-                                        backgroundColor: 'rgba(255,10,20,1)', height: '100%', borderTopLeftRadius: '1rem',
+                                        backgroundColor: '#fa5239', height: '100%', borderTopLeftRadius: '1rem',
                                         borderBottomLeftRadius: '1rem', display: 'flex',
                                         flexDirection: 'column',
                                     }}>
@@ -477,46 +465,41 @@ export default function EventDetailPage() {
                                     </div>
 
                                     {/*aquí comença la part de descripció de l'entrada*/}
-                                    <div className='col-md-8' style={{ backgroundColor: 'rgba(189, 125, 125, 1)', height: '100%' }}>
+                                    <div className='col-md-8' style={{ backgroundColor: '#fca784', height: '100%' }}>
                                         <div className='d-flex p-5 mt-2' style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-                                            <div style={{ flex: 2 }}>
+                                            <div style={{ flex: 3 }}>
                                                 <span style={{ fontSize: '40px', fontWeight: 'bold' }}>{entrada['titulo']}</span><br />
                                                 <span style={{ fontSize: '30px', fontWeight: 'lighter' }}>{entrada['desc']}</span><br />
                                                 <span style={{ fontSize: '40px', fontWeight: 'lighter', lineHeight: '3' }}>{'$' + entrada['precio']}</span>
                                             </div>
-                                            <div className="px-0" style={{ flex: 1 }}>
-                                                <span className="fw-light" style={{ fontSize: '22px' }}> Disponibles: {entrada['disponibles']}</span><br />
-                                                <span className="fw-light" style={{ fontSize: '22px' }}> Cantidad de entradas total: {entrada['maxima_disponibilidad']}</span>
+                                            <div className="px-0" style={{ flex: 2 }}>
+                                                {entrada['disponibles'] === 0 && (
+                                                    <div style={{width:'12rem', position: 'absolute', top: '2rem', right:'2rem', border: '5px solid #fa3950', borderRadius:'15px', display: 'flex', alignItems:'center', justifyContent:'center', color: '#fa3950', fontSize: '30px'}}> SOLD OUT</div>
+                                                ) }
+                                                <span className="fw-lighter" style={{ fontSize: '25px' }}> Disponibles: <span className='fw-light'>{entrada['disponibles']}</span></span><br />
+                                                <span className="fw-lighter" style={{ fontSize: '25px' }}> Cantidad de entradas total: <span className='fw-light'>{entrada['maxima_disponibilidad']}</span></span>
 
                                                 <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuemin="0" aria-valuemax="100">
                                                     <div
                                                         className="progress-bar"
-                                                        style={{ width: `${((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100}%` }}
+                                                        style={{ width: `${((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100}%`,
+                                                         backgroundColor: '#fa5239'
+                                                    }}
                                                     >{(((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100).toFixed(2) + '%'}</div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </Card.Body>
                         </Card>
-
-
-
                     ))}
                 </div>
             )
             }
             {event['reservas_forms']?.length > 0 && (
-
                 <div class="mt-5" style={{ gap: '1rem' }}>
-
                     {event.reservas_forms?.map((reserva, index) => (
-
                         <Card className="m-3 p-0" style={{ minHeight: '200px', height: 'auto', width: '100%', borderRadius: '1rem', overflow: 'hidden' }}>
                             <Card.Body className='p-0' style={{ minheight: '200px' }}>
 

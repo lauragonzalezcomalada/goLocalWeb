@@ -201,7 +201,7 @@ export default function CrearEventoFromScratch() {
 
     const handleEsGratisChange = (e) => {
 
-        if (e.target.value === 'si' && freePlanes === 0) {
+        if (e.target.value === 'si' /* && freePlanes === 0*/) {
             setShowModalFreePlanes(true);
             return;
         }
@@ -459,7 +459,7 @@ export default function CrearEventoFromScratch() {
     };
 
 
-    return <div style={{ marginTop: '56px', width: '100%', height: '100%', backgroundColor: 'rgba(255,255,0,1)' }}>
+    return <div style={{/* marginTop: '56px',*/ marginTop:'56px', width: '100%', height: '100%' }}>
         <Form /* onSubmit={handleSubmit} */ className="d-flex align-items-center w-100 px-0 mt-3 g-0" style={{ height: '100%' }}>
             <div className="w-50 " style={{ marginLeft: '100px', paddingTop: '50px' }}>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row' }}>
@@ -724,8 +724,8 @@ export default function CrearEventoFromScratch() {
                 {entradas.map((entrada, index) => (
                     <div
                         key={index}
-                        className="p-2 my-2 border rounded mx-4"
-                        style={{ width: '95%', backgroundColor: '#edb953ff', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+                        className="p-3 py-3 my-1 border rounded mx-4"
+                        style={{ width: '95%', backgroundColor: '#FA7239', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
                         <div className="d-flex flex-column" style={{ flex: 1 }}>
                             <p className="mb-1 fs-4"><strong>{entrada.nombre}</strong></p>
@@ -771,15 +771,15 @@ export default function CrearEventoFromScratch() {
                 {reservas.map((reserva, index) => (
                     <div
                         key={index}
-                        className="p-2 my-2 border rounded mx-4"
-                        style={{ width: '95%', backgroundColor: '#edb953ff', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+                        className="p-3 py-3 my-1 border rounded mx-4"
+                        style={{ width: '95%', backgroundColor: '#FA7239', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
-                        <div className="d-flex flex-column" style={{ flex: 1 }}>
-                            <p className="mb-1 fs-4"><span className='fw-light fs-5' style={{ marginRight: '10px' }}>tipo de reserva: </span><strong>{reserva.tipoReserva}</strong></p>
-                            <p className="mb-1 fw-light fs-6">cantidad: {reserva.cantidad}</p>
+                        <div className="d-flex flex-column" style={{ flex: 3 }}>
+                            <p className="mb-1 fs-4"><span className='fw-lighter fs-5' style={{ marginRight: '10px' }}>tipo de reserva: </span><strong>{reserva.tipoReserva}</strong></p>
+                            <p className="mb-1 fw-lighter fs-5">cantidad: <span className='fw-light'>{reserva.cantidad}</span></p>
                         </div>
 
-                        <div className="d-flex flex-column" style={{ flex: 1 }}>
+                        <div className="d-flex flex-column" style={{ flex: 2 }}>
                             <p className="mb-1 fw-light fs-6">Campos personalizados:</p>
                             <ul>
                                 {reserva.campos.map((campo, idx) => (
@@ -828,6 +828,7 @@ export default function CrearEventoFromScratch() {
                             alignItems: 'center',
                             marginLeft: '100px',
                             cursor: 'pointer',
+                            marginTop:'1rem'
                         }}
 
                     >
@@ -840,7 +841,7 @@ export default function CrearEventoFromScratch() {
                 {(necesitaReserva === true && mostrarNuevaReserva) && <CreadorReservas onGuardar={guardarReserva} onCancelar={cancelarReserva} />}
 
 
-                <button className='btn-success fw-light fs-5 mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', position: 'absolute', right: '25px' }} type="submit">
+                <button className='mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', width:'window.innerWidth * 0.80', height:'5rem', position: 'absolute', right: '25px', backgroundColor:'#FA7239', fontSize:'50px', fontWeight:'lighter', display:'flex', justifyContent:'center', alignItems:'center' }} type="submit">
                     Crear tu evento
                 </button>
 

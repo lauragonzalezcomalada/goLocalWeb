@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }) => {
   //FUNCIÓ DE LOGIN QUE POT SER REUTILITZADA
   const login = async (username, password) => {
 
+    console.log('login')
     const response = await fetch(`${API_BASE_URL}/token/`, {
       method: 'POST',
       headers: {
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     if (!response.ok) throw new Error('Login inválido')
     const data = await response.json()
 
-
+    console.log(data)
     localStorage.setItem(TOKEN_STORAGE_KEY, data.access)
     localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, data.refresh)
 

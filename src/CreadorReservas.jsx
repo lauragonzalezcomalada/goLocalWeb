@@ -159,17 +159,17 @@ export default function CreadorReservas({ onGuardar , onCancelar}) {
             <div className="d-flex justify-content-between mt-4 px-4">
                 <button
                     type="button"
-                    className="btn btn-success fw-light fs-5"
+                    className="btn fw-light fs-5"
                     onClick={handleAceptar}
-                    style={{ padding: '0.5rem 2rem', borderRadius: '20px' }}
+                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', border:'0px', backgroundColor:'#FA7239' }}
                 >
                     Aceptar
                 </button>
                 <button
                     type="button"
-                    className="btn btn-secondary fw-light fs-5"
+                    className="btn fw-light fs-5"
                     onClick={onCancelar}
-                    style={{ padding: '0.5rem 2rem', borderRadius: '20px' }}
+                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px', backgroundColor:'#491a13b3' }}
                 >
                     Cancelar
                 </button>

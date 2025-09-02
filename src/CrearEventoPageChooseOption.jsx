@@ -118,7 +118,7 @@ export default function CrearEventoPageChooseOption() {
                                                               alignItems:'center',
                                                               justifyContent:'center',
                                                               marginTop:'1rem',
-                                                              backgroundColor:'rgba(77, 132, 26, 0.71)'
+                                                              backgroundColor:'#FA7239'
 
                                 }}
 

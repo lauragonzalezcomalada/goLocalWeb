@@ -32,7 +32,8 @@ export default function WeekCalendar({ esteLunes, eventos }) {
                 height: '85vh',
                 boxSizing: 'border-box',
                 overflowX: 'auto',
-                margin: '0 auto'
+                margin: '0 auto',
+                color: '#491a13ff'
             }}
         >
             <Container fluid style={{ minHeight: '40vh' }}>
@@ -43,11 +44,11 @@ export default function WeekCalendar({ esteLunes, eventos }) {
                             key={day}
                             className="d-flex flex-column align-items-center"
                             style={{ padding: '0.5rem', 
-                                
-                                 borderLeft: index === 0 ? 'none' : '0.5px solid black',
-        borderRight: index === fechas.length - 1 ? 'none' : '0.5px solid black', }}
+                                color:'#491a13ff',
+                                 borderLeft: index === 0 ? 'none' : '0.5px solid #491a13ff',
+        borderRight: index === fechas.length - 1 ? 'none' : '0.5px solid #491a13ff', }}
                         >
-                            <div className="fw-lighter mb-2 fs-2" style={{ color: 'black' }}>{day}</div>
+                            <div className="fw-lighter mb-2 fs-2" style={{ color: '#491a13ff' }}>{day}</div>
                           
                             {(eventos[day] || []).map((evento, index) => {
                                 console.log(evento)

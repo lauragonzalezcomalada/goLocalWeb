@@ -10,6 +10,9 @@ import { Input } from 'postcss';
 import { Doughnut } from "react-chartjs-2";
 
 import { shortFormatDate } from './helpers.js'
+import soloCarita from './assets/nopicture.png';
+
+
 
 
 import { Chart as ChartJS, ArcElement, Tooltip as ChartTooltip, Legend } from "chart.js";
@@ -817,12 +820,12 @@ export default function ProfileScreen() {
 
 
             </div>
-            <div className="col-md-4" style={{ backgroundColor: 'rgba(167, 40, 235, 0.5)', height: '100%' }}>
+            <div className="col-md-4" style={{ height: '100%' }}>
 
-                <img src={userData['image']} style={{
+                <img src={userData['image'] ? userData['image'] : soloCarita} style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover', // rellena y recorta si es necesario
+                    objectFit: userData['image'] ? 'cover' : 'scale-down' , // rellena y recorta si es necesario
                     display: 'block'
                 }} />
 

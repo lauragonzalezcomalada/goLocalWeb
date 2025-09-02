@@ -17,7 +17,7 @@ export default function LoginPage() {
     setError(null)
     try {
       //aquest login es el login de authcontext
-      login(username, password)
+      await login(username, password)
       navigate('/mainlogged')
     } catch (e) {
       console.error(e)

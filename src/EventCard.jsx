@@ -30,9 +30,9 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
       <div style={{ flex: 1, position: 'relative', minHeight: '150px' }}>
         {imageUrl ? (
           <img
-            src={SERVER_IP + imageUrl}
+            src={imageUrl}
             alt={name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'expand' }}
           />
         ) : (
           <div style={{ width: '100%', height: '100%', backgroundColor: '#ffc14577' }} />
@@ -45,7 +45,7 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
         >
           <div className="ms-2 px-2 d-flex gap-2 align-items-center" style={{
             backgroundColor: 'rgba(255,255,255,0.7)',
-            border: '1px solid #ffc245', // Bootstrap primary
+            border: '1px solid #FA7239', // Bootstrap primary
             borderRadius: '18px',
             fontSize: '15px',
             lineHeight: '2',
@@ -70,8 +70,8 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
             className="position-absolute top-0 end-0 m-2 px-2 py-1"
             style={{
               backgroundColor: 'rgba(255,255,255,0.7)',
-              border: '2px solid rgba(13,110,253,0.8)', // Bootstrap primary
-              borderRadius: '12px',
+              border: '2px solid #FA7239', // Bootstrap primary
+              borderRadius: '20px',
               fontSize: '15px',
               zIndex: 2,
             }}
@@ -86,7 +86,7 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
       <div
         style={{
 
-          backgroundColor: '#a2441d', // Bootstrap primary
+          backgroundColor: '#FA7239', // Bootstrap primary
           color: 'white',
           padding: '8px',
 

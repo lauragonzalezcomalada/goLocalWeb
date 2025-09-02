@@ -4,11 +4,11 @@ export default function TagChip({icon, name, selected, onClick, size}) {
         onClick={onClick}
         className="px-2 py-1"
         style={{
-            backgroundColor:  selected ? '#0d6efd' : 'rgba(255,255,255,0.8)',
-            border: '1.5px solid #0d6efd',
+            backgroundColor:  selected ? '#FA7239' : 'rgba(255,255,255,0.8)',
+            border: '2.5px solid #FA7239',
             borderRadius: '20px',
             fontSize: size === 'md' ? '18px' : '18px',
-            color: selected ? 'white' : '#0d6efd',
+            color: selected ? 'white' : '#FA7239',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

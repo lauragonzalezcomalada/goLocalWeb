@@ -76,7 +76,7 @@ export default function CreadorEntradas({ onGuardar }) {
         type="button"
         className="btn btn-success fw-light fs-5"
         onClick={handleAceptar}
-        style={{ paddingLeft :'2rem ', paddingRight:'2rem', borderRadius: '20px' }}
+        style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px',backgroundColor:'#FA7239' }}
       >
         Aceptar
       </button>
@@ -84,7 +84,7 @@ export default function CreadorEntradas({ onGuardar }) {
         type="button"
         className="btn btn-secondary fw-light fs-5"
         onClick={handleCancel}
-        style={{ paddingLeft :'2rem ', paddingRight:'2rem' , borderRadius: '20px' }}
+        style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px', backgroundColor:'#491a13b3' }}
       >
         Cancelar
       </button>
