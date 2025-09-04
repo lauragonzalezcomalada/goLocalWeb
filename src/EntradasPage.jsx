@@ -1,7 +1,7 @@
 import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
-import { Container, Card } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import { Icono } from './Icono'
@@ -440,9 +440,9 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <span>
+                                                
                                                     <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                </span>
+                                                
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
@@ -456,10 +456,10 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <span>
+                                                
 
                                                     <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                </span>
+                                                
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
 
@@ -484,27 +484,27 @@ export default function EntradasPage() {
                                         <div className="justify-content-center align-items-center p-3" style={{ display: 'flex', flexDirection: 'column', maxWidth: '85%' }}>
 
 
-                                            <OverlayTrigger
-                                                placement="top" // posición del tooltip
-                                                overlay={
-                                                    <Tooltip id="tooltip-top">
-                                                        Presiona para editar el link de compra de las entradas
-                                                    </Tooltip>
-                                                }
-                                                style={{ color: '#491a13ff' }}
-                                            >  <span className='fw-light fs-3' style={{ color: '#491a13ff' }} onClick={() => fetchExternalTicketsLinkDetail(evento.tipo, evento.event_dateandtime, evento.event_uuid, evento.tickets_link, API_BASE_URL + evento.event_imageUrl)}
-                                            > Link a las entradas:
+                                         <OverlayTrigger
+  placement="top"
+  overlay={<Tooltip id="tooltip-top">Presiona para editar el link</Tooltip>}
+>
+  <div
+    role="button"
+    tabIndex={0}
+    style={{ color: '#491a13ff', cursor: 'pointer' }}
+    onClick={() => fetchExternalTicketsLinkDetail(
+      evento.tipo,
+      evento.event_dateandtime,
+      evento.event_uuid,
+      evento.tickets_link,
+      API_BASE_URL + evento.event_imageUrl
+    )}
+  >
+    Link a las entradas:
+    <span className="fw-bold fs-4 px-1">{evento.tickets_link}</span>
+  </div>
+</OverlayTrigger>
 
-
-
-                                                    <span className='fw-bold fs-4 px-1' style={{
-                                                        wordWrap: "break-word",
-                                                        overflowWrap: "break-word",
-                                                        color: '#491a13ff'
-                                                    }}>{evento.tickets_link}</span></span>
-
-
-                                            </OverlayTrigger>
 
                                             <div className="mt-3 align-items-center justify-content-center" style={{ display: 'flex', flexDirection: 'row' }}>
                                                 <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -516,10 +516,7 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <span>
-                                                            <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
-
+                                                        <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                                 </div>
@@ -532,9 +529,9 @@ export default function EntradasPage() {
                                                                 Veces que se ha compartido
                                                             </Tooltip>
                                                         }
-                                                    >   <span>
+                                                    >  
                                                             <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
+                                                    
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
@@ -547,10 +544,10 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <span>
+                                                        
 
                                                             <Icono className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
+                                                        
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
@@ -559,11 +556,6 @@ export default function EntradasPage() {
                                     </div>
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
-
-                         console.log('els hovers'),
-                        console.log('trackingtipo: ', evento.tracking_tipo),
-                        console.log('evento del error: ', evento),
-
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -575,11 +567,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                               
-
                                                     <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-
-                                             
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
@@ -592,9 +580,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                
                                                     <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
