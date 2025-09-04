@@ -4,6 +4,7 @@ import WeekCalendar from './WeekCalendar'
 import { Container, Card } from 'react-bootstrap';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
+import { Icono } from './Icono'
 import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import noPicture from './assets/nopicture.png';
@@ -11,6 +12,7 @@ import noPicture from './assets/nopicture.png';
 import ojitosgif from './assets/ojitos.gif';
 
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { listenArrayEvents } from 'chart.js/helpers';
 
 
 
@@ -237,9 +239,6 @@ export default function EntradasPage() {
 
             </div>
                 {listaEntradas?.map((evento, index) => {
-
-                    console.log('evento: ', evento)
-
                     if (evento.tracking_tipo === 0) { //plan con entradas
                         var anchoColumna = Math.max(1, Math.floor((12 - 3) / evento.entradas.length));
                         var colIcono = Math.max(1, 12 - anchoColumna * evento.entradas.length - 2);
@@ -437,17 +436,9 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-
-                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-
-                                                </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
-
-                                                <span>
-                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                 </span>
                                             </OverlayTrigger>
-
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         {console.log('despues del overlaytrigger')}
@@ -461,13 +452,12 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <span>
 
+                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                 </span>
-                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-
-                                                </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
-                                            </OverlayTrigger>
+                                                </OverlayTrigger>
+                                                <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
+                                            
                                         </div>
                                         {console.log('despues del overlaytrigger2')}
 
@@ -521,7 +511,7 @@ export default function EntradasPage() {
                                                         }
                                                     >
                                                         <span>
-                                                            <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                            <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                         </span>
                                                        
                                                     </OverlayTrigger>
@@ -538,7 +528,7 @@ export default function EntradasPage() {
                                                         }
                                                     >   <span>
                                                             <span>
-                                                            <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                            <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                         </span>
                                                         </span>
                                                     </OverlayTrigger>
@@ -555,7 +545,7 @@ export default function EntradasPage() {
                                                     >
                                                         <span>
                                                             <span>
-                                                            <i className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                            <Icono className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                         </span>                                                        </span>
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
@@ -579,12 +569,12 @@ export default function EntradasPage() {
                                             >
                                                 <span>
 
-                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
 
                                                 </span>
 
                                                 <span>
-                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                 </span>
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
@@ -600,17 +590,9 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                 </span>
-
-
-                                                <span>
-
-                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-                                                </span>
-
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
                                         <i
@@ -626,6 +608,7 @@ export default function EntradasPage() {
                         </div >
                         {expandedEventoUuid === evento.event_uuid && (
                             console.log('aqui entra?'),
+                           
                             <div className="card mx-3 mb-3 p-3" style={{ backgroundColor: '#f8f9fa' }}>
                                 {loadingTickets ? (
                                     <div className="text-center">Cargando datos...</div>
