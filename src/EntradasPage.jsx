@@ -15,7 +15,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export default function EntradasPage() {
-    //// Entradas es un dict tipus:
+    //// Entradas es un dict tipus:asdf
     /*
         {'dd/mm':[{tipo:x,
         {entradas:[{entrada_dinero_recaudado,entrada_disponibles,
