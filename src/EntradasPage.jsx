@@ -575,11 +575,11 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <span>
+                                               
 
                                                     <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
 
-                                                </span>
+                                             
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
@@ -592,9 +592,9 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <span>
+                                                
                                                     <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                </span>
+                                                
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
