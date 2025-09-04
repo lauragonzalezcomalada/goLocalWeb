@@ -560,6 +560,8 @@ export default function EntradasPage() {
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
                          console.log('els hovers'),
+                        console.log('trackingtipo: ', evento.tracking_tipo),
+                        console.log('evento del error: ', evento),
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -594,7 +596,7 @@ export default function EntradasPage() {
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
-                                        <i
+                                        <Icono
                                             className="bi bi-chevron-down"
                                             role="button"
                                             style={{ fontSize: '1.5rem', cursor: 'pointer', marginLeft: '2rem' }}
