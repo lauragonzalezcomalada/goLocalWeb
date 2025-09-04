@@ -246,7 +246,7 @@ export default function EntradasPage() {
 
                     return (<>
                         <div key={evento.event_uuid} className="card mx-3 mb-1">
-                            <div class="row g-0">
+                            <div className="row g-0">
                                 <div className="col-md-2">
                                     {/*{evento.event_imageUrl != null ? (*/}
                                     <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }}>
@@ -431,7 +431,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
+                                                <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
 
 
                                             </OverlayTrigger>
@@ -447,7 +447,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                             </OverlayTrigger>
@@ -504,7 +504,7 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                                     </OverlayTrigger>
@@ -522,7 +522,7 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
 
                                                     </OverlayTrigger>
@@ -537,7 +537,7 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i class="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        <i className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
                                                     </OverlayTrigger>
 
@@ -566,7 +566,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
+                                                <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
 
 
                                             </OverlayTrigger>
@@ -581,7 +581,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i class="bi bi-send" style={{ fontSize: '2rem' , color: '#491a13ff' }}></i>
+                                                <i className="bi bi-send" style={{ fontSize: '2rem' , color: '#491a13ff' }}></i>
 
 
                                             </OverlayTrigger>
@@ -664,7 +664,7 @@ export default function EntradasPage() {
                                                             <thead>
                                                                 <tr>
                                                                     {Object.keys(reservas[0].values).map((campo, idx) => (
-                                                                        <th class="text-uppercase" key={idx}>{campo}</th>
+                                                                        <th className="text-uppercase" key={idx}>{campo}</th>
                                                                     ))}
                                                                     <th key="asist">¿Asistido?</th>
                                                                 </tr>
@@ -674,10 +674,10 @@ export default function EntradasPage() {
                                                                 {reservas.map((reserva, idx) => (
                                                                     <tr key={idx}>
                                                                         {Object.values(reserva.values).map((valor, i) => (
-                                                                            <td class="text-uppercase" key={i}>{valor}</td>
+                                                                            <td className="text-uppercase" key={i}>{valor}</td>
                                                                         ))}
                                                                         <td>
-                                                                            <input class="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
+                                                                            <input className="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
                                                                         </td>
 
                                                                     </tr>

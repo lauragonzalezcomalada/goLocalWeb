@@ -132,7 +132,7 @@ export default function ReservaTypeDetail() {
                                     /></div>
                                     <div style={{ marginTop: '12px', marginLeft: '5px', display: 'flex', flexDirection: 'row' }}>
 
-                                        <i class="bi bi-clock" style={{ fontSize: '50px' }}></i>
+                                        <i className="bi bi-clock" style={{ fontSize: '50px' }}></i>
                                         <p className="px-2 mt-3" style={{ fontSize: '30px' }}>{hora}</p>
 
                                     </div>

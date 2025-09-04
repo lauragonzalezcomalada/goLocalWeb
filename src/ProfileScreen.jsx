@@ -439,8 +439,8 @@ export default function ProfileScreen() {
                                     }}
                                 />
                                 <Button style={{ backgroundColor: 'transparent', borderLeft: '0px', color: 'black', borderTop: "1px solid #000000ff", borderBottom: "1px solid #000000ff", borderRight: "1px solid #000000ff", }} onClick={() => toggleShowPassword("current")}>
-                                    {showPassword.current ? <i class="bi bi-eye-slash-fill"></i>
-                                        : <i class="bi bi-eye-fill"></i>}
+                                    {showPassword.current ? <i className="bi bi-eye-slash-fill"></i>
+                                        : <i className="bi bi-eye-fill"></i>}
                                 </Button>
                             </InputGroup>
 
@@ -463,8 +463,8 @@ export default function ProfileScreen() {
                                         border: "1px solid #000000ff"
                                     }}
                                 />  <Button style={{ backgroundColor: 'transparent', borderLeft: '0px', color: 'black', borderTop: "1px solid #000000ff", borderBottom: "1px solid #000000ff", borderRight: "1px solid #000000ff", }} onClick={() => toggleShowPassword("new")}>
-                                    {showPassword.new ? <i class="bi bi-eye-slash-fill"></i>
-                                        : <i class="bi bi-eye-fill"></i>}
+                                    {showPassword.new ? <i className="bi bi-eye-slash-fill"></i>
+                                        : <i className="bi bi-eye-fill"></i>}
                                 </Button>
                             </InputGroup>
                         </Form.Group>
@@ -485,8 +485,8 @@ export default function ProfileScreen() {
                                         border: "1px solid #000000ff"
                                     }}
                                 /> <Button style={{ backgroundColor: 'transparent', borderLeft: '0px', color: 'black', borderTop: "1px solid #000000ff", borderBottom: "1px solid #000000ff", borderRight: "1px solid #000000ff", }} onClick={() => toggleShowPassword("confirm")}>
-                                    {showPassword.confirm ? <i class="bi bi-eye-slash-fill"></i>
-                                        : <i class="bi bi-eye-fill"></i>}
+                                    {showPassword.confirm ? <i className="bi bi-eye-slash-fill"></i>
+                                        : <i className="bi bi-eye-fill"></i>}
                                 </Button>
                             </InputGroup>
                         </Form.Group>
@@ -566,7 +566,7 @@ export default function ProfileScreen() {
                             overlay={<Tooltip id="tooltip-top">Compra más bonos de eventos gratuitos</Tooltip>}
                         >
                             <Button style={{ width: '3rem', height: '3rem', marginLeft: '5rem', borderRadius: '25px' }} onClick={() => navigate("/comprarBono")}>
-                                <i class="bi bi-bag-fill"></i>
+                                <i className="bi bi-bag-fill"></i>
                             </Button>
                         </OverlayTrigger>
 
@@ -650,7 +650,7 @@ export default function ProfileScreen() {
                                 placement="top" // puede ser: top, right, bottom, left
                                 overlay={<Tooltip id="tooltip-top">Información sobre los tramos de precio</Tooltip>}
                             >
-                                <i class="bi bi-info-circle ms-2"></i>
+                                <i className="bi bi-info-circle ms-2"></i>
 
                             </OverlayTrigger>
 
@@ -778,7 +778,7 @@ export default function ProfileScreen() {
                         style={{ border: "none", background: "transparent" }}
                     >
                         {/* <FaBars size={24} /> ç*/}
-                        <i class="bi bi-three-dots fs-4"></i>
+                        <i className="bi bi-three-dots fs-4"></i>
                     </Button>
 
                     {/* Offcanvas Menu */}

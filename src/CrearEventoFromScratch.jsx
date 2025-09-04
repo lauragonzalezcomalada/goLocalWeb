@@ -569,15 +569,15 @@ export default function CrearEventoFromScratch() {
                 {/* Formulario columna 2 */}
 
                 <div style={{ width: '100%', display: 'flex', flexDirecion: 'row', alignItems: 'end' }}>
-                    <div class="form-check form-switch" style={{ position: 'absolute', right: '2rem' }}>
-                        <input class="form-check-input"
+                    <div className="form-check form-switch" style={{ position: 'absolute', right: '2rem' }}>
+                        <input className="form-check-input"
                             type="checkbox" role="switch"
                             id="switchCheckDefault" style={{ fontSize: '22px' }}
 
                             checked={createTemplate}
                             onChange={handleCreateTemplateChange}
                         />
-                        <label class="form-check-label" className="fw-light fs-5" for="switchCheckDefault">Crear plantilla de este evento</label>
+                        <label className="form-check-label" className="fw-light fs-5" for="switchCheckDefault">Crear plantilla de este evento</label>
                     </div>
                 </div>
 
