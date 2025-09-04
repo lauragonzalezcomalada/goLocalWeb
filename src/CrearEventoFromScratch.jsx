@@ -197,9 +197,19 @@ export default function CrearEventoFromScratch() {
             [name]: value
         }));
         setErrors(prev => ({ ...prev, [name]: '' }));  // neteja errors quan sobreescrius
+
+        if(name === 'tipoEvento' && value === '1'){
+            console.log('automaticament gratis perquè es promo');
+            setEsGratis(true);
+        }
     };
 
-    const handleEsGratisChange = (e) => {       
+    const handleEsGratisChange = (e) => {
+
+        if (e.target.value === 'si' /* && freePlanes === 0*/) {
+            setShowModalFreePlanes(true);
+            return;
+        }
         setEsGratis(e.target.value === 'si');
         setNecesitaReserva(null);
         setCentralizarEntradas(null);
@@ -606,7 +616,7 @@ export default function CrearEventoFromScratch() {
                         style={{ maxWidth: '300px' }} // opcional, para que no se agrande mucho
                     />
                 </Form.Group>
-
+                {formData.tipoEvento === '0' && (
                 <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
                     <Form.Label className='mt-2 fw-light fs-5'>¿Es gratis?</Form.Label>
                     <div className="d-flex gap-5 align-items-center">
@@ -634,14 +644,13 @@ export default function CrearEventoFromScratch() {
                         {errors.gratis}
                     </Form.Control.Feedback>
 
-                </Form.Group>
+                </Form.Group>)}
 
-                {esGratis === true && (
-                    <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <Form.Label className='mt-2 fw-light fs-5'>¿Se necesita hacer una reserva?</Form.Label>
-                        <div className="d-flex gap-5 align-items-center">
-                            <Form.Check
-                                type="radio"
+                {esGratis === true && formData.tipoEvento !== '2' && (  <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
+                    <Form.Label className='mt-2 fw-light fs-5'>¿Se necesita hacer una reserva?</Form.Label>
+                    <div className="d-flex gap-5 align-items-center">
+                        <Form.Check
+                            type="radio"
                                 label={<span className="fw-light fs-5" style={{ marginLeft: '20px' }}>sí</span>}
                                 name="reserva"
                                 value="conReserva"

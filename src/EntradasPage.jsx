@@ -164,7 +164,7 @@ export default function EntradasPage() {
                     const updated = { ...prev };
 
                     const reservasObj = updated[evento_uuid].data.data[reservaNameKey];
-                    const updatedReservasObj = reservasObj.map(reserva => {
+                    const updatedReservasObj = reservasObj?.map(reserva => {
                         if (reserva.uuid === reserva_uuid) {
                             return { ...reserva, status: parseInt(estado) };
                         }
@@ -221,7 +221,7 @@ export default function EntradasPage() {
     }
 
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
-        {Object.entries(referencias).map(([fecha, listaEntradas]) => {
+        {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
 
             return (<div> <div style={{
                 display: 'flex',
@@ -235,7 +235,7 @@ export default function EntradasPage() {
 
 
             </div>
-                {listaEntradas.map((evento, index) => {
+                {listaEntradas?.map((evento, index) => {
 
                     console.log('evento: ', evento)
 
@@ -347,7 +347,7 @@ export default function EntradasPage() {
 
                                 {/*evento con entradas*/}
                                 {evento.tracking_tipo === 0 &&
-                                    evento.entradas.map((entrada, i) => {
+                                    evento.entradas?.map((entrada, i) => {
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, evento.event_imageUrl)}>
 
                                             <div className="card" style={{ width: '100%', height: '85%', color: '#491a13ff' }}>
@@ -380,7 +380,7 @@ export default function EntradasPage() {
                                     })}
                                 {/*evento con reservas*/}
                                 {evento.tracking_tipo === 1 &&
-                                    evento.reservas.map((reserva, i) => {
+                                    evento.reservas?.map((reserva, i) => {
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, evento.event_imageUrl)}>
 
                                             <div className="card" style={{ width: '100%', height: '100%', color: '#491a13ff' }}>
@@ -398,7 +398,7 @@ export default function EntradasPage() {
                                                         </div>
                                                     </div>
                                                     <div className='col-md-6' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                                        {reserva.campos.map((campo) => {
+                                                        {reserva.campos?.map((campo) => {
                                                             return <div
 
                                                                 className="p-2 mb-1 mx-2"
@@ -441,8 +441,12 @@ export default function EntradasPage() {
 
                                                 </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
 
+                                                <span>
+                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                </span>
                                             </OverlayTrigger>
 
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -455,9 +459,9 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
+                                                    <span>
 
-
-
+                                                </span>
                                                     <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
 
                                                 </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
@@ -513,9 +517,11 @@ export default function EntradasPage() {
                                                                 Veces que se visitado el evento
                                                             </Tooltip>
                                                         }
-                                                    >   <span>
+                                                    >
+                                                        <span>
                                                             <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
                                                         </span>
+                                                       
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                                 </div>
@@ -529,10 +535,10 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >   <span>
+                                                            <span>
                                                             <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
                                                         </span>
-
-
+                                                        </span>
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
@@ -546,22 +552,15 @@ export default function EntradasPage() {
                                                         }
                                                     >
                                                         <span>
+                                                            <span>
                                                             <i className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-                                                        </span>
+                                                        </span>                                                        </span>
                                                     </OverlayTrigger>
-
-
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
                                             </div>
-
-
                                         </div>
-
-
-
                                     </div>
-
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
@@ -581,7 +580,11 @@ export default function EntradasPage() {
 
                                                 </span>
 
+                                                <span>
+                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                </span>
                                             </OverlayTrigger>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -593,6 +596,9 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
+                                                <span>
+                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                </span>
 
 
                                                 <span>
@@ -601,6 +607,7 @@ export default function EntradasPage() {
                                                 </span>
 
                                             </OverlayTrigger>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
                                         <i
@@ -635,7 +642,7 @@ export default function EntradasPage() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {ticketsVendidos[evento.event_uuid].data.map((ticket, index) => (
+                                                {ticketsVendidos[evento.event_uuid].data?.map((ticket, index) => (
                                                     <tr key={ticket.id}>
                                                         <td>{index + 1}</td>
                                                         <td>{ticket.nombre}</td>
@@ -666,7 +673,7 @@ export default function EntradasPage() {
                                         ticketsVendidos[evento.event_uuid] &&
                                             Object.values(ticketsVendidos[evento.event_uuid].data.data).some(arr => Array.isArray(arr) && arr.length > 0)
                                             ?
-                                            Object.entries(ticketsVendidos[evento.event_uuid].data.data).map(([nombreFormulario, reservas]) => (
+                                            Object.entries(ticketsVendidos[evento.event_uuid].data.data)?.map(([nombreFormulario, reservas]) => (
                                                 <div key={nombreFormulario} style={{ marginBottom: '2rem' }}>
                                                     {/* Título del grupo */}
                                                     <h5>{nombreFormulario}</h5>
@@ -679,7 +686,7 @@ export default function EntradasPage() {
                                                         >
                                                             <thead>
                                                                 <tr>
-                                                                    {Object.keys(reservas[0].values).map((campo, idx) => (
+                                                                    {Object.keys(reservas[0].values)?.map((campo, idx) => (
                                                                         <th className="text-uppercase" key={idx}>{campo}</th>
                                                                     ))}
                                                                     <th key="asist">¿Asistido?</th>
@@ -687,9 +694,9 @@ export default function EntradasPage() {
 
                                                             </thead>
                                                             <tbody>
-                                                                {reservas.map((reserva, idx) => (
+                                                                {reservas?.map((reserva, idx) => (
                                                                     <tr key={idx}>
-                                                                        {Object.values(reserva.values).map((valor, i) => (
+                                                                        {Object.values(reserva.values)?.map((valor, i) => (
                                                                             <td className="text-uppercase" key={i}>{valor}</td>
                                                                         ))}
                                                                         <td>
