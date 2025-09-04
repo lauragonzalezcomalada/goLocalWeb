@@ -348,7 +348,9 @@ export default function EntradasPage() {
 
                                 {/*evento con entradas*/}
                                 {evento.tracking_tipo === 0 &&
+                                    
                                     evento.entradas?.map((entrada, i) => {
+                                        console.log('tracking_tipo 0');
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, evento.event_imageUrl)}>
 
                                             <div className="card" style={{ width: '100%', height: '85%', color: '#491a13ff' }}>
@@ -381,7 +383,9 @@ export default function EntradasPage() {
                                     })}
                                 {/*evento con reservas*/}
                                 {evento.tracking_tipo === 1 &&
-                                    evento.reservas?.map((reserva, i) => {
+                                    evento.reservas?.map((reserva, i) => {       
+                                        console.log('tracking_tipo 1');
+
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, evento.event_imageUrl)}>
 
                                             <div className="card" style={{ width: '100%', height: '100%', color: '#491a13ff' }}>
@@ -419,7 +423,7 @@ export default function EntradasPage() {
                                 {/*Evento gratis sin reserva*/}
                                 {console.log('ahora va a printar el tracking itpo 2')}
                                 {evento.tracking_tipo === 2 && (
-
+                                    console.log('tracking_tipo 2'),
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
                                         <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> gratuito</span></span>
@@ -466,7 +470,7 @@ export default function EntradasPage() {
                                 )}
                                 {/*Evento de pago con link externo*/}
                                 {evento.tracking_tipo === 3 && (
-
+                                    console.log('tracking_tipo 3'),
                                     <div key={'sin_entradas_centr'} className={`col-md-8 d-flex align-items-center justify-content-center p-3`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
 
 
@@ -555,7 +559,7 @@ export default function EntradasPage() {
                                     </div>
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
-                         console.log('aqui tampoc entra'),
+                         console.log('els hovers'),
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
