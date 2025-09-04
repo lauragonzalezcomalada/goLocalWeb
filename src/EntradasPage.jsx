@@ -308,6 +308,7 @@ export default function EntradasPage() {
                                         </div>
 
                                     </div>
+                                    {console.log('la imatge es veu be');}
                                     {/*}) : (
 
 
@@ -417,16 +418,15 @@ export default function EntradasPage() {
                                     })
                                 }
                                 {/*Evento gratis sin reserva*/}
+                                {console.log('ahora va a printar el tracking itpo 2');}
                                 {evento.tracking_tipo === 2 && (
 
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
-
-
                                         <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> gratuito</span></span>
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}> sin</span> reservas</span>
-
                                         </div>
+                                          {console.log('entramos dentro del tracking tipo 2')}
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center', color: '#491a13ff' }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
@@ -450,6 +450,7 @@ export default function EntradasPage() {
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
+                                        {console.log('despues del overlaytrigger')}
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
