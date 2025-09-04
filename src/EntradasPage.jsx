@@ -15,7 +15,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export default function EntradasPage() {
-    //// Entradas es un dict tipus:
+    //// Entradas es un dict tipus:asdf
     /*
         {'dd/mm':[{tipo:x,
         {entradas:[{entrada_dinero_recaudado,entrada_disponibles,
@@ -222,8 +222,9 @@ export default function EntradasPage() {
 
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
-
-            return (<div> <div style={{
+            console.log('fecha: ', fecha)
+            console.log('listaEntradas: ',listaEntradas)
+        return (<div> <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 margin: '2rem 2rem'
@@ -307,6 +308,7 @@ export default function EntradasPage() {
                                         </div>
 
                                     </div>
+                                    {console.log('la imatge es veu be')}
                                     {/*}) : (
 
 
@@ -416,16 +418,15 @@ export default function EntradasPage() {
                                     })
                                 }
                                 {/*Evento gratis sin reserva*/}
+                                {console.log('ahora va a printar el tracking itpo 2')}
                                 {evento.tracking_tipo === 2 && (
 
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
-
-
                                         <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> gratuito</span></span>
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}> sin</span> reservas</span>
-
                                         </div>
+                                          {console.log('entramos dentro del tracking tipo 2')}
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center', color: '#491a13ff' }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
@@ -449,6 +450,7 @@ export default function EntradasPage() {
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
+                                        {console.log('despues del overlaytrigger')}
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
@@ -467,13 +469,13 @@ export default function EntradasPage() {
                                                 </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                             </OverlayTrigger>
                                         </div>
+                                        {console.log('despues del overlaytrigger2')}
 
                                     </div>
 
                                 )}
                                 {/*Evento de pago con link externo*/}
                                 {evento.tracking_tipo === 3 && (
-
 
                                     <div key={'sin_entradas_centr'} className={`col-md-8 d-flex align-items-center justify-content-center p-3`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
 
@@ -563,6 +565,7 @@ export default function EntradasPage() {
                                     </div>
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
+                         console.log('aqui tampoc entra'),
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -622,6 +625,7 @@ export default function EntradasPage() {
 
                         </div >
                         {expandedEventoUuid === evento.event_uuid && (
+                            console.log('aqui entra?'),
                             <div className="card mx-3 mb-3 p-3" style={{ backgroundColor: '#f8f9fa' }}>
                                 {loadingTickets ? (
                                     <div className="text-center">Cargando datos...</div>
