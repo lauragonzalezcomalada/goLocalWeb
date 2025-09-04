@@ -572,12 +572,7 @@ export default function EntradasPage() {
                                                     <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
 
                                                 </span>
-
-                                                <span>
-                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                </span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
