@@ -206,7 +206,10 @@ export default function EntradasPage() {
         navigate('/externalLinkDetail', { state: { evento_uuid, evento_tipo, evento_fecha, evento_tickets_link, evento_image } })
     }
 
+    print('no referencias?', !referencias);
+    print('referencias length:', referencias)
     if (!referencias) {
+        print('referencias empty')
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '56px', height: '100vh' }}>
                 <div className="spinner-border text-success" role="status">
@@ -216,7 +219,6 @@ export default function EntradasPage() {
         )
     }
 
-    console.log('referencias: ',referencias);
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias).map(([fecha, listaEntradas]) => {
 
