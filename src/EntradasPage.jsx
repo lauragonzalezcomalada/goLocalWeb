@@ -469,12 +469,14 @@ export default function EntradasPage() {
                                                 </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                             </OverlayTrigger>
                                         </div>
+                                        {console.log('despues del overlaytrigger2')}
 
                                     </div>
 
                                 )}
                                 {/*Evento de pago con link externo*/}
                                 {evento.tracking_tipo === 3 && (
+                                        {console.log('aqui no entra')}
 
 
                                     <div key={'sin_entradas_centr'} className={`col-md-8 d-flex align-items-center justify-content-center p-3`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
@@ -565,6 +567,7 @@ export default function EntradasPage() {
                                     </div>
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
+                        {console.log('aqui tampoc entra')}
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -624,6 +627,7 @@ export default function EntradasPage() {
 
                         </div >
                         {expandedEventoUuid === evento.event_uuid && (
+                        {console.log('aqui entra?')}
                             <div className="card mx-3 mb-3 p-3" style={{ backgroundColor: '#f8f9fa' }}>
                                 {loadingTickets ? (
                                     <div className="text-center">Cargando datos...</div>
