@@ -85,7 +85,7 @@ export default function CrearEventoPageChooseOption() {
                         onClick={() => navigate('/crearEventoFromScratch')}
                     >
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <i class="bi bi-plus-lg" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
+                            <i className="bi bi-plus-lg" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
 
                             <h1 style={{ fontWeight: 'lighter', lineHeight: '1' }}>Crear evento desde zero</h1>
                         </div>
@@ -102,7 +102,7 @@ export default function CrearEventoPageChooseOption() {
                        
                     >
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <i class="bi bi-collection" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
+                            <i className="bi bi-collection" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
                             <h1 style={{ fontWeight: 'lighter', lineHeight: '1' }}>Usa una plantilla</h1>
                         </div>
 

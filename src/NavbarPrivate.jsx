@@ -61,8 +61,8 @@ export default function NavbarPrivate({ name }) {
                 }}
             >
                 <span style={{ marginLeft: '5rem' }}>
-                    <button type="button" class="btn btn-outline-secondary" style={{ width: '300px', color: 'white' }} onClick={() => navigate('/crearEventoFromScratch')}>
-                        <i class="bi bi-plus-lg" style={{ paddingRight: '20px' }}></i>
+                    <button type="button" className="btn btn-outline-secondary" style={{ width: '300px', color: 'white' }} onClick={() => navigate('/crearEventoFromScratch')}>
+                        <i className="bi bi-plus-lg" style={{ paddingRight: '20px' }}></i>
                         Crear nuevo evento</button>
 
                 </span>
@@ -174,12 +174,12 @@ export default function NavbarPrivate({ name }) {
                             inicio
                         </Nav.Link>
                         {/* <Nav.Link as={Link} to="/mainlogged" className="text-black">
-                            <i class="bi bi-bar-chart-line"></i>
+                            <i className="bi bi-bar-chart-line"></i>
                         </Nav.Link> */}
                         <Nav.Link as={Link} to="/entradas" style={{color:'#491a13ff'}}>
-                            <i class="bi bi-ticket-perforated"></i>                        </Nav.Link>
+                            <i className="bi bi-ticket-perforated"></i>                        </Nav.Link>
                         <Nav.Link as={Link} to="/crearEventoChooseOption" style={{color:'#491a13ff'}}>
-                            <i class="bi bi-patch-plus"></i>
+                            <i className="bi bi-patch-plus"></i>
 
                         </Nav.Link>
 

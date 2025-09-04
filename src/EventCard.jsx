@@ -53,14 +53,14 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
             
 
           }}>
-            {gratis ? <i class="bi bi-person-fill-check"></i> : <i class="bi bi-ticket-perforated"></i>}
+            {gratis ? <i className="bi bi-person-fill-check"></i> : <i className="bi bi-ticket-perforated"></i>}
             <p className="mb-0">{asistentes}</p>
 
           </div>
 
 
           <div className=" d-flex align-items-center justify-content-center ms-1 mt-1" style={{ borderRadius: '50%', height: '25px', width: '25px', border: '1px solid rgba(27, 80, 6, 0.9)', backgroundColor: activo === true ? 'rgba(54, 160, 9, 1)' : 'rgba(221, 8, 8,1)' }}>
-            <i class="bi bi-check2"></i>
+            <i className="bi bi-check2"></i>
           </div>
 
         </div>

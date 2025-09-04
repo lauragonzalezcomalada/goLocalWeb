@@ -254,7 +254,7 @@ export default function EventDetailPage() {
                             <p className='mt-3 fw-light fs-4'>{fecha}</p>
                         </div>
                         <div className="d-flex align-items-center px-5">
-                            <i class="bi bi-clock"></i>
+                            <i className="bi bi-clock"></i>
                             <p className='mt-3 px-2 fw-light fs-4'>{hora}</p>
                         </div>
                     </div>
@@ -312,7 +312,7 @@ export default function EventDetailPage() {
 
                             {event['active'] === false && (
                                 <div style={{ display: 'flex', flexDirection: 'row', color: 'rgba(204, 12, 12, 0.8)' }}>
-                                    <i class="bi bi-x-lg fs-5"></i>
+                                    <i className="bi bi-x-lg fs-5"></i>
                                     <span className="fs-5 fw-light px-2"> evento  <span className='fw-bold'>no </span> visible</span>
                                 </div>
 
@@ -320,7 +320,7 @@ export default function EventDetailPage() {
                             {event['active'] === true && (
 
                                 <div style={{ display: 'flex', flexDirection: 'row', color: 'rgba(54, 160, 9, 0.8)' }}>
-                                    <i class="bi bi-check2 fs-5"></i>
+                                    <i className="bi bi-check2 fs-5"></i>
                                     <span className="fs-5 fw-light px-2"> evento  <span className='fw-bold'> visible </span> </span>
                                 </div>
 
@@ -412,7 +412,7 @@ export default function EventDetailPage() {
 
             {event['entradas_for_plan']?.length > 0 && (
 
-                <div class="mt-5" style={{ gap: '1rem' }}>
+                <div className="mt-5" style={{ gap: '1rem' }}>
 
                     {event['entradas_for_plan'].map((entrada, index) => (
 
@@ -456,7 +456,7 @@ export default function EventDetailPage() {
                                             /></div>
                                             <div style={{ marginLeft: '5px', display: 'flex', flexDirection: 'row' }}>
 
-                                                <i class="bi bi-clock" style={{ fontSize: '50px' }}></i>
+                                                <i className="bi bi-clock" style={{ fontSize: '50px' }}></i>
                                                 <p className="px-2 mt-3" style={{ fontSize: '30px' }}>{hora}</p>
 
                                             </div>
@@ -498,7 +498,7 @@ export default function EventDetailPage() {
             )
             }
             {event['reservas_forms']?.length > 0 && (
-                <div class="mt-5" style={{ gap: '1rem' }}>
+                <div className="mt-5" style={{ gap: '1rem' }}>
                     {event.reservas_forms?.map((reserva, index) => (
                         <Card className="m-3 p-0" style={{ minHeight: '200px', height: 'auto', width: '100%', borderRadius: '1rem', overflow: 'hidden' }}>
                             <Card.Body className='p-0' style={{ minheight: '200px' }}>
@@ -549,7 +549,7 @@ export default function EventDetailPage() {
                                             /></div>
                                             <div style={{ marginLeft: '5px', display: 'flex', flexDirection: 'row' }}>
 
-                                                <i class="bi bi-clock" style={{ fontSize: '50px' }}></i>
+                                                <i className="bi bi-clock" style={{ fontSize: '50px' }}></i>
                                                 <p className="px-2 mt-3" style={{ fontSize: '30px' }}>{hora}</p>
 
                                             </div>
@@ -655,13 +655,13 @@ export default function EventDetailPage() {
         </div>
         <div className= "container d-flex flex-column" style={{backgroundColor: 'rgba(255, 0, 0, 1)', minHeight: '100px', width:'50vw',position: 'relative', left:'10vw' , top:'20vh'}}>
 
-            <h3 class="display-6" style={{color: 'rgba(255, 149, 0, 1)'}}>Tu evento:</h3>
+            <h3 className="display-6" style={{color: 'rgba(255, 149, 0, 1)'}}>Tu evento:</h3>
             <div style={{height:'20px'}}></div>
-            <h2 class="display-4 text-end px-4" style={{color: 'rgba(255, 149, 0, 1)' }}>{event['name']}</h2>
+            <h2 className="display-4 text-end px-4" style={{color: 'rgba(255, 149, 0, 1)' }}>{event['name']}</h2>
             <div style={{height:'20px'}}></div>
             
-            <div class="container d-flex">
-                <i class="bi bi-calendar-date-fill"></i>
+            <div className="container d-flex">
+                <i className="bi bi-calendar-date-fill"></i>
                 <p>{fecha}</p>
             </div>
 
