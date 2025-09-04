@@ -222,8 +222,8 @@ export default function EntradasPage() {
 
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
-            console.log('fecha: ', fecha);
-            console.log('listaEntradas: ',listaEntradas);
+            console.log('fecha: ', fecha)
+            console.log('listaEntradas: ',listaEntradas)
         return (<div> <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -308,7 +308,7 @@ export default function EntradasPage() {
                                         </div>
 
                                     </div>
-                                    {console.log('la imatge es veu be');}
+                                    {console.log('la imatge es veu be')}
                                     {/*}) : (
 
 
@@ -418,7 +418,7 @@ export default function EntradasPage() {
                                     })
                                 }
                                 {/*Evento gratis sin reserva*/}
-                                {console.log('ahora va a printar el tracking itpo 2');}
+                                {console.log('ahora va a printar el tracking itpo 2')}
                                 {evento.tracking_tipo === 2 && (
 
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
