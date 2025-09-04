@@ -222,8 +222,9 @@ export default function EntradasPage() {
 
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
-
-            return (<div> <div style={{
+            console.log('fecha: ', fecha);
+            console.log('listaEntradas: ',listaEntradas);
+        return (<div> <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 margin: '2rem 2rem'
