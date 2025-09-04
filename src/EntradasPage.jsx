@@ -8,6 +8,8 @@ import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import noPicture from './assets/nopicture.png';
 
+import ojitosgif from './assets/ojitos.gif';
+
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
@@ -206,15 +208,14 @@ export default function EntradasPage() {
         navigate('/externalLinkDetail', { state: { evento_uuid, evento_tipo, evento_fecha, evento_tickets_link, evento_image } })
     }
 
-    console.log('no referencias?', !referencias);
-    console.log('referencias length:', referencias)
-    if (!referencias) {
-        console.log('referencias empty')
+    if (Object.keys(referencias || {}).length === 0) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '56px', height: '100vh' }}>
-                <div className="spinner-border text-success" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
+                
+                <img src={ojitosgif} style={{height:'250px', width:'250px'}} />
+                {/*<div className="spinner-border text-success" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>*/}
             </div>
         )
     }
