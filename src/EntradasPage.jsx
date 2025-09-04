@@ -216,6 +216,7 @@ export default function EntradasPage() {
         )
     }
 
+    console.log('referencias: ',referencias);
     return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
         {Object.entries(referencias).map(([fecha, listaEntradas]) => {
 
