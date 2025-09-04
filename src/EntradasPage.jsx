@@ -488,7 +488,10 @@ export default function EntradasPage() {
   placement="top"
   overlay={<Tooltip id="tooltip-top">Presiona para editar el link</Tooltip>}
 >
-  <Button as="span" variant="link" style={{ color: '#491a13ff' }}
+  <div
+    role="button"
+    tabIndex={0}
+    style={{ color: '#491a13ff', cursor: 'pointer' }}
     onClick={() => fetchExternalTicketsLinkDetail(
       evento.tipo,
       evento.event_dateandtime,
@@ -499,7 +502,7 @@ export default function EntradasPage() {
   >
     Link a las entradas:
     <span className="fw-bold fs-4 px-1">{evento.tickets_link}</span>
-  </Button>
+  </div>
 </OverlayTrigger>
 
 
