@@ -516,10 +516,7 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <span>
-                                                            <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
-
+                                                        <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                                 </div>
@@ -532,9 +529,9 @@ export default function EntradasPage() {
                                                                 Veces que se ha compartido
                                                             </Tooltip>
                                                         }
-                                                    >   <span>
+                                                    >  
                                                             <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
+                                                    
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
@@ -547,10 +544,10 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <span>
+                                                        
 
                                                             <Icono className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                        </span>
+                                                        
                                                     </OverlayTrigger>
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                                 </div>
@@ -559,11 +556,6 @@ export default function EntradasPage() {
                                     </div>
                                 )}
                                 {(evento.tracking_tipo === 0 || evento.tracking_tipo === 1) && (
-
-                         console.log('els hovers'),
-                        console.log('trackingtipo: ', evento.tracking_tipo),
-                        console.log('evento del error: ', evento),
-
                                     <div className={`col-md-${colIcono}  d-flex align-items-center justify-content-center`} style={{ paddingRight: '3rem', flexDirection: 'column' }}>
 
                                         <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -575,11 +567,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                               
-
                                                     <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-
-                                             
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
@@ -592,9 +580,7 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                
                                                     <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
-                                                
                                             </OverlayTrigger>
                                             <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
