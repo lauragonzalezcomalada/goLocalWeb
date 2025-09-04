@@ -431,12 +431,15 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
+                                                <span>
 
+                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+
+                                                </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
 
                                             </OverlayTrigger>
 
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff'  }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -447,11 +450,14 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                <span>
 
 
+
+                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+
+                                                </span><span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
 
                                     </div>
@@ -503,13 +509,10 @@ export default function EntradasPage() {
                                                                 Veces que se visitado el evento
                                                             </Tooltip>
                                                         }
-                                                    >
-                                                        <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-
-
+                                                    >   <span>
+                                                            <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        </span>
                                                     </OverlayTrigger>
-
-
                                                     <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                                 </div>
                                                 <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
@@ -521,8 +524,9 @@ export default function EntradasPage() {
                                                                 Veces que se ha compartido
                                                             </Tooltip>
                                                         }
-                                                    >
-                                                        <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                    >   <span>
+                                                            <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        </span>
 
 
                                                     </OverlayTrigger>
@@ -537,8 +541,9 @@ export default function EntradasPage() {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <i className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
-
+                                                        <span>
+                                                            <i className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                        </span>
                                                     </OverlayTrigger>
 
 
@@ -566,11 +571,14 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff'  }}></i>
+                                                <span>
 
+                                                    <i className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+
+                                                </span>
 
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff'  }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -581,11 +589,15 @@ export default function EntradasPage() {
                                                     </Tooltip>
                                                 }
                                             >
-                                                <i className="bi bi-send" style={{ fontSize: '2rem' , color: '#491a13ff' }}></i>
 
+
+                                                <span>
+
+                                                    <i className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }}></i>
+                                                </span>
 
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light' , color: '#491a13ff' }}> {evento.shares}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
                                         </div>
                                         <i
                                             className="bi bi-chevron-down"
@@ -637,7 +649,7 @@ export default function EntradasPage() {
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                             >
-                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem', color: '#FA7239'  }}></i>
+                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem', color: '#FA7239' }}></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -677,7 +689,7 @@ export default function EntradasPage() {
                                                                             <td className="text-uppercase" key={i}>{valor}</td>
                                                                         ))}
                                                                         <td>
-                                                                            <input className="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
+                                                                            <input className="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{ accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
                                                                         </td>
 
                                                                     </tr>

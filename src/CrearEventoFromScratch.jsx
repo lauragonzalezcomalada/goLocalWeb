@@ -577,7 +577,7 @@ export default function CrearEventoFromScratch() {
                             checked={createTemplate}
                             onChange={handleCreateTemplateChange}
                         />
-                        <label className="form-check-label" className="fw-light fs-5" for="switchCheckDefault">Crear plantilla de este evento</label>
+                        <label className="form-check-label fw-light fs-5" htmlFor="switchCheckDefault">Crear plantilla de este evento</label>
                     </div>
                 </div>
 
