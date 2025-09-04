@@ -18,15 +18,10 @@ export default function Reserva({ initialData }) {
     const mes = new Intl.DateTimeFormat('es-AR', { month: 'short', timeZone: 'UTC' }).format(fechaEvento).toUpperCase(); // "AGO"
     const hora = fechaEvento.getUTCHours().toString().padStart(2, "0") + ":" + fechaEvento.getUTCMinutes().toString().padStart(2, "0");
 
-
     const [camposPosibles, setCamposPosibles] = useState([]);
 
-
     useEffect(() => {
-
-
         async function fetchCampos() {
-
             try {
                 var response = await fetch(API_BASE_URL + '/campos_reserva/', {
                     method: 'GET',
@@ -95,8 +90,6 @@ export default function Reserva({ initialData }) {
 
             });
         } catch (error) { console.error('Error en fetch:', error); }
-
-
         setEditMode(false);
     };
 
@@ -106,13 +99,11 @@ export default function Reserva({ initialData }) {
                 {!editMode ? (
                     <>
                         <div className='row g-0' style={{ height: '100%' }}>
-
                             <div className="col-md-4 g-0" style={{
                                 backgroundColor: 'rgba(255,10,20,1)', height: '100%', borderTopLeftRadius: '1rem',
                                 borderBottomLeftRadius: '1rem', display: 'flex',
                                 flexDirection: 'column',
                             }}>
-
                                 <div style={{ flex: '2', overflow: 'hidden' }}>
                                     <img src={formData.imagen} style={{
                                         width: '100%',
@@ -120,8 +111,6 @@ export default function Reserva({ initialData }) {
                                         objectFit: 'cover', // rellena y recorta si es necesario
                                         display: 'block'
                                     }}></img>
-
-
                                 </div>
                                 <div
                                     className="d-flex"
@@ -148,7 +137,6 @@ export default function Reserva({ initialData }) {
 
                                 </div>
                             </div>
-
                             {/*aquí comença la part de descripció de la reserva */}
                             <div className='col-md-8' style={{ backgroundColor: 'rgba(189, 125, 125, 1)' }}>
                                 <div className='d-flex p-5 mt-5' style={{ height: '100%' }}>
@@ -170,30 +158,14 @@ export default function Reserva({ initialData }) {
                                                 className="p-2 border rounded mb-1 mx-2"
                                                 style={{ flex: '1 0 auto', gap: '2rem' }}
                                             >
-
                                                 <span style={{ fontSize: '18px', fontWeight: 'lighter' }}>{campo.label}</span>
-
                                             </div>
                                         })}
-
-
-
-
                                         <button type="button" className="btn btn-outline-primary px-5 mt-3 mx-5" style={{ lineHeight: '2', position: 'absolute', bottom: '2rem', right: '2rem' }} onClick={handleEditClick}>Editar</button>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-                        {/*<h5>{formData.nombre}</h5>
-            <p>{formData.descripcion}</p>
-            <Button variant="outline-primary" onClick={handleEditClick}>
-              Editar
-            </Button>*/}
-
-
                     </>
                 ) : (
                     <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100 px-2 mt-3" style={{ height: '100%', overflowY: 'auto' }}>
@@ -206,8 +178,6 @@ export default function Reserva({ initialData }) {
                                 onChange={handleChange}
                             />
                         </Form.Group>
-
-
                         <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
                             <Form.Label>Reservas máximas para el evento</Form.Label>
                             <Form.Control
