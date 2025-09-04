@@ -193,12 +193,13 @@ export default function EntradasPage() {
     }
 
     function fetchEntradaTypeDetail(entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image) {
+        console.log('fetch entrada type detail: ', evento_image)
         navigate('/entradaDetail', { state: { entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image } })
     }
 
 
     function fetchReservaTypeDetail(reserva_uuid, evento_tipo, reserva_nombre, evento_fecha, reserva_confirmadas, reserva_max_disponibilidad, reserva_porcentaje_reservado, reserva_campos, evento_image) {
-        console.log('reservaUuid:', reserva_uuid)
+        console.log('fetch reserva type detail:', evento_image)
         //reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad,reserva.porcentaje_reservado, reserva.campos, API_BASE_URL + evento.event_imageUrl)
 
         navigate('/reservaDetail', { state: { reserva_uuid, evento_tipo, reserva_nombre, evento_fecha, reserva_confirmadas, reserva_max_disponibilidad, reserva_porcentaje_reservado, reserva_campos, evento_image } })
@@ -207,6 +208,8 @@ export default function EntradasPage() {
 
 
     function fetchExternalTicketsLinkDetail(evento_tipo, evento_fecha, evento_uuid, evento_tickets_link, evento_image) {
+
+        console.log('fetch external tickets link detail: ', evento_image)
         navigate('/externalLinkDetail', { state: { evento_uuid, evento_tipo, evento_fecha, evento_tickets_link, evento_image } })
     }
 
@@ -348,9 +351,7 @@ export default function EntradasPage() {
 
                                 {/*evento con entradas*/}
                                 {evento.tracking_tipo === 0 &&
-                                    
                                     evento.entradas?.map((entrada, i) => {
-                                        console.log('tracking_tipo 0');
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, evento.event_imageUrl)}>
 
                                             <div className="card" style={{ width: '100%', height: '85%', color: '#491a13ff' }}>
