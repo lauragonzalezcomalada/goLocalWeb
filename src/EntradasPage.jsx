@@ -206,10 +206,10 @@ export default function EntradasPage() {
         navigate('/externalLinkDetail', { state: { evento_uuid, evento_tipo, evento_fecha, evento_tickets_link, evento_image } })
     }
 
-    print('no referencias?', !referencias);
-    print('referencias length:', referencias)
+    console.log('no referencias?', !referencias);
+    console.log('referencias length:', referencias)
     if (!referencias) {
-        print('referencias empty')
+        console.log('referencias empty')
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '56px', height: '100vh' }}>
                 <div className="spinner-border text-success" role="status">
