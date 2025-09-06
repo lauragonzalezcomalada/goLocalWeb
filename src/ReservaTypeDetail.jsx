@@ -6,7 +6,6 @@ export default function ReservaTypeDetail() {
 
 
     const location = useLocation()
-    console.log(location)
     const { evento_tipo, reserva_uuid, reserva_nombre, evento_image, evento_fecha,
         reserva_confirmadas, reserva_max_disponibilidad, reserva_porcentaje_reservado, reserva_campos
     } = location.state || {}

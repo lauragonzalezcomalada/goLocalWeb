@@ -16,7 +16,6 @@ export default function ExternalLinkDetail() {
         evento_tickets_link
     } = location.state || {}
 
-    console.log('evento image: ', evento_image);
     const [editMode, setEditMode] = useState(false);
     const { accessToken, refreshTokenIfNeeded, setAccessToken } = useContext(AuthContext)
 
@@ -27,8 +26,6 @@ export default function ExternalLinkDetail() {
 
     const [ticketsLink, setTicketsLink] = useState(evento_tickets_link)
     const handleChange = (e) => {
-        console.log('la e')
-        console.log(e.target.value);
         setTicketsLink(e.target.value)
     }
 

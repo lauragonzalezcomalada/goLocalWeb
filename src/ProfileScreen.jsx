@@ -213,7 +213,6 @@ export default function ProfileScreen() {
 
     useEffect(() => {
         async function trackBillingStatus() {
-            console.log('dins del get events')
             try {
                 var response = await fetch(API_BASE_URL + '/billing_status/', {
                     headers: {
@@ -230,7 +229,7 @@ export default function ProfileScreen() {
                     if (!newAccessToken) return // no se pudo refrescar
 
                     // reintentamos con token nuevo
-                    response = await fetch(API_BASE_URL + '/events_for_the_week/?date=' + fechaISO, {
+                    response = await fetch(API_BASE_URL + '/billing_status/' , {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                         }
@@ -239,7 +238,7 @@ export default function ProfileScreen() {
                         data = await response.json()
                     }
                 }
-                console.log('billing status', data)
+                console.log('data billing status: ', data);
                 setBillingInfo(data)
 
 
@@ -586,10 +585,6 @@ export default function ProfileScreen() {
 
 
                         <div style={{ position: "relative", width: '22rem', marginLeft: '2rem' }}>
-                            {console.log('billing_end_range: ', billingInfo.range_centralizados.end_range)}
-                            {console.log('billininforcentralizados: ', billingInfo.centralizados)}
-
-                            {console.log((billingInfo.centralizados - billingInfo.range_centralizados.start_range) / (billingInfo.range_centralizados.end_range - billingInfo.range_centralizados.start_range))}
                             {/* Progress bar */}
                             <div
                                 className="progress"

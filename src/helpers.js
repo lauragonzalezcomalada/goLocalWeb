@@ -32,14 +32,11 @@ export function shortFormatDate(){
 
   const date = new Date()
 
-  console.log('date today: ', date)
   const fechaFormateada = new Intl.DateTimeFormat('es-AR', {
     year: 'numeric',
     month:'long'
   }).format(date).toUpperCase()
-  console.log(fechaFormateada)
   return fechaFormateada;
-  
 }
 
 

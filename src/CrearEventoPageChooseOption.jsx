@@ -46,12 +46,7 @@ export default function CrearEventoPageChooseOption() {
                     }
 
                 }
-
-                console.log(data)
-                setTemplates(data)
-
-
-
+                setTemplates(data);
             } catch (e) {
                 console.error('Error fetching user profile', e)
             }

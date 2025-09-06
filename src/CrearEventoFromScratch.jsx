@@ -37,52 +37,6 @@ export default function CrearEventoFromScratch() {
     const [errors, setErrors] = useState({});
     const [createTemplate, setCreateTemplate] = useState(false);
 
-
-   /* const [freePlanes, setFreePlanes] = useState(0);
-    const [showModalFreePlanes, setShowModalFreePlanes] = useState(false); */
-/*
-
-    useEffect(() => {
-
-        if (!accessToken) return
-
-        const fetchUserProfileAvailableFreePlans = async () => {
-            try {
-                var response = await fetch(API_BASE_URL + '/available_free_plans/', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
-                var data = await response.json();
-                if (response.status === 401) {
-                    console.log('response status = 401');
-                    // intentamos refrescar
-                    const newAccessToken = await refreshTokenIfNeeded();
-                    if (!newAccessToken) return; // no se pudo refrescar
-
-                    // reintentamos con token nuevo
-                    response = await fetch(`${API_BASE_URL}/available_free_plans/`, {
-                        headers: {
-                            Authorization: `Bearer ${newAccessToken}`
-                        }
-                    });
-                    if (response.ok) {
-                        data = await response.json();
-                    }
-                }
-                setFreePlanes(data);
-                // Aquí puedes usar data si lo necesitas, por ejemplo:
-                // setFreePlanes(data.free_planes);
-            } catch (e) {
-                console.error('Error fetching available free plans', e);
-            }
-        };
-
-        fetchUserProfileAvailableFreePlans();
-    }, [accessToken]);
- */
-
     const handleCreateTemplateChange = (e) => {
         setCreateTemplate(e.target.checked);
     };
@@ -100,8 +54,6 @@ export default function CrearEventoFromScratch() {
     });
 
     if (uuid) {
-        console.log('hi ha uuid')
-
         useEffect(() => {
             async function fetchTemplateValues() {
 
@@ -145,9 +97,7 @@ export default function CrearEventoFromScratch() {
                     setEsGratis(data.values.gratis)
                     setNecesitaReserva(data.values.reserva_necesaria)
                     setCentralizarEntradas(data.values.control_entradas)
-                    console.log(data)
-                    console.log(data?.values?.entradas_for_event)
-
+        
                     if (data?.values?.reservas_forms?.length > 0) {
                         const nuevasReservas = data.values.reservas_forms.map((reserva_form) => ({
                             tipoReserva: reserva_form.nombre,
@@ -160,22 +110,15 @@ export default function CrearEventoFromScratch() {
                         }));
 
                         setReservas(nuevasReservas);
-
                     }
-
                     if (data?.values?.entradas_for_event?.length > 0) {
-                        console.log('hi ha entradaes')
                         const nuevasEntradas = data.values.entradas_for_event.map((entrada) => ({
                             nombre: entrada.nombre,
                             descripcion: entrada.descripcion,
                             precio: entrada.precio,
                             cantidad: entrada.cantidad,
-
-
                         }));
-
                         setEntradas(nuevasEntradas);
-
                     }
 
 
@@ -199,17 +142,12 @@ export default function CrearEventoFromScratch() {
         setErrors(prev => ({ ...prev, [name]: '' }));  // neteja errors quan sobreescrius
 
         if(name === 'tipoEvento' && value === '1'){
-            console.log('automaticament gratis perquè es promo');
             setEsGratis(true);
         }
     };
 
     const handleEsGratisChange = (e) => {
 
-        if (e.target.value === 'si' /* && freePlanes === 0*/) {
-            setShowModalFreePlanes(true);
-            return;
-        }
         setEsGratis(e.target.value === 'si');
         setNecesitaReserva(null);
         setCentralizarEntradas(null);
@@ -345,12 +283,6 @@ export default function CrearEventoFromScratch() {
         if (formData.tipoEvento === '1') {
             formDataToSend.append('endTime', formData.endTime);
         }
-
-        console.log('formDataToSend contents:');
-
-        for (const [key, value] of formDataToSend.entries()) {
-            console.log(key, value);
-        }
         try {
             var response = await fetch(`${API_BASE_URL}/createevent/`, {
                 headers: {
@@ -394,7 +326,6 @@ export default function CrearEventoFromScratch() {
 
 
         if (createTemplate === true) {
-            console.log('crear una plantilla de levent')
             const formDataForTemplate = new FormData()
 
             const valuesJson = {

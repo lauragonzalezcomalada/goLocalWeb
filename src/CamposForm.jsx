@@ -28,7 +28,6 @@ export default function CamposForm({ campo, setCampo, onAgregar }) {
 
 
     const agregarCampo = () => {
-        console.log('agregarCampo', campo)
         if (campo.uuid && campo.label) {
             onAgregar(campo);
             setCampo({ uuid: '', label: '' }); // Limpiar después de agregar
