@@ -10,12 +10,9 @@ import { obtenerLunes } from './helpers.js'
 
 
 export default function MainLoggedPage() {
-    /*  console.log(localStorage.getItem(TOKEN_STORAGE_KEY))
-      console.log('refresh')
-      console.log(localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY))*/
+
     const [userProfile, setUserProfile] = useState(null)
     const { accessToken, refreshTokenIfNeeded, setAccessToken } = useContext(AuthContext)
-
     const [eventos, setEventos] = useState(null)
     const [lunesVisible, setLunesVisible] = useState(obtenerLunes(new Date()))
 
@@ -29,7 +26,7 @@ export default function MainLoggedPage() {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 })
-                console.log(response)
+
                 var data = await response.json()
 
                 if (response.status === 401) {
@@ -65,10 +62,7 @@ export default function MainLoggedPage() {
     useEffect(() => {
         if (!accessToken) return
         async function getWeeklyEvents() {
-            console.log('dins del get events')
-            try {
-
-                
+            try {                
                 const fechaISO = lunesVisible.toISOString().split('T')[0] // "YYYY-MM-DD"
                 var response = await fetch(API_BASE_URL + '/events_for_the_week/?date=' + fechaISO, {
                     headers: {
@@ -94,11 +88,7 @@ export default function MainLoggedPage() {
                         data = await response.json()
                     }
                 }
-
-                console.log('eventos: ', data)
                 setEventos(procesarEventosPorFecha(data['activities'], data['promos'], data['private_plans']))
-
-
             } catch (e) {
                 console.error('Error fetching activities for the week', e)
             }
@@ -108,12 +98,9 @@ export default function MainLoggedPage() {
     }, [accessToken, lunesVisible])
 
     const cambiarSemana = (dias) => {
-        console.log('cambiar semana')
-        console.log(dias)
         const nuevaFecha = new Date(lunesVisible)
         nuevaFecha.setDate(nuevaFecha.getDate() + dias)
         setLunesVisible(obtenerLunes(nuevaFecha))
-        console.log('lunes visible, ', lunesVisible)
     }
 
 

@@ -64,8 +64,8 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
           </div>
 
         </div>
-
-        {gratis && (
+        {console.log('tipo, gratis: ', tipo)}
+        {(tipo === 1 || gratis) && (
           <div
             className="position-absolute top-0 end-0 m-2 px-2 py-1"
             style={{

@@ -115,8 +115,6 @@ export default function EntradasPage() {
                     data = await response.json()
                 }
             }
-            console.log('data', data)
-
             setTicketsVendidos(prev => ({
                 ...prev,
                 [event_uuid]: { type: event_ticketsType, data }
@@ -352,7 +350,6 @@ export default function EntradasPage() {
                                     })
                                 }
                                 {/*Evento gratis sin reserva*/}
-                                {console.log('ahora va a printar el tracking itpo 2')}
                                 {evento.tracking_tipo === 2 && (
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
                                         <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>

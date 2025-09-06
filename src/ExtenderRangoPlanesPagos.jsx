@@ -23,12 +23,8 @@ export default function ExtenderRangoPlanesPagos() {
     };
 
     async function handleCompraAmpliacionRango() {
-        console.log('handle compra de bono')
-        console.log(selectedAmpliacionId)
         let rango_seleccionado = rangos.find(r => r.id === selectedAmpliacionId)
-        console.log(rango_seleccionado)
         let precio_a_pagar = rango_seleccionado.price - precioPagado;
-        console.log('pecio a pagar: ', precio_a_pagar)
         const res = await fetch(`${API_BASE_URL}/create_test_payment/`, {
             method: 'POST',
             headers: {  Authorization: `Bearer ${accessToken}`,'Content-Type': 'application/json' },
@@ -38,9 +34,7 @@ export default function ExtenderRangoPlanesPagos() {
         }
         )
         const data = await res.json()
-        console.log('data: ', data)
         window.open(data.sandbox_init_point, "_blank")
-
     }
 
     useEffect(() => {
@@ -50,7 +44,6 @@ export default function ExtenderRangoPlanesPagos() {
                 })
 
                 var data = await response.json();
-                console.log('rangos: ', data);
                 setRangos(data)
 
             } catch (e) {
@@ -70,7 +63,6 @@ export default function ExtenderRangoPlanesPagos() {
             </div>
         )
     }
-    console.log('rangos: ', rangos)
     var precioPagado = 0;
     return <div className="p-5" style={{ marginTop: '56px', width: '100%', height: 'calc(100vh - 56px - 170px)', justifyContent: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {rangos.map((rango) => {
@@ -80,7 +72,6 @@ export default function ExtenderRangoPlanesPagos() {
                 precioPagado = rango.price;
                 return null; // no renderiza nada
             }
-            console.log('prcio pagado actualizado: ', precioPagado)
             return (
                 <div key={rango.id} className="p-5" style={{
                     border: '1px solid rgba(0, 0, 0, 0.9)',

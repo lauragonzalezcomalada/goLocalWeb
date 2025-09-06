@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import DateCard from './DateCard.jsx'
 import { useNavigate } from 'react-router-dom';
+import soloCarita from './assets/nopicture.png';
 
 
 export default function EventDetailPage() {
@@ -23,14 +24,13 @@ export default function EventDetailPage() {
     const [showNotEnoughPagosModal, setShowNotEnoughPagosModal] = useState(false);
 
 
-    const handleOpen = (accion) => {
+    async function handleOpen() {
 
         //Hi ha d'haver 3 modals: Event gratis --> no hi ha més plans gratis: --> comprar bono
         // Event pago --> ja has omplert el teu rango de plans de pago mensuals --> ampliar rango
         // Tot okay --> confirmació
-        console.log('abletoturnvisible, ', ableToTurnVisible)
-        fetchAvailabilityToTurnVisible();
-        if (ableToTurnVisible === true) {
+        let able = await fetchAvailabilityToTurnVisible();
+        if (able === true) {
             console.log('able to turn visible');
             setShowConfirmationModal(true);
             return;
@@ -78,7 +78,6 @@ export default function EventDetailPage() {
                 url += '/private_plans/?privatePlanUuid='
             }
             try {
-                console.log('Haciendo fetch a:', url + uuid)
                 const response = await fetch(url + uuid, {
                     method: 'GET',
                     headers: {
@@ -108,7 +107,7 @@ export default function EventDetailPage() {
 
                 }
                 if (!response.ok) throw new Error('No autorizado o error')
-                console.log(data)
+                console.log('promo:  ', data);
                 setEvent(data)
             } catch (e) {
                 console.error('Error fetching user profile', e)
@@ -118,19 +117,17 @@ export default function EventDetailPage() {
 
     }, [uuid, tipo])
 
-
-    console.log('event: ', typeof event?.gratis)
     //Ejecutar una vez se tenga evento
-
     async function fetchAvailabilityToTurnVisible() {
 
         try {
+            console.log('gratis?: ',  tipo === 1 ? true: event.gratis )
             var response = await fetch(API_BASE_URL + '/able_turn_visible/', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ free_event: event.gratis }),
+                body: JSON.stringify({ free_event: tipo === 1 ? true: event.gratis }),
 
             })
             var data = await response.json()
@@ -160,6 +157,7 @@ export default function EventDetailPage() {
             if (!response.ok) throw new Error('No autorizado o error')
             console.log('response: ', data)
             setAbleToTurnVisible(data)
+            return data;
         } catch (e) {
             console.error('Error: ', e)
         }
@@ -167,9 +165,6 @@ export default function EventDetailPage() {
 
 
     async function handleConfirm() {
-        console.log('confirmación a backend')
-        console.log(tipo)
-
         try {
             var response = await fetch(`${API_BASE_URL}/handle_visibility_change/`, {
                 method: 'POST',
@@ -200,7 +195,6 @@ export default function EventDetailPage() {
                     data = await response.json()
                 }
             }
-            console.log('data response: ', data)
             setEvent(prevEvent => ({
                 ...prevEvent,
                 active: data,
@@ -222,13 +216,13 @@ export default function EventDetailPage() {
         )
 
     const { fecha, hora, dia, mes } = formatDate(event?.startDateandtime)
-
+    console.log('event: ', event);
     return <div
         style={{
             minHeight: '100vh',
             width: '100vw',
             overflowY: 'auto',
-           // color: 'red',
+            // color: 'red',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -245,7 +239,7 @@ export default function EventDetailPage() {
                     <h3 className="display-5 mb-3" style={{ fontWeight: 'lighter' }}>
                         Tu evento:
                     </h3>
-                    <h1 className="display-1 text-end px-3" style={{ fontSize: '120px', lineHeight:'1', fontWeight:'regular' }}>
+                    <h1 className="display-1 text-end px-3" style={{ fontSize: '120px', lineHeight: '1', fontWeight: 'regular' }}>
                         {event['name']}
                     </h1>
                     <div className='d-flex align-items-space-between px-2 mt-5'>
@@ -292,8 +286,7 @@ export default function EventDetailPage() {
 
                         {event['shortDesc']}
                     </div>
-                    <div className='mt-3 px-2 fw-lighter fs-3'>
-
+                    <div className="mt-3 px-3 fw-lighter fs-3" style={{ textAlign: 'justify', marginRight: '10px' }}>
                         {event['desc']}
                     </div>
                     {/* Resto de contenido */}
@@ -406,6 +399,17 @@ export default function EventDetailPage() {
                         className="w-100"
                         style={{ objectFit: 'cover', height: '500px' }}
                     />
+
+                    {event['tickets_link'] && (
+                        <div style={{ marginTop: '1rem', fontSize: '1.2rem', textAlign: 'center', wordWrap: 'break-word', overflowWrap: 'break-word', display: 'flex', flexDirection: 'column' }}>
+                            <div className='fw-lighter fs-4'style={{ textAlign:'start' }}>
+                                Link a las entradas:
+                            </div>
+                            <div className='fw-medium fs-3' style={{softwrap:'true'}}>
+                                {event['tickets_link']}
+                            </div>
+                        </div>
+                    )}
                 </Col>
             </Row>
 
@@ -427,9 +431,8 @@ export default function EventDetailPage() {
                                         borderBottomLeftRadius: '1rem', display: 'flex',
                                         flexDirection: 'column',
                                     }}>
-
                                         <div style={{ flex: '2', overflow: 'hidden' }}>
-                                            <img src={event['image']} style={{
+                                            <img src={event['image']!== null  ? event['image'] : soloCarita} style={{
                                                 width: '100%',
                                                 height: '100%',
                                                 objectFit: 'cover', // rellena y recorta si es necesario
@@ -474,17 +477,18 @@ export default function EventDetailPage() {
                                             </div>
                                             <div className="px-0" style={{ flex: 2 }}>
                                                 {entrada['disponibles'] === 0 && (
-                                                    <div style={{width:'12rem', position: 'absolute', top: '2rem', right:'2rem', border: '5px solid #fa3950', borderRadius:'15px', display: 'flex', alignItems:'center', justifyContent:'center', color: '#fa3950', fontSize: '30px'}}> SOLD OUT</div>
-                                                ) }
+                                                    <div style={{ width: '12rem', position: 'absolute', top: '2rem', right: '2rem', border: '5px solid #fa3950', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fa3950', fontSize: '30px' }}> SOLD OUT</div>
+                                                )}
                                                 <span className="fw-lighter" style={{ fontSize: '25px' }}> Disponibles: <span className='fw-light'>{entrada['disponibles']}</span></span><br />
                                                 <span className="fw-lighter" style={{ fontSize: '25px' }}> Cantidad de entradas total: <span className='fw-light'>{entrada['maxima_disponibilidad']}</span></span>
 
                                                 <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuemin="0" aria-valuemax="100">
                                                     <div
                                                         className="progress-bar"
-                                                        style={{ width: `${((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100}%`,
-                                                         backgroundColor: '#fa5239'
-                                                    }}
+                                                        style={{
+                                                            width: `${((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100}%`,
+                                                            backgroundColor: '#fa5239'
+                                                        }}
                                                     >{(((entrada['maxima_disponibilidad'] - entrada['disponibles']) / entrada['maxima_disponibilidad']) * 100).toFixed(2) + '%'}</div>
                                                 </div>
                                             </div>

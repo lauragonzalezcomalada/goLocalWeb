@@ -22,10 +22,7 @@ export default function CompraDeBonos() {
                 })
 
                 var data = await response.json();
-                console.log('bonos: ', data);
                 setBonos(data);
-
-
 
             } catch (e) {
                 console.error('Error fetching activities for the week', e)

@@ -18,8 +18,6 @@ export default function EditableEntradaCard({ initialData }) {
   const mes = new Intl.DateTimeFormat('es-AR', { month: 'short', timeZone: 'UTC' }).format(fechaEvento).toUpperCase(); // "AGO"
   const hora = fechaEvento.getUTCHours().toString().padStart(2, "0") + ":" + fechaEvento.getUTCMinutes().toString().padStart(2, "0");
 
-  console.log('formDate')
-  console.log(formData)
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -35,9 +33,6 @@ export default function EditableEntradaCard({ initialData }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // 🔁 Podés hacer un fetch o axios POST aquí para actualizar en backend
-    console.log('Datos enviados:', formData);
-
     try {
       const response = await fetch(`${API_BASE_URL}/update_entrada/`, {
         method: 'POST',

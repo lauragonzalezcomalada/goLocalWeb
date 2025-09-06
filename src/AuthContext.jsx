@@ -10,36 +10,36 @@ export const AuthProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY))
   const [userProfile, setUserProfile] = useState(null)
 
- const fetchUserInfo = async (token) => {
-  try {
-    let response = await fetch(`${API_BASE_URL}/user/profile/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-
-    // Si está expirado o inválido
-    if (response.status === 401) {
-      const newAccessToken = await refreshTokenIfNeeded()
-      if (!newAccessToken) return
-
-      // Reintenta con el nuevo token
-      response = await fetch(`${API_BASE_URL}/user/profile/`, {
-        headers: {
-          Authorization: `Bearer ${newAccessToken}`
-        }
+  const fetchUserInfo = async (token) => {
+    try {
+      let response = await fetch(`${API_BASE_URL}/user/profile/`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
-    }
 
-    if (response.ok) {
-      const data = await response.json()
-      setUserProfile(data)
-    } else {
-      console.error('No se pudo obtener perfil del usuario, status:', response.status)
-    }
+      // Si está expirado o inválido
+      if (response.status === 401) {
+        const newAccessToken = await refreshTokenIfNeeded()
+        if (!newAccessToken) return
 
-  } catch (e) {
-    console.error('Error al obtener info del usuario:', e)
+        // Reintenta con el nuevo token
+        response = await fetch(`${API_BASE_URL}/user/profile/`, {
+          headers: {
+            Authorization: `Bearer ${newAccessToken}`
+          }
+        })
+      }
+
+      if (response.ok) {
+        const data = await response.json()
+        setUserProfile(data)
+      } else {
+        console.error('No se pudo obtener perfil del usuario, status:', response.status)
+      }
+
+    } catch (e) {
+      console.error('Error al obtener info del usuario:', e)
+    }
   }
-}
 
 
 
@@ -68,7 +68,6 @@ export const AuthProvider = ({ children }) => {
   //FUNCIÓ DE LOGIN QUE POT SER REUTILITZADA
   const login = async (username, password) => {
 
-    console.log('login')
     const response = await fetch(`${API_BASE_URL}/token/`, {
       method: 'POST',
       headers: {
@@ -78,9 +77,8 @@ export const AuthProvider = ({ children }) => {
     })
 
     if (!response.ok) throw new Error('Login inválido')
-    const data = await response.json()
 
-    console.log(data)
+    const data = await response.json()
     localStorage.setItem(TOKEN_STORAGE_KEY, data.access)
     localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, data.refresh)
 
@@ -104,7 +102,7 @@ export const AuthProvider = ({ children }) => {
   }, [accessToken])
 
   useEffect(() => {
-    if (accessToken ) {
+    if (accessToken) {
       // solo pide al backend si no tenemos cacheado userProfile
       fetchUserInfo(accessToken)
     }

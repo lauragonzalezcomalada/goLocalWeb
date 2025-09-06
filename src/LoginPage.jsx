@@ -57,7 +57,7 @@ export default function LoginPage() {
           <label>Password:</label>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
         </div>
-        <button className="mt-3" type="submit" style={{ justifyContent: 'center', padding: '0.5rem' }} >logeatassse</button>
+        <button className="mt-3" type="submit" style={{ justifyContent: 'center', padding: '0.5rem' }} >Registra't</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}            </form>
     </div>
 
