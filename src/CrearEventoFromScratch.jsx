@@ -141,10 +141,13 @@ export default function CrearEventoFromScratch() {
         }));
         setErrors(prev => ({ ...prev, [name]: '' }));  // neteja errors quan sobreescrius
 
-        if(name === 'tipoEvento' && value === '1'){
+        if(name === 'tipoEvento' && value !== '0'){
             setEsGratis(true);
         }
-    };
+        if(name === 'tipoEvento' && value === '2'){
+            setNecesitaReserva(false);
+        }
+    }
 
     const handleEsGratisChange = (e) => {
 
@@ -214,6 +217,7 @@ export default function CrearEventoFromScratch() {
     };
 
     const validate = () => {
+        console.log('validate')
         let newErrors = {};
 
         if (!formData.tipoEvento) newErrors.tipoEvento = 'Selecciona un tipo de evento';
@@ -221,7 +225,7 @@ export default function CrearEventoFromScratch() {
         if (!formData.descripcion) newErrors.descripcion = 'Campo obligatorio';
         if (!formData.fecha) newErrors.fecha = 'Campo obligatorio';
         if (!formData.startTime) newErrors.startTime = 'Campo obligatorio';
-        if (formData.tipoEvento === '2' && !formData.endTime) newErrors.endTime = 'Campo obligatorio';
+        if (formData.tipoEvento === '1' && !formData.endTime) newErrors.endTime = 'Campo obligatorio';
         if (esGratis === null) newErrors.gratis = 'Campo obligatorio';
         if (esGratis === true && necesitaReserva === null) newErrors.necesitaReserva = 'Campo obligatorio';
         if (esGratis === false && centralizarEntradas === null) newErrors.centralizarEntradas = 'Campo obligatorio';
@@ -236,11 +240,14 @@ export default function CrearEventoFromScratch() {
         }
         if (ubicacion.direccion === '') newErrors.locationError = 'Campo obligatorio';
 
-        setErrors(newErrors);
+        setErrors(newErrors);   
+        console.log('new erors:', newErrors);
+
         return Object.keys(newErrors).length === 0;
     }
 
     const submitCrearEvento = async (e) => {
+        console.log('submit');
         e.preventDefault();
 
         if (!validate()) return;
@@ -250,7 +257,7 @@ export default function CrearEventoFromScratch() {
         formDataToSend.append('tipoEvento', formData.tipoEvento);
         formDataToSend.append('name', formData.titulo);
         formDataToSend.append('shortDesc', formData.shortDesc);
-        formDataToSend.append('descripcion', formData.descripcion);
+        formDataToSend.append('desc', formData.descripcion);
         formDataToSend.append('startDateandtime', `${formData.fecha}T${formData.startTime}`);
         formDataToSend.append('gratis', esGratis);
         formDataToSend.append('reserva', necesitaReserva);
