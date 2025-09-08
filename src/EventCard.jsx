@@ -6,15 +6,15 @@ import TagChip from './TagChip.jsx'
 
 export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, shortDesc, tags, asistentes }) {
 
-  /*const navigate = useNavigate()*/
-  /*const handleClick = () => {
+  const navigate = useNavigate()
+  const handleClick = () => {
     navigate('/eventDetail', { state: { uuid, tipo } })
-  }*/
+  }
 
   return (
     console.log('printing event card'),
     <div
-     /* onClick={handleClick}*/
+      onClick={handleClick}
       className="event-card card mb-3"
       style={{
         minHeight: '220px',
