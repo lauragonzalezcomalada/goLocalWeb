@@ -72,7 +72,7 @@ export default function WeekCalendar({ esteLunes, eventos }) {
                             {/* Acá se podrán insertar eventos más adelante */}
                         </Col>
                     ))}
-                      {Object.keys(eventos).length === 0 && (
+                      {Object.values(eventos).every(arr => arr.length === 0) && (
                                 <Card className="text-center mt-5"  style={{ width: '100%', height: '100%', backgroundColor:'transparent' }}>
                                     <Card.Body>
                                         <Card.Text>No hay eventos para esta semana</Card.Text>
