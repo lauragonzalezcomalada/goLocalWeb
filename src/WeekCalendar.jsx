@@ -51,6 +51,8 @@ export default function WeekCalendar({ esteLunes, eventos }) {
                             <div className="fw-lighter mb-2 fs-2" style={{ color: '#491a13ff' }}>{day}</div>
                           
                             {(eventos[day] || []).map((evento, index) => {
+                                console.log('hay eventos');
+                                console.log('evento:', evento);
                                 return (
                                     <EventCard
                                         tipo={evento.tipo}
