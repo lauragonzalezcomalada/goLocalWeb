@@ -38,9 +38,6 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
         ) : (
           <div style={{ width: '100%', height: '100%', backgroundColor: '#ffc14577' }} />
         )}
-
-
-
         <div
           className="position-absolute top-0 start-0 mt-2" style={{display:'flex', flexDirection:'row'}}
         >

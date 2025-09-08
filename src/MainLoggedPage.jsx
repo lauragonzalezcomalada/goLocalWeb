@@ -44,10 +44,7 @@ export default function MainLoggedPage() {
                     if (response.ok) {
                         data = await response.json()
                     }
-
                 }
-
-
                 // if (!response.ok) throw new Error('No autorizado o error')
                 setUserProfile(data)  // Guarda el perfil en el estado
             } catch (e) {
@@ -69,9 +66,7 @@ export default function MainLoggedPage() {
                         Authorization: `Bearer ${accessToken}`,
                     }
                 })
-
                 var data = await response.json()
-
                 if (response.status === 401) {
                     console.log('response status = 401')
                     // intentamos refrescar
@@ -89,6 +84,7 @@ export default function MainLoggedPage() {
                     }
                 }
                 setEventos(procesarEventosPorFecha(data['activities'], data['promos'], data['private_plans']))
+                console.log('se ejecuta el fetch events weekly');
             } catch (e) {
                 console.error('Error fetching activities for the week', e)
             }
