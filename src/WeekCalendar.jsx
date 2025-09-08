@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import EventCard from './EventCard'
-
+import React, { useMemo, useEffect } from 'react'
 
 function obtenerFechasSemanaActual(esteLunes) {
     const hoy = new Date(esteLunes)
@@ -20,10 +20,9 @@ function obtenerFechasSemanaActual(esteLunes) {
     return fechas // ['22/07', '23/07', ...]
 }
 
-export default function WeekCalendar({ esteLunes, eventos }) {
-    const fechas = obtenerFechasSemanaActual(esteLunes)
+const WeekCalendar = React.memo(function WeekCalendar({ esteLunes, eventos }) {
+    const fechas =  useMemo(() => obtenerFechasSemanaActual(esteLunes));
 
-   
     return (
 
         <div
@@ -85,4 +84,5 @@ export default function WeekCalendar({ esteLunes, eventos }) {
             </Container>
         </div>
     )
-}
+})
+export default WeekCalendar
