@@ -10,6 +10,7 @@ export default function CompraDeBonos() {
 
     const [bonos, setBonos] = useState(null)
     const [selectedBonoId, setSelectedBonoId] = useState(null);
+    const { accessToken, refreshTokenIfNeeded } = useContext(AuthContext)
 
     const handleChange = (id) => {
         setSelectedBonoId(id); // solo un checkbox activo a la vez
@@ -34,7 +35,54 @@ export default function CompraDeBonos() {
 
 
     async function handleCompraDeBono() {
-        console.log('handle compra de bono')
+        console.log('handle compra de bono');
+        console.log('selected bono id:', selectedBonoId);
+        console.log('bonos:', bonos);
+        console.log('quiere comrarp:', bonos[selectedBonoId - 1]);
+        console.log('bearer token:', accessToken)
+        if (!selectedBonoId) {
+            alert('Por favor, seleccione un bono para comprar.');
+            return;
+        }
+        try {
+            var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken,
+                },
+                body: JSON.stringify({ type: 'compra_bono', uuid: bonos[selectedBonoId - 1].uuid }),
+            })
+
+            // Si está expirado o inválido
+            if (response.status === 401) {
+                const newAccessToken = await refreshTokenIfNeeded()
+                if (!newAccessToken) return
+
+                // Reintenta con el nuevo token
+                var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + accessToken,
+                    },
+                    body: JSON.stringify({ type: 'compra_bono', uuid: bonos[selectedBonoId - 1].uuid }),
+                })
+            }
+
+            if (response.ok) {
+                var data = await response.json();
+                console.log('l init point es: ', data.init_point);
+                window.open(data.init_point, "_blank");
+            } else {
+                const errorData = await response.json();
+                console.error('Error comprando el bono, status:', response.status, errorData);
+                alert('Error comprando el bono: ' + (errorData.detail || 'Error desconocido'));
+            }
+        } catch (e) {
+            console.error('Error comprando el bono', e)
+            alert('Error comprando el bono: ' + e.message);
+        }
     }
 
     if (!bonos) {
@@ -69,10 +117,11 @@ export default function CompraDeBonos() {
         )
         )}
         <div >
-            <div style={{display:'flex', flexDirection:'row', justifyContent:'end', width:'100%'}}>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', width: '100%' }}>
 
-                <Button type="button" onClick={handleCompraDeBono} className="mt-2" style={{width:'12rem', height:'4rem', borderRadius
-                    :'3rem', fontSize:'25px', fontWeight:'lighter'
+                <Button type="button" onClick={handleCompraDeBono} className="mt-2" style={{
+                    width: '12rem', height: '4rem', borderRadius
+                        : '3rem', fontSize: '25px', fontWeight: 'lighter'
                 }}>
                     Comprar
                 </Button>
