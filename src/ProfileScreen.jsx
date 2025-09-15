@@ -273,7 +273,7 @@ export default function ProfileScreen() {
 
         );
         const data = await res.json();
-        window.location.href = data.link; // Abrís el link generado por el backend
+        window.open(data.link, "_blank");
     }
 
 
@@ -284,7 +284,7 @@ export default function ProfileScreen() {
 
         );
         const data = await res.json();
-        window.open(data.init_point, "_blank"); // Abrís el link generado por el backend
+        window.open(data.sandbox_init_point, "_blank"); // Abrís el link generado por el backend
     }
     switch (infoDisplay) {
         case "0":
@@ -533,7 +533,7 @@ export default function ProfileScreen() {
                                 style={{
                                     position: "absolute",
                                     top: "0px",  // 👈 sube el texto arriba de la barra
-                                    left: `${(8 / billingInfo.gratuitos_disponibles) * 100}%`,
+                                    left: `${(4 / billingInfo.gratuitos_disponibles) * 100}%`,
                                     transform: "translateX(-50%)", // centra el número en la línea
                                     display: "flex",
                                     flexDirection: "column",
@@ -541,7 +541,7 @@ export default function ProfileScreen() {
                                 }}
                             >
                                 <div style={{ height: "30px", width: "2px", backgroundColor: "red" }} />
-                                <span style={{ fontSize: "20px" }}>8</span>
+                                <span style={{ fontSize: "20px" }}>4</span>
                             </div>
 
                             {/* Marca del máximo */}

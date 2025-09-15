@@ -171,15 +171,15 @@ export default function NavbarPrivate({ name }) {
                 <Container>
                     <Nav className="w-100 justify-content-between">
                         <Nav.Link as={Link} to="/mainlogged" style={{color:'#491a13ff'}}>
-                            inicio
+                            INICIO
                         </Nav.Link>
                         {/* <Nav.Link as={Link} to="/mainlogged" className="text-black">
                             <i className="bi bi-bar-chart-line"></i>
                         </Nav.Link> */}
                         <Nav.Link as={Link} to="/entradas" style={{color:'#491a13ff'}}>
-                            <i className="bi bi-ticket-perforated"></i>                        </Nav.Link>
+                            <i className="bi bi-ticket-perforated"></i>     REVISA TUS TIQUETS                   </Nav.Link>
                         <Nav.Link as={Link} to="/crearEventoChooseOption" style={{color:'#491a13ff'}}>
-                            <i className="bi bi-patch-plus"></i>
+                            <i className="bi bi-patch-plus"></i> CREAR EVENTOS
 
                         </Nav.Link>
 

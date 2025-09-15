@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 
       // Si está expirado o inválido
       if (response.status === 401) {
+        console.log('response 401');
         const newAccessToken = await refreshTokenIfNeeded()
         if (!newAccessToken) return
 
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json()
+        console.log('data: ', data);
         setUserProfile(data)
       } else {
         console.error('No se pudo obtener perfil del usuario, status:', response.status)
