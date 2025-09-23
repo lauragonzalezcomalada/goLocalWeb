@@ -1,5 +1,6 @@
 import { Navbar, Nav } from 'react-bootstrap'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import logo from './assets/golocaltitle.png';
 
 export default function NavbarPublic() {
     return (
@@ -14,7 +15,7 @@ export default function NavbarPublic() {
         >
             <Nav className="w-100 justify-content-between text-white">
                 <Nav.Link as={Link} to="/" className="text-black">
-                    Inicio
+                   <img src={logo} style={{height:'8vh', width:'auto'}} />
                 </Nav.Link>
                 <Nav.Link as={Link} to="/login" className="text-black">
                     Login

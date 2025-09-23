@@ -243,7 +243,7 @@ export default function EntradasPage() {
                                             style={evento.event_imageUrl
                                                 ? {
                                                     minHeight: '12rem',
-                                                    height: '100%',
+                                                    height: '80%',
                                                     width: '100%',
                                                     objectFit: 'cover',
                                                 }

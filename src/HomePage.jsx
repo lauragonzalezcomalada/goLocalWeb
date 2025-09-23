@@ -1,3 +1,7 @@
+
+import screenshot from './assets/goLocalDocs1.png';
+
+
 // HomePage.jsx
 export default function HomePage() {
   return (
@@ -5,7 +9,7 @@ export default function HomePage() {
       style={{
         height: '100vh',
         width: '100vw',
-        backgroundColor: '#007bff',
+     
         overflowY: 'auto',
         color: 'white',
         paddingTop: '56px',
@@ -16,7 +20,11 @@ export default function HomePage() {
         alignItems: 'center',
       }}
     >
-      Espacio central para rellenar luego
+
+      <div style={{height:'80vh', width:'auto', display:'flex', flexAlign:'right'}}>
+       <img src={screenshot} />
+      </div>
+     
     </div>
   )
 }
