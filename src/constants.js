@@ -1,4 +1,4 @@
-export const SERVER_IP = "http://192.168.0.167:8000"
+export const SERVER_IP = import.meta.env.VITE_SERVER_IP
 //export const SERVER_IP = "http://192.168.1.37:8000"
 //export const SERVER_IP = "https://golocalbackend.onrender.com"
 //export const SERVER_IP = "http://192.168.0.93:8000"
