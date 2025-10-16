@@ -1,7 +1,7 @@
 
 
 
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { useContext } from 'react'
@@ -402,7 +402,7 @@ export default function CrearEventoFromScratch() {
     };
 
 
-    return <div style={{/* marginTop: '56px',*/ marginTop:'56px', width: '100%', height: '100%' }}>
+    return <div style={{backgroundColor:backgroundColor, marginTop:'56px', width: '100%', height: '100%' }}>
         <Form /* onSubmit={handleSubmit} */ className="d-flex align-items-center w-100 px-0 mt-3 g-0" style={{ height: '100%' }}>
             <div className="w-50 " style={{ marginLeft: '100px', paddingTop: '50px' }}>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row' }}>
@@ -551,7 +551,7 @@ export default function CrearEventoFromScratch() {
                         onChange={(e) =>
                             setFormData({ ...formData, imagen: e.target.files[0] })
                         }
-                        style={{ maxWidth: '300px' }} // opcional, para que no se agrande mucho
+                        style={{ maxWidth: '300px' }} 
                     />
                 </Form.Group>
                 {formData.tipoEvento === '0' && (

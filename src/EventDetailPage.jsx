@@ -1,7 +1,7 @@
 
 import { IDLE_BLOCKER, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { API_BASE_URL, REFRESH_TOKEN_STORAGE_KEY, TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, backgroundColor, REFRESH_TOKEN_STORAGE_KEY, TOKEN_STORAGE_KEY } from './constants.js'
 import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap'
 import { formatDate } from './helpers.js'
 import { useContext } from 'react'
@@ -226,7 +226,7 @@ export default function EventDetailPage() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#f8f9fa',
+            backgroundColor: backgroundColor,
             position: 'relative'
 
         }}

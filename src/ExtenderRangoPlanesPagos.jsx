@@ -24,48 +24,46 @@ export default function ExtenderRangoPlanesPagos() {
 
     async function handleCompraAmpliacionRango() {
         let rango_seleccionado = rangos.find(r => r.id === selectedAmpliacionId)
-        console.log('rango seleccionado es:', rango_seleccionado)
         let precio_a_pagar = rango_seleccionado.price - precioPagado;
-        console.log('precio a pagar es:', precio_a_pagar)
         try {
-                    var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + accessToken,
-                        },
-                        body: JSON.stringify({ type: 'extend_rango', uuid: rango_seleccionado['uuid'] }),
-                    })
-        
-                    // Si está expirado o inválido
-                    if (response.status === 401) {
-                        const newAccessToken = await refreshTokenIfNeeded()
-                        if (!newAccessToken) return
-        
-                        // Reintenta con el nuevo token
-                        var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + accessToken,
-                            },
-                            body: JSON.stringify({ type: 'extend_rango', uuid: rango_seleccionado['uuid'] }),
-                        })
-                    }
-        
-                    if (response.ok) {
-                        var data = await response.json();
-                        console.log('l init point es: ', data.init_point);
-                        window.open(data.init_point, "_blank");
-                    } else {
-                        const errorData = await response.json();
-                        console.error('Error extendiendo el rango de planes pagos, status:', response.status, errorData);
-                        alert('Error extendiendo el rango de planes pagos, ' + (errorData.detail || 'Error desconocido'));
-                    }
-                } catch (e) {
-                    console.error('Error extendiendo el rango de planes pagos', e)
-                    alert('Error extendiendo el rango de planes pagos: ' + e.message);
-                }
+            var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken,
+                },
+                body: JSON.stringify({ type: 'extend_rango', uuid: rango_seleccionado['uuid'] }),
+            })
+
+            // Si está expirado o inválido
+            if (response.status === 401) {
+                const newAccessToken = await refreshTokenIfNeeded()
+                if (!newAccessToken) return
+
+                // Reintenta con el nuevo token
+                var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + accessToken,
+                    },
+                    body: JSON.stringify({ type: 'extend_rango', uuid: rango_seleccionado['uuid'] }),
+                })
+            }
+
+            if (response.ok) {
+                var data = await response.json();
+                console.log('l init point es: ', data.init_point);
+                window.open(data.init_point, "_blank");
+            } else {
+                const errorData = await response.json();
+                console.error('Error extendiendo el rango de planes pagos, status:', response.status, errorData);
+                alert('Error extendiendo el rango de planes pagos, ' + (errorData.detail || 'Error desconocido'));
+            }
+        } catch (e) {
+            console.error('Error extendiendo el rango de planes pagos', e)
+            alert('Error extendiendo el rango de planes pagos: ' + e.message);
+        }
     }
 
     useEffect(() => {
@@ -95,11 +93,11 @@ export default function ExtenderRangoPlanesPagos() {
         )
     }
     var precioPagado = 0;
-    return <div className="p-5" style={{ marginTop: '56px', width: '100%', height: 'calc(100vh - 56px - 170px)', justifyContent: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    return <div className="p-5" style={{ marginTop: '56px', width: '100%', minHeight: 'calc(100vh - 56px - 170px)', justifyContent: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {rangos.map((rango) => {
             // mostrar solo si end_range_actual es menor al end_range del rango
-            
-            if (rango?.end_range !== null && userProfile?.payment_events_range.end_range >= rango?.end_range) {
+           
+            if (rango?.end_range !== null && userProfile?.payment_events_range !== null && userProfile?.payment_events_range.end_range >= rango?.end_range) {
                 precioPagado = rango.price;
                 return null; // no renderiza nada
             }
@@ -122,15 +120,22 @@ export default function ExtenderRangoPlanesPagos() {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <div className='mx-1' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                       
+                         {userProfile.payment_events_range !== null && (  <s>  {  "$" + Number(rango.price).toLocaleString('es-AR')} </s> )}
+
+                        {userProfile.payment_events_range === null && ( <p className="fs-4 fw-light"> {"$" + Number(rango.price).toLocaleString('es-AR')} </p> )}
                             <span className='fs-4 fw-light'>
-                                <s>  {"$" + Number(rango.price).toLocaleString('es-AR')}</s>
+                              
                             </span>
-                            <span className='fs-3 fw-light'>
+                            {userProfile.payment_events_range !== null && (<span className='fs-3 fw-light'>
                                 {"$" + Number(rango.price - precioPagado).toLocaleString('es-AR')}
-                            </span>
+                            </span>)}
+                            
                         </div>
+                        {userProfile.payment_events_range !== null && (
                         <span className='fw-bolder mt-1' style={{ fontSize: '12px' }}> *Ya pagaste {"$" + Number(precioPagado).toLocaleString('es-AR')} </span>
-                    </div>
+                        )}
+                        </div>
 
 
                     <div>

@@ -1,8 +1,8 @@
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-import logo from './assets/goLocaltitle.png';
-
+import logo from './assets/golocaladmin.png';
+import { API_BASE_URL, backgroundColor, logoColor, orangeColor } from './constants';
 
 export default function NavbarPrivate({ name }) {
 
@@ -85,7 +85,7 @@ export default function NavbarPrivate({ name }) {
                     left: 0,
                     width: '100%',
                     height: '170px', // suma de 100px + 70px
-                    backgroundColor: '#491a13ff',
+                    backgroundColor: orangeColor,
                     zIndex: 1040,
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -104,11 +104,11 @@ export default function NavbarPrivate({ name }) {
                     <button
                         type="button"
                         className="btn btn-outline-secondary"
-                        style={{ width: '300px', color: 'white' }}
+                        style={{ width: '300px', color: 'white', borderRadius:'20px', border:'2px solid' }}
                         onClick={() => navigate('/crearEventoFromScratch')}
                     >
                         <i className="bi bi-plus-lg" style={{ paddingRight: '20px' }}></i>
-                        Crear nuevo evento
+                        <span style={{fontSize:'20px', fontWeight:300}}>  Crear nuevo evento</span>
                     </button>
                 </div>
 
@@ -139,7 +139,7 @@ export default function NavbarPrivate({ name }) {
                         marginRight:'3rem'
                     }}
                 >
-                    🎉 ¡Bienvenido{' '}
+                     ¡Bienvenido{' '}
                     <span
                         onClick={() => navigate('/profileScreen')}
                         style={{
@@ -161,8 +161,8 @@ export default function NavbarPrivate({ name }) {
                 expand="sm"
                 fixed="top"
                 style={{
-                    top: '170px', // Altura del banner
-                    backgroundColor: 'transparent',
+                    top: '170px', 
+                    backgroundColor: backgroundColor,
                     boxShadow: 'none',
                     zIndex: 1030,
                 }}
@@ -170,20 +170,23 @@ export default function NavbarPrivate({ name }) {
             >
                 <Container>
                     <Nav className="w-100 justify-content-between">
-                        <Nav.Link as={Link} to="/mainlogged" style={{color:'#491a13ff'}}>
-                            INICIO
+                        <Nav.Link as={Link} to="/mainlogged" style={{fontSize:'20px',fontWeight:800, color: logoColor, display: 'inline-block', justifyContent:'center', alignItems:'center'}}>
+                       INICIO
                         </Nav.Link>
                         {/* <Nav.Link as={Link} to="/mainlogged" className="text-black">
                             <i className="bi bi-bar-chart-line"></i>
                         </Nav.Link> */}
-                        <Nav.Link as={Link} to="/entradas" style={{color:'#491a13ff'}}>
-                            <i className="bi bi-ticket-perforated"></i>     REVISA TUS TIQUETS                   </Nav.Link>
-                        <Nav.Link as={Link} to="/crearEventoChooseOption" style={{color:'#491a13ff'}}>
-                            <i className="bi bi-patch-plus"></i> CREAR EVENTOS
+                        <Nav.Link as={Link} to="/entradas" style={{ fontSize:'20px',fontWeight:800, color: logoColor, display: 'inline-block', justifyContent:'center', alignItems:'center'}}>
+                            <i className="bi bi-ticket-perforated"></i>    <span style={{marginLeft:'10px'}}>  REVISA TUS TIQUETS  </span>                 </Nav.Link>
+                        <Nav.Link as={Link} to="/crearEventoChooseOption" style={{fontSize:'20px',fontWeight:800,color:logoColor, display: 'inline-block', justifyContent:'center', alignItems:'center'}}>
+                            <i className="bi bi-patch-plus"></i>  <span style={{marginLeft:'10px'}}>  CREAR EVENTOS </span>
+
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/transacciones" style={{fontSize:'20px',fontWeight:800,color:logoColor, display: 'inline-block', justifyContent:'center', alignItems:'center'}}>
+                            <span style={{marginLeft:'10px'}}>  TRANSACCIONES </span>
 
                         </Nav.Link>
 
-                        {/* Podés habilitar este cuando quieras */}
                         {/*
                         <Nav.Link as={Link} to="/login" className="text-black">
                             LoginPrivate

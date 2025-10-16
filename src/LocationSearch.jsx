@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLoadScript, Autocomplete } from '@react-google-maps/api';
-import { GOOGLE_API_KEY } from './constants.js';
 import { Form, Spinner } from 'react-bootstrap';
 
 const libraries = ['places'];
@@ -11,7 +10,7 @@ export default function LocationSearch({ dir, onUbicacionSeleccionada, errorPlac
     const autocompleteRef = useRef(null);
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: GOOGLE_API_KEY,
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
         libraries,
     });
 

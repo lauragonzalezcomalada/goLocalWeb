@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, logoColor, backgroundColor, orangeColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { Container, Form, Offcanvas, ListGroup, Toast, ToastContainer, InputGroup, ProgressBar } from 'react-bootstrap';
@@ -229,7 +229,7 @@ export default function ProfileScreen() {
                     if (!newAccessToken) return // no se pudo refrescar
 
                     // reintentamos con token nuevo
-                    response = await fetch(API_BASE_URL + '/billing_status/' , {
+                    response = await fetch(API_BASE_URL + '/billing_status/', {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                         }
@@ -265,7 +265,28 @@ export default function ProfileScreen() {
 
 
 
+    const _editProfileDate = async (editMode) => {
+        console.log('edit o guardar ?', editMode);
+        //EDIT MODE = FALSE ES QUE S'ACTIVA EL MODE 
+        //EDIT MODE = TRUE ES QUE ES VOL GUARDAR
+        if (editMode === true) {
+            console.log(userData);
+            const res = await fetch(`${API_BASE_URL}/actualizar_usuario/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_uuid: userData['uuid'],location: userData['location'],bio:userData['bio'],telefono:userData['telefono'],email:userData['email'] })
+            }
+            );
+            const data = await res.json();
+            console.log('data: ',data);
 
+
+        }
+        setEditMode(!editMode);
+
+    }
     const handleVincular = async () => {
         const res = await fetch(`${API_BASE_URL}/generate_oauth_mp_link/`, {
             headers: { Authorization: `Bearer ${accessToken}` }
@@ -288,29 +309,29 @@ export default function ProfileScreen() {
     }
     switch (infoDisplay) {
         case "0":
-            content = <Container className="mt-2">
+            content = <Container >
                 <Form>
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
-                        <Form.Label className='mt-2  fs-4 fw-light'>Nombre: </Form.Label>
+                        <Form.Label className=' mt-2 fs-4'>Nombre: </Form.Label>
                         <Form.Control
                             type="text"
                             name="username"
                             value={userData.username}
-                            onChange={handleChange}
-                            readOnly={!editMode}
+    
+                            readOnly={true}
                             style={{
                                 fontWeight: 'lighter',
-                                fontSize: '20px',
+                                fontSize: '25px',
                                 flex: 1,
                                 marginLeft: "1rem",
                                 backgroundColor: "transparent",
-                                border: editMode ? "1px solid #000000ff" : "none"
+                                border: "none"
                             }}
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
-                        <Form.Label className='mt-2  fs-4 fw-light'>Ubicación: </Form.Label>
+                        <Form.Label className='mt-2  fs-4'>Ubicación: </Form.Label>
                         <Form.Control
                             type="text"
                             name="location"
@@ -318,7 +339,7 @@ export default function ProfileScreen() {
                             onChange={handleChange}
                             readOnly={!editMode} style={{
                                 fontWeight: 'lighter',
-                                fontSize: '20px',
+                                fontSize: '25px',
                                 flex: 1,
                                 marginLeft: "1rem",
                                 backgroundColor: "transparent",
@@ -328,16 +349,16 @@ export default function ProfileScreen() {
                     </Form.Group>
 
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
-                        <Form.Label className='mt-2  fs-4 fw-light'>Descripción: </Form.Label>
+                        <Form.Label className='mt-2  fs-4 '>Descripción: </Form.Label>
                         <Form.Control
                             as="textarea"
                             name="bio"
                             value={userData.bio}
-                            rows={4}
+                            rows={3}
                             onChange={handleChange}
                             readOnly={!editMode} style={{
                                 fontWeight: 'lighter',
-                                fontSize: '20px',
+                                fontSize: '25px',
                                 flex: 1,
                                 marginLeft: "1rem",
                                 backgroundColor: "transparent",
@@ -355,7 +376,7 @@ export default function ProfileScreen() {
                     </div>
 
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
-                        <Form.Label className='mt-2  fs-4 fw-light'>Telefono: </Form.Label>
+                        <Form.Label className='mt-2  fs-4'>Telefono: </Form.Label>
                         <Form.Control
                             type="text"
                             name="telefono"
@@ -363,7 +384,7 @@ export default function ProfileScreen() {
                             onChange={handleChange}
                             readOnly={!editMode} style={{
                                 fontWeight: 'lighter',
-                                fontSize: '20px',
+                                fontSize: '25px',
                                 flex: 1,
                                 marginLeft: "1rem",
                                 backgroundColor: "transparent",
@@ -372,7 +393,7 @@ export default function ProfileScreen() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
-                        <Form.Label className='mt-2 fs-4 fw-light'>Email: </Form.Label>
+                        <Form.Label className='mt-2 fs-4'>Email: </Form.Label>
                         <Form.Control
                             type="text"
                             name="email"
@@ -380,7 +401,7 @@ export default function ProfileScreen() {
                             onChange={handleChange}
                             readOnly={!editMode} style={{
                                 fontWeight: 'lighter',
-                                fontSize: '20px',
+                                fontSize: '25px',
                                 flex: 1,
                                 marginLeft: "1rem",
                                 backgroundColor: "transparent",
@@ -393,15 +414,15 @@ export default function ProfileScreen() {
 
                     <Button
                         variant={editMode ? "success" : "primary"}
-                        onClick={() => setEditMode(!editMode)}
-                        style={{ position: 'fixed', right: '40%', borderRadius: '30px', backgroundColor: 'rgba(105, 105, 204, 0.9)' }}
+                        onClick={() => _editProfileDate(editMode)}
+                        style={{ position: 'absolute', right: '40%', bottom: '2vh', borderRadius: '30px', backgroundColor: logoColor, borderColor: 'transparent', lineHeight: 1 }}
                         className='px-5 py-3'
                     >
                         <span className='fs-4 fw-light'> {editMode ? "Guardar" : "Editar"}</span>
                     </Button>
                 </Form>
 
-
+                {/*
                 <Button onClick={handleVincular}>
                     Vincular con Mercado Pago
                 </Button>
@@ -409,7 +430,7 @@ export default function ProfileScreen() {
                 <Button onClick={handleCreateSplitPayment}>
                     Crear split payment
                 </Button>
-
+                */}
 
             </Container>
             break;
@@ -420,7 +441,7 @@ export default function ProfileScreen() {
                     <Form onSubmit={handleSubmitPwdChange} className="p-3">
 
                         <Form.Group className="mb-3 d-flex align-items-center fs-5">
-                            <Form.Label className='mt-2 fw-lighter fs-4'>Contraseña actual: </Form.Label>
+                            <Form.Label className='mt-2 fw-lighter fs-4' style={{softWrap:false}}>Contraseña actual: </Form.Label>
                             <InputGroup>
 
                                 <Form.Control
@@ -429,10 +450,10 @@ export default function ProfileScreen() {
                                     value={formDataPwd.current_password}
                                     onChange={handleChangePwd}
                                     style={{
+                                      
                                         fontWeight: 'lighter',
                                         fontSize: '20px',
                                         flex: 1,
-                                        marginLeft: "1rem",
                                         backgroundColor: "transparent",
                                         border: "1px solid #000000ff",
                                     }}
@@ -489,7 +510,7 @@ export default function ProfileScreen() {
                                 </Button>
                             </InputGroup>
                         </Form.Group>
-                        <Button type="submit" variant="primary" className="px-5 py-3 fs-4 fw-light" style={{ position: 'absolute', bottom: '10%', right: '40%', borderRadius: '30px', backgroundColor: 'rgba(105, 105, 204, 0.9)' }}>Actualizar</Button>
+                        <Button type="submit" variant="primary" className="px-5 py-3 fs-4 fw-light" style={{ position: 'absolute', bottom: '10%', right: '40%', borderRadius: '30px', backgroundColor: logoColor, lineHeight:1, borderColor:'transparent' }}>Actualizar</Button>
                     </Form>
 
                 </div>
@@ -509,7 +530,7 @@ export default function ProfileScreen() {
                         <span className='fs-4 fw-lighter'> Planes gratuitos creados este mes: </span>
 
 
-                        <div style={{ position: "relative", width: '22rem', marginLeft: '2rem' }}>
+                        <div style={{ position: "relative", width: '22rem', marginLeft: '3rem' }}>
 
                             {/* Progress bar */}
                             <div
@@ -518,11 +539,11 @@ export default function ProfileScreen() {
                                 aria-valuenow={billingInfo.gratuitos}
                                 aria-valuemin="0"
                                 aria-valuemax={billingInfo.gratuitos_disponibles}
-                                style={{ height: "30px" }}
+                                style={{ height: "30px",}}
                             >
                                 <div
                                     className="progress-bar"
-                                    style={{ width: `${(billingInfo.gratuitos / billingInfo.gratuitos_disponibles) * 100}%`, fontSize: '20px' }}
+                                    style={{ width: `${(billingInfo.gratuitos / billingInfo.gratuitos_disponibles) * 100}%`, fontSize: '20px' , backgroundColor:orangeColor }}
                                 >
                                     {billingInfo.gratuitos}
                                 </div>
@@ -564,7 +585,7 @@ export default function ProfileScreen() {
                             placement="top" // puede ser: top, right, bottom, left
                             overlay={<Tooltip id="tooltip-top">Compra más bonos de eventos gratuitos</Tooltip>}
                         >
-                            <Button style={{ width: '3rem', height: '3rem', marginLeft: '5rem', borderRadius: '25px' }} onClick={() => navigate("/comprarBono")}>
+                            <Button style={{ width: 'auto', height: '3rem', marginLeft: '5rem', borderRadius: '25px' ,backgroundColor:orangeColor , borderColor:'transparent'}} onClick={() => navigate("/comprarBono")}>
                                 <i className="bi bi-bag-fill"></i>
                             </Button>
                         </OverlayTrigger>
@@ -596,7 +617,7 @@ export default function ProfileScreen() {
                             >
                                 <div
                                     className="progress-bar"
-                                    style={{ width: `${((billingInfo.centralizados - billingInfo.range_centralizados.start_range + 0.4) / (billingInfo.range_centralizados.end_range - billingInfo.range_centralizados.start_range)) * 100}%`, fontSize: '20px' }}
+                                    style={{ width: `${((billingInfo.centralizados - billingInfo.range_centralizados.start_range + 0.4) / (billingInfo.range_centralizados.end_range - billingInfo.range_centralizados.start_range)) * 100}%`, fontSize: '20px', backgroundColor: orangeColor }}
                                 >
                                     {billingInfo.centralizados}
                                 </div>
@@ -657,7 +678,7 @@ export default function ProfileScreen() {
                     {/*Button para extender rango de planes pagos */}
                     <div className="mt-2" style={{ width: '100%', display: 'flex', justifyContent: 'start' }}>
 
-                        <Button className='p-1 px-4 py-2' style={{ borderRadius: '40px' }} onClick={() => navigate('/extendRangoPlanesPagos', { state: { end_range_actual: billingInfo.range_centralizados.end_range } })}>
+                        <Button className='p-1 px-4 py-2' style={{ borderRadius: '40px' , backgroundColor:orangeColor, borderColor:'transparent'}} onClick={() => navigate('/extendRangoPlanesPagos', { state: { end_range_actual: billingInfo.range_centralizados.end_range } })}>
 
                             <span className='fs-5 fw-lighter'>Ampliar rango de planes pagos </span>
                         </Button>
@@ -718,24 +739,46 @@ export default function ProfileScreen() {
 
 
                     </div>
-                    <div className='fs-5 fw-lighter ms-2 me-1 mt-5' style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className='fs-5 fw-lighter ms-2 me-1 mt-5' style={{ display: 'flex', flexDirection: 'row'}}>
 
-                        Estado: <em> {billingInfo.estado}</em>
+                        Estado: <b style={{marginLeft: '20px'}}> {billingInfo.estado}</b>
 
-                      
-                        <Button className ="ms-5" onClick={() => window.open(`${API_BASE_URL}/export-pagos-excel?current_month=${currentMonth}`, "_blank")}>
+
+                        <Button
+                            className="ms-5"
+                            onClick={async () => {
+                                console.log('clicked descargar excel button');
+
+                                const url = `${API_BASE_URL}/export-pagos-excel?current_month=${currentMonth}`;
+
+                                const response = await fetch(url, {
+                                    method: "GET",
+                                    headers: {
+                                        Authorization: `Bearer ${accessToken}`,
+                                    },
+                                });
+
+                                const blob = await response.blob();
+                                const downloadUrl = window.URL.createObjectURL(blob);
+                                const link = document.createElement("a");
+                                link.href = downloadUrl;
+                                link.download = `pagos_${currentMonth}.xlsx`;
+                                link.click();
+                            }}
+                            style={{fontSize:'20px', borderRadius:'20px' ,backgroundColor: logoColor, borderColor:'transparent'}}
+                        >
                             Descargar Excel
                         </Button>
 
-                       
+
 
                     </div>
-                    {billingInfo.mostrar_boton_planificacion === true && (<div style={{display:'flex', flexDirection:'row', justifyContent:'end', width:'100%'}}>
-                         <Button className ="ms-5" style={{height:'5rem', width:'20rem', borderRadius:'40px'}} onClick={() => manageContentDisplay("3")}>
+                    {billingInfo.mostrar_boton_planificacion === true && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', width: '100%' }}>
+                        <Button className="ms-5" style={{ height: '5rem', width: '20rem', borderRadius: '40px' }} onClick={() => manageContentDisplay("3")}>
                             <span className='fs-4 fw-lighter'> Crear planificación para el mes que viene</span>
                         </Button>
                     </div>)}
-                    
+
 
                 </div>
 
@@ -748,7 +791,7 @@ export default function ProfileScreen() {
 
 
     }
-    return <div style={{ marginTop: '56px', width: '100%', height: '100%', }}>
+    return <div style={{ marginTop: '40px', width: '100%', height: '100%', backgroundColor:backgroundColor}}>
         <div
             style={{
                 height: 'calc(100vh - 56px - 170px)',
@@ -778,7 +821,7 @@ export default function ProfileScreen() {
 
                     {/* Offcanvas Menu */}
                     <Offcanvas show={showMenu} onHide={handleCloseMenu} placement="start" style={{ height: '100%' }}>
-                        <Offcanvas.Header closeButton>
+                        <Offcanvas.Header closeButton style={{ backgroundColor:backgroundColor, fontSize:'30px'}}>
                         </Offcanvas.Header>
                         <Offcanvas.Body style={{
                             display: 'flex',
@@ -786,19 +829,20 @@ export default function ProfileScreen() {
                             alignItems: 'center', // Centra horizontalmente
                             justifyContent: 'center', // Centra verticalmente
                             padding: 0
+                            ,backgroundColor:backgroundColor
                         }}>
                             <ListGroup variant="flush">
-                                <ListGroup.Item action value="0" onClick={() => manageContentDisplay("0")} style={{ fontSize: '30px', fontWeight: 'lighter' }}>
-                                    Información general
+                                <ListGroup.Item action value="0" onClick={() => manageContentDisplay("0")} style={{ fontSize: '35px',  backgroundColor:'transparent' , color:logoColor}}>
+                                    INFORMACIÓN GENERAL
                                 </ListGroup.Item>
-                                <ListGroup.Item action value="1" onClick={() => manageContentDisplay("1")} style={{ fontSize: '30px', fontWeight: 'lighter' }}>
-                                    Cambiar contraseña
+                                <ListGroup.Item action value="1" onClick={() => manageContentDisplay("1")} style={{ fontSize: '35px',  backgroundColor:'transparent' , color:logoColor}}>
+                                    CAMBIAR CONTRASEÑA
                                 </ListGroup.Item>
-                                <ListGroup.Item action value="2" onClick={() => manageContentDisplay("2")} style={{ fontSize: '30px', fontWeight: 'lighter' }}>
-                                    Mi plan de facturación
+                                <ListGroup.Item action value="2" onClick={() => manageContentDisplay("2")} style={{ fontSize: '35px', backgroundColor:'transparent', color:logoColor }}>
+                                    MI PLAN DE FACTURACIÓN
                                 </ListGroup.Item>
-                                <ListGroup.Item action value="3" onClick={() => { logout(); }} style={{ fontSize: '30px', fontWeight: 'lighter' }}>
-                                    Cerrar sesión
+                                <ListGroup.Item action value="3" onClick={() => { logout(); }} style={{ fontSize: '35px',  backgroundColor:'transparent' , color:logoColor}}>
+                                    CERRAR SESIÓN
                                 </ListGroup.Item>
                             </ListGroup>
                         </Offcanvas.Body>
@@ -815,13 +859,17 @@ export default function ProfileScreen() {
 
 
             </div>
-            <div className="col-md-4" style={{ height: '100%' }}>
+            <div className="col-md-4" style={{ height: '100%', display:'flex', justifyContent:'center', alignItems:'center',}}>
 
                 <img src={userData['image'] ? userData['image'] : soloCarita} style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: userData['image'] ? 'cover' : 'scale-down' , // rellena y recorta si es necesario
+                  
+                    height: '500px',
+                    width:'500px',
+                    objectFit: userData['image'] ? 'cover' : 'scale-down', // rellena y recorta si es necesario
                     display: 'block'
+                    ,
+                    borderRadius:'500px',
+                     border: '5px solid'+logoColor
                 }} />
 
             </div>
@@ -837,6 +885,7 @@ export default function ProfileScreen() {
                     onClose={() => setToast({ ...toast, show: false })}
                     delay={3000} // 3 segundos
                     autohide
+
                 >
                     <Toast.Body className="text-white text-center fs-6">
                         {toast.message}

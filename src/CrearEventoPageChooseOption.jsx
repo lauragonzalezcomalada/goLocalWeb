@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, orangeColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { Container, Card } from 'react-bootstrap';
@@ -55,14 +55,14 @@ export default function CrearEventoPageChooseOption() {
 
     }, [accessToken])
 
-    return <div style={{ marginTop: '56px', width: '100%', height: '100%', backgroundColor: 'rgba(255,255,0,1)' }}>
+    return <div style={{ marginTop: '56px', width: '100%', height: '100%', backgroundColor: backgroundColor }}>
         <div
             style={{
-                height: 'calc(100vh - 56px - 170px)', // 100vh menos margen arriba menos navbar total
+                height: 'calc(100vh - 56px - 170px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
+          
                 width: '100%',
             }}
         >
@@ -107,13 +107,13 @@ export default function CrearEventoPageChooseOption() {
                                 style={{
                                     height:'4rem',
                                     width:'80%',
-                                    borderRadius:'10px',
-                                                              border: '3px solid #000000',
+                                    borderRadius:'20px',
+                                                              border: '3px solid #FA7239',
                                                               display:'flex',
                                                               alignItems:'center',
                                                               justifyContent:'center',
                                                               marginTop:'1rem',
-                                                              backgroundColor:'#FA7239'
+                                                              backgroundColor:orangeColor
 
                                 }}
 

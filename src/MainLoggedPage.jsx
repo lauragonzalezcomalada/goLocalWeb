@@ -1,6 +1,6 @@
 // HomePage.jsx
 
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
 import { Container, Card, Button } from 'react-bootstrap';
@@ -120,7 +120,7 @@ export default function MainLoggedPage() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#f8f9fa',
+                backgroundColor:backgroundColor,
                 position: 'relative'
 
             }}

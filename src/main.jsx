@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import { AuthProvider } from './AuthContext'
 
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 
 createRoot(document.getElementById('root')).render(

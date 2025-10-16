@@ -12,6 +12,46 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@font-face {
+  font-family: 'BarlowCondensed';
+  src: 
+       url('./assets/fonts/BarlowCondensed/BarlowCondensed-Regular.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BarlowCondensed';
+  src: 
+       url('./assets/fonts/BarlowCondensed/BarlowCondensed-Medium.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BarlowCondensed';
+  src: 
+       url('./assets/fonts/BarlowCondensed/BarlowCondensed-Light.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BarlowCondensed';
+  src: 
+       url('./assets/fonts/BarlowCondensed/BarlowCondensed-Bold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BarlowCondensed';
+  src: 
+       url('./assets/fonts/BarlowCondensed/BarlowCondensed-ExtraBold.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 a {
   font-weight: 500;
@@ -23,6 +63,7 @@ a:hover {
 }
 
 body {
+  font-family: 'BarlowCondensed' !important;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -40,12 +81,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #fa503f;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #FA5039;
 }
 button:focus,
 button:focus-visible {
@@ -64,3 +105,5 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
