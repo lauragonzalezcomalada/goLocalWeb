@@ -29,8 +29,7 @@ export default function HomePage() {
         display: 'flex',
         flexDirection: 'column',     
         alignItems: 'stretch',
-        position: 'relative',
-        overflowX: 'hidden',    
+        position: 'relative',  
         color:logoColor    
       }}
     > 

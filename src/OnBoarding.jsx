@@ -182,7 +182,6 @@ export default function LoginPage() {
                                 height: '56px',
                                 borderRadius: '10px',
                                 boxSizing: 'border-box',
-                                fontSize: '30px',
                                 fontWeight: 300,
                                 border: '2px solid ' + logoColor,
                                 selectedBorderColor: logoColor,
