@@ -16,10 +16,12 @@ export default function LoginPage() {
 
 
   const handleSubmit = async (e) => {
+  
     e.preventDefault()
     setError(null)
     try {
       //aquest login es el login de authcontext
+   
       await login(username, password)
       navigate('/mainlogged')
     } catch (e) {
@@ -81,14 +83,13 @@ export default function LoginPage() {
                 lineHeight: 0
               }}
             >
-              {showPwd ? <i class="bi bi-eye-slash fs-4" style={{color:logoColor}}></i> : <i class="bi bi-eye fs-4"  style={{color:logoColor}}></i>
+              {showPwd ? <i className="bi bi-eye-slash fs-4" style={{color:logoColor}}></i> : <i className="bi bi-eye fs-4"  style={{color:logoColor}}></i>
               }
             </button>
           </div>
         </div>
         <button className="mt-3" type="submit" style={{ justifyContent: 'center', padding: '0.5rem', fontSize: '30px', color: 'white', fontWeight: 900, backgroundColor: logoColor, borderRadius: '20px', border: '2px solid' + logoColor }} >ENTRÁ!</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}            </form>
-          <button className="mt-3" onClick={navigate('/recoverPwd')} style={{ justifyContent: 'center', padding: '0.5rem', fontSize: '20px', color: logoColor, fontWeight: 400, backgroundColor: backgroundColor, borderRadius:'20px'}}>¿Olvidaste tu contraseña?</button>
 
     </div>
 
@@ -97,3 +98,6 @@ export default function LoginPage() {
 }
 
 
+
+{/*          <button className="mt-3" onClick={navigate('/recoverPwd')} style={{ justifyContent: 'center', padding: '0.5rem', fontSize: '20px', color: logoColor, fontWeight: 400, backgroundColor: backgroundColor, borderRadius:'20px'}}>¿Olvidaste tu contraseña?</button>
+*/}

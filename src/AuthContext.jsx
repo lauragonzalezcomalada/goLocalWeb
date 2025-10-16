@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('data: ', data);
         setUserProfile(data)
       } else {
         console.error('No se pudo obtener perfil del usuario, status:', response.status)
@@ -69,7 +68,6 @@ export const AuthProvider = ({ children }) => {
 
   //FUNCIÓ DE LOGIN QUE POT SER REUTILITZADA
   const login = async (username, password) => {
-
     const response = await fetch(`${API_BASE_URL}/token/`, {
       method: 'POST',
       headers: {
@@ -77,7 +75,6 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username, password }),
     })
-
     if (!response.ok) throw new Error('Login inválido')
 
     const data = await response.json()
