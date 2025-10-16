@@ -9,13 +9,8 @@ import icon from './assets/icon.png'
 
 import { logoColor } from './constants';
 
-export default function HomePage() {
+export default function ToMobileApp() {
 
-  const [showTextUno, setShowTextUno] = useState(false);
-  const [showTextDos, setShowTextDos] = useState(false);
-  const [showTextTres, setShowTextTres] = useState(false);
-
-    const navigate = useNavigate();
 
   return (
 <div
@@ -30,7 +25,7 @@ export default function HomePage() {
         flexDirection: 'column',     
         alignItems: 'stretch',
         position: 'relative',  
-        color:logoColor    
+      
       }}
     > 
       <div>

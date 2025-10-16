@@ -1,7 +1,6 @@
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-//import logo from './assets/goLocaltitle.png';
 import logo from './assets/golocaladmin.png';
 import { API_BASE_URL, backgroundColor, logoColor, orangeColor } from './constants';
 
