@@ -1,3 +1,4 @@
+import { backgroundColor } from './constants';
 import EditableReservaCard from './EditableReservaCard';
 import { useLocation } from 'react-router-dom'
 
@@ -14,6 +15,7 @@ export default function ReservaTypeDetail() {
     return <div 
       className="d-flex justify-content-center align-items-center" 
       style={{ 
+        backgroundColor:backgroundColor,
         width: '100%', 
         minHeight: 'calc(100vh - 56px - 170px)' // altura total menos el margin-top
       }}

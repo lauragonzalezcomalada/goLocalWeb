@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
-import { API_BASE_URL } from './constants';
+import { API_BASE_URL, backgroundColor, logoColor } from './constants';
 import DateCard from './DateCard';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
@@ -56,7 +56,7 @@ export default function EditableEntradaCard({ initialData }) {
   };
 
   return (
-    <Card className="m-3 p-0" style={{ height: '400px', width: '100%', borderRadius: '1rem', overflow: 'hidden' }}>
+    <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden' , backgroundColor:backgroundColor}}>
       <Card.Body className='p-0' style={{ height: '400px' }}>
         {!editMode ? (
           <>
@@ -104,7 +104,6 @@ export default function EditableEntradaCard({ initialData }) {
                 </div>
               </div>
 
-              {/*aquí comença la part de descripció de l'entrada*/}
               <div className='col-md-8' style={{ backgroundColor: 'rgba(189, 125, 125, 1)' }}>
                 <div className='d-flex p-5 mt-5' style={{ height: '100%' }}>
                   <div style={{ flex: 2 }}>
@@ -143,8 +142,13 @@ export default function EditableEntradaCard({ initialData }) {
         ) : (
           <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100 px-2 mt-3" style={{ height: '100%' }}>
             <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1' }}>
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
+              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Nombre</Form.Label>
+              <Form.Control style={{
+    borderWidth: '2px',         
+    borderColor: logoColor,       
+    borderStyle: 'dotted',    
+  }}
+              className='fs-4 fw-light'
                 type="text"
                 name="nombre"
                 value={formData.nombre}
@@ -153,8 +157,13 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label>Descripción</Form.Label>
-              <Form.Control
+              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Descripción</Form.Label>
+              <Form.Control style={{
+    borderWidth: '2px',         
+    borderColor: logoColor,       
+    borderStyle: 'dotted',    
+  }}
+                className='fs-4 fw-light'
                 as="textarea"
                 name="descripcion"
                 rows={1}
@@ -163,8 +172,13 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label>Precio</Form.Label>
-              <Form.Control
+              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Precio</Form.Label>
+              <Form.Control style={{
+    borderWidth: '2px',         
+    borderColor: logoColor,       
+    borderStyle: 'dotted',    
+  }}
+                className='fs-4 fw-light'
                 type="number"
                 name="precio"
                 value={formData.precio}
@@ -172,8 +186,14 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label>Disponibles</Form.Label>
+              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Disponibles</Form.Label>
               <Form.Control
+              style={{
+    borderWidth: '2px',         
+    borderColor: logoColor,       
+    borderStyle: 'dotted',    
+  }}
+                className="fs-4 fw-light"
                 type="number"
                 name="disponibles"
                 value={formData.disponibles}
@@ -182,10 +202,10 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <div className="d-flex gap-2 px-3">
-              <Button type="submit" variant="success">
+              <Button type="submit" variant="success" className="fs-3 fw-lighter"style={{width: '20vw', height:'7vh', borderRadius:'20px', borderColor:'transparent', backgroundColor: logoColor}}>
                 Guardar
               </Button>
-              <Button variant="secondary" onClick={() => setEditMode(false)}>
+              <Button variant="secondary" className="fs-3 fw-lighter" style={{width: '20vw', height:'7vh', borderRadius:'20px', borderColor:'transparent'}} onClick={() => setEditMode(false)}>
                 Cancelar
               </Button>
             </div>

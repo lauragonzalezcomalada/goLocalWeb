@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
-import { API_BASE_URL } from './constants';
+import { API_BASE_URL, backgroundColor } from './constants';
 import DateCard from './DateCard';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
@@ -94,7 +94,7 @@ export default function Reserva({ initialData }) {
     };
 
     return (
-        <Card className="m-3 p-0" style={{ height: '400px', width: '100%', borderRadius: '1rem', overflow: 'hidden' }}>
+        <Card className="m-3 p-0" style={{ height: '400px', width: '100%', borderRadius: '1rem', overflow: 'hidden', backgroundColor:backgroundColor }}>
             <Card.Body className='p-0' style={{ height: '400px' }}>
                 {!editMode ? (
                     <>

@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
 import { Container, Card, Button } from 'react-bootstrap';
@@ -191,6 +191,7 @@ export default function EntradasPage() {
         } catch (error) { console.log(error) }
     }
 
+
     function fetchEntradaTypeDetail(entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image) {
         navigate('/entradaDetail', { state: { entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image } })
     }
@@ -212,16 +213,17 @@ export default function EntradasPage() {
         )
     }
 
-    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto' }}>
+    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto', backgroundColor: backgroundColor }}>
         {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
-            return (<div> <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                margin: '2rem 2rem'
-            }}>
-                <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
-                <span className="fw-bold" style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '20px' }}>{fecha}</span>
-            </div>
+            return (<div>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    margin: '2rem 2rem'
+                }}>
+                    <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
+                    <span style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>{fecha}</span>
+                </div>
                 {listaEntradas?.map((evento, index) => {
                     if (evento.tracking_tipo === 0) { //plan con entradas
                         var anchoColumna = Math.max(1, Math.floor((12 - 3) / evento.entradas.length));
@@ -233,7 +235,7 @@ export default function EntradasPage() {
                     }
 
                     return (<>
-                        <div key={evento.event_uuid} className="card mx-3 mb-1">
+                        <div key={evento.event_uuid} className="card mx-3 mb-1" style={{ borderRadius: '20px' }}>
                             <div className="row g-0">
                                 <div className="col-md-2">
                                     <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }}>
@@ -319,8 +321,6 @@ export default function EntradasPage() {
                                 {/*evento con reservas*/}
                                 {evento.tracking_tipo === 1 &&
                                     evento.reservas?.map((reserva, i) => {
-                                        console.log('tracking_tipo 1');
-
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, evento.event_imageUrl)}>
                                             <div className="card" style={{ width: '100%', height: '100%', color: '#491a13ff' }}>
                                                 <div className="card-body d-flex align-items-center">
@@ -527,7 +527,7 @@ export default function EntradasPage() {
                                     ticketsVendidos[evento.event_uuid].type === 0 ? (
                                         <table className="table table-hover">
                                             <thead>
-                                                <tr>
+                                                <tr style={{ fontSize: '20px' }}>
                                                     <th></th>
                                                     <th>Nombre</th>
                                                     <th>Email</th>
@@ -539,7 +539,7 @@ export default function EntradasPage() {
                                             </thead>
                                             <tbody>
                                                 {ticketsVendidos[evento.event_uuid].data?.map((ticket, index) => (
-                                                    <tr key={ticket.id}>
+                                                    <tr key={ticket.id} style={{ fontSize: '20px', fontWeight: 300 }} >
                                                         <td>{index + 1}</td>
                                                         <td>{ticket.nombre}</td>
                                                         <td>{ticket.email}</td>
@@ -549,7 +549,10 @@ export default function EntradasPage() {
                                                                 : "-"}
                                                         </td>
                                                         <td>{'$' + Number(ticket.precio).toLocaleString('es-AR')}</td>
-                                                        <td>{ticket.status === 0 ? 'No' : 'Sí'}</td>
+                                                        <td>
+                                                            <input className="form-check-input p-3" type="checkbox" checked={ticket.status === 1} id="checkDefault" style={{ accentColor: '#red' }} /*onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)}*/ />
+                                                        </td>
+
                                                         <td>
                                                             <a
                                                                 href={API_BASE_URL + ticket.qr_code}
@@ -570,7 +573,7 @@ export default function EntradasPage() {
                                             Object.entries(ticketsVendidos[evento.event_uuid].data.data)?.map(([nombreFormulario, reservas]) => (
                                                 <div key={nombreFormulario} style={{ marginBottom: '2rem' }}>
                                                     {/* Título del grupo */}
-                                                    <h5>{nombreFormulario}</h5>
+                                                    <h3>{nombreFormulario}</h3>
                                                     {reservas.length > 0 && (
                                                         <table
                                                             key={nombreFormulario}
@@ -578,7 +581,7 @@ export default function EntradasPage() {
                                                             style={{ tableLayout: 'fixed', width: '100%' }}
                                                         >
                                                             <thead>
-                                                                <tr>
+                                                                <tr style={{ fontSize: '20px' }}>
                                                                     {Object.keys(reservas[0].values)?.map((campo, idx) => (
                                                                         <th className="text-uppercase" key={idx}>{campo}</th>
                                                                     ))}
@@ -587,7 +590,7 @@ export default function EntradasPage() {
                                                             </thead>
                                                             <tbody>
                                                                 {reservas?.map((reserva, idx) => (
-                                                                    <tr key={idx}>
+                                                                    <tr key={idx} style={{ fontSize: '20px', fontWeight: 300 }}>
                                                                         {Object.values(reserva.values)?.map((valor, i) => (
                                                                             <td className="text-uppercase" key={i}>{valor}</td>
                                                                         ))}

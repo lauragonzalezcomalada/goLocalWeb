@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { backgroundColor, logoColor } from './constants';
 
 export default function CreadorEntradas({ onGuardar }) {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ export default function CreadorEntradas({ onGuardar }) {
       style={{
         border: '1px solid #ccc',
         borderRadius: '10px',
-        background: '#f9f9f9c8',
+        backgroundColor: backgroundColor,
         width: '95%',
       
       }}
