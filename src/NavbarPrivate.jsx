@@ -108,7 +108,7 @@ export default function NavbarPrivate({ name }) {
                         onClick={() => navigate('/crearEventoFromScratch')}
                     >
                         <i className="bi bi-plus-lg" style={{ paddingRight: '20px' }}></i>
-                        <span style={{fontSize:'20px', fontWeight:300}}>  Crear nuevo evento</span>
+                        <span style={{fontSize:'20px', fontWeight:800}}>  CREAR NUEVO EVENTO</span>
                     </button>
                 </div>
 
@@ -134,25 +134,26 @@ export default function NavbarPrivate({ name }) {
                         display: 'flex',
                         alignItems: 'flex-end', // alineado abajo
                         color: 'white',
-                        fontSize: '30px',
-                        fontWeight: 'lighter',
+                        fontSize: '25px',
+                        fontWeight: 900,
                         marginRight:'3rem'
                     }}
                 >
-                     ¡Bienvenido{' '}
+                     ¡BIENVENIDO{' '}
                     <span
                         onClick={() => navigate('/profileScreen')}
                         style={{
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             marginLeft: '0.5rem',
+                            fontSize:'30px'
                         }}
                         onMouseOver={(e) => (e.target.style.color = 'red')}
                         onMouseOut={(e) => (e.target.style.color = 'white')}
                     >
-                        {name}
+                        {name}!
                     </span>
-                    !
+                    
                 </div>
             </div>
 

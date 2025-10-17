@@ -1,6 +1,6 @@
 import { Card, Button, Form, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react'
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, logoColor } from './constants.js'
 
 
 export default function CamposForm({ campo, setCampo, onAgregar }) {
@@ -55,7 +55,7 @@ export default function CamposForm({ campo, setCampo, onAgregar }) {
     };
 
     return (
-        <div className="p-3 border rounded mb-3">
+        <div className="p-3 mb-3">
             <Form.Group className="mb-3">
                 <Form.Label>Tipo</Form.Label>
                 <Form.Select name="uuid" value={campo.uuid} onChange={handleChange}>
@@ -64,8 +64,8 @@ export default function CamposForm({ campo, setCampo, onAgregar }) {
                 </Form.Select>
             </Form.Group>
 
-            <Button type="button" onClick={agregarCampo} className="mt-2">
-                Añadir campo
+            <Button type="button" onClick={agregarCampo} className="mt-2" style={{borderRadius:'20px', backgroundColor:logoColor, borderColor:'transparent'}}>
+                AÑADIR CAMPO
             </Button>
         </div>
     );

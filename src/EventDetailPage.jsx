@@ -132,8 +132,6 @@ export default function EventDetailPage() {
             })
             var data = await response.json()
             if (response.status === 401) {
-                console.log('status 401')
-
                 await refreshTokenIfNeeded()
                 try {
 

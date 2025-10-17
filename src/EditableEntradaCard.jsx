@@ -40,9 +40,30 @@ export default function EditableEntradaCard({ initialData }) {
           Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',
         }, body: JSON.stringify({ uuid: formData.uuid, event_type: formData.tipo, titulo: formData.nombre, descripcion: formData.descripcion, disponibles: formData.disponibles, precio: formData.precio })
       });
+      var data = await response.json()
+
+      if (response.status === 401) {
+              console.log('response 401');
+              const newAccessToken = await refreshTokenIfNeeded()
+              if (!newAccessToken) return
+      
+              // Reintenta con el nuevo token
+              response = await fetch(`${API_BASE_URL}/update_entrada/`, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',
+                }, body: JSON.stringify({ uuid: formData.uuid, event_type: formData.tipo, titulo: formData.nombre, descripcion: formData.descripcion, disponibles: formData.disponibles, precio: formData.precio })
+              });
+
+              if(response.ok){
+                data = await response.json()
+              }
+              
+            }
+      
+
       if (!response.ok) throw new Error('Error al actualizar entrada');
 
-      var data = await response.json()
       setFormData({
         ...formData,
         max_disponibilidad: data.max_disponibilidad,

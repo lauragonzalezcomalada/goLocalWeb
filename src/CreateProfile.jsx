@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor } from './constants'
 
 
 export default function LoginPage() {
@@ -50,7 +50,6 @@ export default function LoginPage() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Formulario válido ✅", { email, password });
       setErrors({});
       const response = await fetch(`${API_BASE_URL}/signIn/`, {
         method: 'POST',
@@ -86,6 +85,7 @@ export default function LoginPage() {
     <div
       style={{
         minHeight: 'calc(100vh - 18vh)',
+        backgroundColor:backgroundColor,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -105,17 +105,17 @@ export default function LoginPage() {
         flexDirection: 'column',
         gap: '1rem',
       }}>
-        <h3 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>CREATE PROFILE</h3>
+        <h3 style={{ marginBottom: '1.5rem', textAlign: 'center', fontSize: '40px', color: logoColor, fontWeight: 900 }}>CREAR PERFIL</h3>
 
         <div className="mb-3">
-          <label>Nombre:</label>
+          <label style={{ color: logoColor, fontSize: '30px', fontWeight: 800 }}>NOMBRE:</label>
           <input value={username} onChange={e => setUsername(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
           {errors.name && (
             <small style={{ color: "red" }}>{errors.name}</small>
           )}
         </div>
         <div className="mb-3">
-          <label>Email:</label>
+          <label style={{ color: logoColor, fontSize: '30px', fontWeight: 800 }}>EMAIL:</label>
           <input value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
           {errors.email && (
             <small style={{ color: "red" }}>{errors.email}</small>
@@ -123,7 +123,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mb-3">
-          <label>Contraseña:</label>
+          <label style={{ color: logoColor, fontSize: '30px', fontWeight: 800 }}>CONTRASEÑA:</label>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
           {errors.password && (
             <small style={{ color: "red" }}>{errors.password}</small>
@@ -131,14 +131,14 @@ export default function LoginPage() {
         </div>
 
         <div className="mb-3">
-          <label>Confirma la contraseña:</label>
+          <label style={{ color: logoColor, fontSize: '30px', fontWeight: 800 }}>CONFIRMA LA CONTRASEÑA:</label>
           <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
           {errors.confirmPassword && (
             <small style={{ color: "red" }}>{errors.confirmPassword}</small>
           )}
         </div>
 
-        <button className="mt-3" type="submit" style={{ justifyContent: 'center', padding: '0.5rem' }} >CREA TU CUENTA</button>
+        <button className="mt-3" type="submit"  style={{ justifyContent: 'center', padding: '0.5rem', fontSize: '30px', color: 'white', fontWeight: 900, backgroundColor: logoColor, borderRadius: '20px', border: '2px solid' + logoColor }} >CREÁ TU CUENTA</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}            </form>
     </div>
 

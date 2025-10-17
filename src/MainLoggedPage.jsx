@@ -45,7 +45,7 @@ export default function MainLoggedPage() {
                         data = await response.json()
                     }
                 }
-                // if (!response.ok) throw new Error('No autorizado o error')
+
                 setUserProfile(data)  // Guarda el perfil en el estado
             } catch (e) {
                 console.error('Error fetching user profile', e)

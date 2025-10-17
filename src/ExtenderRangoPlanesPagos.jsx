@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 import { IDLE_BLOCKER, useLocation } from 'react-router-dom'
 import { Card, Button, Form } from 'react-bootstrap';
-import { API_BASE_URL } from './constants';
+import { API_BASE_URL, backgroundColor, logoColor } from './constants';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import { startOfDay } from 'date-fns';
 
+import ojitos_gif from './assets/ojitos.gif';
 
 export default function ExtenderRangoPlanesPagos() {
 
 
+    const [isLoading, setIsLoading] = useState(false);
 
     const location = useLocation()
     const { accessToken, userProfile, refreshTokenIfNeeded } = useContext(AuthContext)
@@ -26,6 +28,7 @@ export default function ExtenderRangoPlanesPagos() {
         let rango_seleccionado = rangos.find(r => r.id === selectedAmpliacionId)
         let precio_a_pagar = rango_seleccionado.price - precioPagado;
         try {
+            setIsLoading(true);
             var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
                 method: 'POST',
                 headers: {
@@ -35,12 +38,10 @@ export default function ExtenderRangoPlanesPagos() {
                 body: JSON.stringify({ type: 'extend_rango', uuid: rango_seleccionado['uuid'] }),
             })
 
-            // Si está expirado o inválido
             if (response.status === 401) {
                 const newAccessToken = await refreshTokenIfNeeded()
                 if (!newAccessToken) return
 
-                // Reintenta con el nuevo token
                 var response = await fetch(API_BASE_URL + '/crear_compra_simple/', {
                     method: 'POST',
                     headers: {
@@ -63,6 +64,8 @@ export default function ExtenderRangoPlanesPagos() {
         } catch (e) {
             console.error('Error extendiendo el rango de planes pagos', e)
             alert('Error extendiendo el rango de planes pagos: ' + e.message);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -93,49 +96,49 @@ export default function ExtenderRangoPlanesPagos() {
         )
     }
     var precioPagado = 0;
-    return <div className="p-5" style={{ marginTop: '56px', width: '100%', minHeight: 'calc(100vh - 56px - 170px)', justifyContent: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    return <div className="p-5" style={{ marginTop: '56px', width: '100%', backgroundColor: backgroundColor, minHeight: 'calc(100vh - 56px - 170px)', justifyContent: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {rangos.map((rango) => {
             // mostrar solo si end_range_actual es menor al end_range del rango
-           
+
             if (rango?.end_range !== null && userProfile?.payment_events_range !== null && userProfile?.payment_events_range.end_range >= rango?.end_range) {
                 precioPagado = rango.price;
                 return null; // no renderiza nada
             }
             return (
                 <div key={rango.id} className="p-5" style={{
-                    border: '1px solid rgba(0, 0, 0, 0.9)',
+                    border: '3px solid ' + logoColor,
                     borderRadius: '30px',
-                    height: '8rem',
+                    height: '10rem',
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                        {rango.end_range ? <span className='fs-3 fw-lighter'>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: logoColor, fontWeight: 400 }}>
+                        {rango.end_range ? <span className='fs-3'>
                             Mejora tu plan hasta <strong> {rango.end_range} </strong>eventos
-                        </span> : <span className='fs-3 fw-lighter'> Mejora tu plan y obtén eventos <strong>ilimitados</strong></span>}
+                        </span> : <span className='fs-3 '> Mejora tu plan y obtén eventos <strong>ilimitados</strong></span>}
 
 
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div className='mx-1' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                       
-                         {userProfile.payment_events_range !== null && (  <s>  {  "$" + Number(rango.price).toLocaleString('es-AR')} </s> )}
+                        <div className='mx-1' style={{ display: 'flex', fontWeight: 800, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: logoColor }}>
 
-                        {userProfile.payment_events_range === null && ( <p className="fs-4 fw-light"> {"$" + Number(rango.price).toLocaleString('es-AR')} </p> )}
+                            {userProfile.payment_events_range !== null && (<s>  {"$" + Number(rango.price).toLocaleString('es-AR')} </s>)}
+
+                            {userProfile.payment_events_range === null && (<p className="fs-3 fw-light"> {"$" + Number(rango.price).toLocaleString('es-AR')} </p>)}
                             <span className='fs-4 fw-light'>
-                              
+
                             </span>
-                            {userProfile.payment_events_range !== null && (<span className='fs-3 fw-light'>
+                            {userProfile.payment_events_range !== null && (<span className='fs-2' style={{ fontWeight: 900 }}>
                                 {"$" + Number(rango.price - precioPagado).toLocaleString('es-AR')}
                             </span>)}
-                            
+
                         </div>
                         {userProfile.payment_events_range !== null && (
-                        <span className='fw-bolder mt-1' style={{ fontSize: '12px' }}> *Ya pagaste {"$" + Number(precioPagado).toLocaleString('es-AR')} </span>
+                            <span className='fw-bolder mt-1' style={{ fontSize: '15px', color: logoColor }}> *Ya pagaste {"$" + Number(precioPagado).toLocaleString('es-AR')} </span>
                         )}
-                        </div>
+                    </div>
 
 
                     <div>
@@ -157,11 +160,29 @@ export default function ExtenderRangoPlanesPagos() {
                 type="button"
                 onClick={handleCompraAmpliacionRango}
                 className="mt-2"
-                style={{ width: '12rem', height: '4rem', borderRadius: '3rem', fontSize: '25px', fontWeight: 'lighter' }}
+                style={{ width: '12rem', height: '4rem', borderRadius: '3rem', fontSize: '30px', fontWeight: 400, backgroundColor: logoColor, borderColor: 'transparent' }}
             >
-                Comprar
+                COMPRAR
             </Button>
         </div>
+        {isLoading && (
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 9999
+                }}
+            >
+                <img src={ojitos_gif} style={{ width: '150px', height: '150px' }} />
+            </div>
+        )}
 
     </div>
 }

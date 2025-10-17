@@ -75,19 +75,19 @@ export default function CreadorEntradas({ onGuardar }) {
     <div style={{ display: 'flex', direction:"row", justifyContent: 'space-between', gap: '1rem', marginLeft:'3rem', marginRight:'3rem' }}>
       <button  
         type="button"
-        className="btn btn-success fw-light fs-5"
+        className="btn btn-success"
         onClick={handleAceptar}
-        style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px',backgroundColor:'#FA7239' }}
+        style={{ padding: '0.5rem 2rem', borderRadius: '20px',fontSize:'25px', border: '0px',fontWeight:800,backgroundColor:logoColor }}
       >
-        Aceptar
+        ACEPTAR
       </button>
       <button
         type="button"
-        className="btn btn-secondary fw-light fs-5"
+        className="btn btn-secondary"
         onClick={handleCancel}
-        style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px', backgroundColor:'#491a13b3' }}
+        style={{ padding: '0.5rem 2rem',fontSize:'25px', borderRadius: '20px',fontWeight:800, border: '0px',  }}
       >
-        Cancelar
+        CANCELAR
       </button>
       </div>
     </div>

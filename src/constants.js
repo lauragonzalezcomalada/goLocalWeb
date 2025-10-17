@@ -8,3 +8,4 @@ export const REFRESH_TOKEN_STORAGE_KEY = "refresh"
 export const logoColor = "#FA5039" 
 export const backgroundColor= "#FEEDEB"
 export const orangeColor ='#FA9339'
+export const orangeColorLight =  '#FBA860'
