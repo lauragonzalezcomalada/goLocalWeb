@@ -31,11 +31,9 @@ export default function MainLoggedPage() {
 
                 if (response.status === 401) {
                     console.log('response status = 401')
-                    // intentamos refrescar
                     const newAccessToken = await refreshTokenIfNeeded()
-                    if (!newAccessToken) return // no se pudo refrescar
+                    if (!newAccessToken) return
 
-                    // reintentamos con token nuevo
                     response = await fetch(`${API_BASE_URL}/user/profile/`, {
                         headers: {
                             Authorization: `Bearer ${newAccessToken}`
@@ -45,8 +43,8 @@ export default function MainLoggedPage() {
                         data = await response.json()
                     }
                 }
-                // if (!response.ok) throw new Error('No autorizado o error')
-                setUserProfile(data)  // Guarda el perfil en el estado
+
+                setUserProfile(data)  
             } catch (e) {
                 console.error('Error fetching user profile', e)
             }

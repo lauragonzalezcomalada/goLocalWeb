@@ -28,6 +28,23 @@ export default function Transacciones() {
                 })
 
                 var data = await response.json();
+                if (response.status === 401) {
+                    console.log('response status = 401')
+                    // intentamos refrescar
+                    const newAccessToken = await refreshTokenIfNeeded()
+                    if (!newAccessToken) return // no se pudo refrescar
+
+                    // reintentamos con token nuevo
+                    response = await fetch(`${API_BASE_URL}/transactions/`, {
+                        headers: {
+                            Authorization: `Bearer ${newAccessToken}`
+                        }
+                    })
+                    if (response.ok) {
+                        data = await response.json()
+                    }
+                }
+
                 console.log('data del transactions: ', data);
 
                 setTransactionsData(data['payments']);
@@ -47,6 +64,7 @@ export default function Transacciones() {
     if (transactionsData == null) {
         return <div> thinkinggg....</div>
     }
+    console.log('total_amounts: ', totalAmounts);
     return (
         <div
             style={{
@@ -68,7 +86,14 @@ export default function Transacciones() {
         >
         <div style={{display:'flex', flexDirection:'row', alignItems:'center',justifyContent:'space-between', marginRight: '10vw', marginLeft:'10vw'}}>
 
-           
+            <div style={{border:'3px solid '+logoColor, backgroundColor: backgroundColor,borderRadius:'20px', width:'35vw', height:'200px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+
+                <div style={{fontSize:'30px', color: logoColor, fontWeight:300}}> Próxima fecha de pago: <span style={{fontWeight:800, fontSize:'40px'}}>{totalAmounts?.next_due_date
+        ? format(parseISO(totalAmounts.next_due_date), "dd/MM/yyyy")
+        : '—'} </span></div>
+                <div style={{fontSize:'30px', color: logoColor, fontWeight:300}}> Monto: <span style={{fontWeight:800, fontSize:'40px'}}>{Intl.NumberFormat('es-ES').format(totalAmounts['due_date_amount'])}  ARS</span></div>
+
+            </div>
               <div style={{  width: '350px', height: '350px', border: '3px solid' + logoColor, backgroundColor: logoColor, borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
                 <div style={{ fontSize: '40px', fontWeight: 300 }}>Ventas:<span style={{ fontWeight: 800, fontSize: '50px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['total_amount'])} ARS</span> </div>

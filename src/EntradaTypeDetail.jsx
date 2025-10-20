@@ -1,12 +1,49 @@
-import { backgroundColor } from './constants';
 import EditableEntradaCard from './EditableEntradaCard';
 import { useLocation } from 'react-router-dom'
-
+import { API_BASE_URL,backgroundColor } from './constants'
 
 export default function EntradaTypeDetail() {
 
 
     const location = useLocation()
+/*
+    useEffect(() => {
+            if (!accessToken) return
+            async function fetchUserProfile() {
+                try {
+                    var response = await fetch(API_BASE_URL + '/user/profile/', {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    })
+    
+                    var data = await response.json()
+    
+                    if (response.status === 401) {
+                        console.log('response status = 401')
+                        const newAccessToken = await refreshTokenIfNeeded()
+                        if (!newAccessToken) return
+    
+                        response = await fetch(`${API_BASE_URL}/user/profile/`, {
+                            headers: {
+                                Authorization: `Bearer ${newAccessToken}`
+                            }
+                        })
+                        if (response.ok) {
+                            data = await response.json()
+                        }
+                    }
+    
+                    setUserProfile(data)  
+                } catch (e) {
+                    console.error('Error fetching user profile', e)
+                }
+            }
+            fetchUserProfile()
+        }, [accessToken])
+    */
+
+        
     const { evento_tipo, entrada_uuid, entrada_name, entrada_shortDesc, evento_image, evento_fecha, entrada_precio,
         entrada_disponibles, entrada_max_disp, entrada_vendidas, entrada_porcentajedeventas
         } = location.state || {}

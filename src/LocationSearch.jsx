@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 import { Form, Spinner } from 'react-bootstrap';
+import { logoColor } from './constants';
 
 const libraries = ['places'];
 
@@ -36,7 +37,7 @@ export default function LocationSearch({ dir, onUbicacionSeleccionada, errorPlac
 
     return (
         <Form.Group className="mb-3 px-3 w-100">
-            <Form.Label className="fw-light fs-5">Ubicación del evento</Form.Label>
+            <Form.Label className="fs-4" style={{color:logoColor, fontWeight:800}}>Ubicación del evento</Form.Label>
             <Autocomplete
                 onLoad={(ref) => (autocompleteRef.current = ref)}
                 onPlaceChanged={onPlaceChanged}
@@ -44,6 +45,7 @@ export default function LocationSearch({ dir, onUbicacionSeleccionada, errorPlac
                 <Form.Control
                     type="text"
                     placeholder="Buscar dirección..."
+                    className='fs-4' style={{color:logoColor}}
                     value={direccion}
                     onChange={(e) => setDireccion(e.target.value)}
                     isInvalid={!!errorPlace}

@@ -78,12 +78,9 @@ export default function EntradasPage() {
     async function toggleExpandTickets(event_uuid, event_type, event_ticketsType) {
         console.log('toggle expanded tickets');
         if (expandedEventoUuid === event_uuid) {
-            // Si ya está abierto, cerramos y no hacemos fetch
             setExpandedEventoUuid(null);
             return;
         }
-
-
 
         setExpandedEventoUuid(event_uuid);
         setLoadingTickets(true);
@@ -102,9 +99,8 @@ export default function EntradasPage() {
                 console.log('response status en fetch entradas = 401')
                 // intentamos refrescar
                 const newAccessToken = await refreshTokenIfNeeded()
-                if (!newAccessToken) return // no se pudo refrescar
+                if (!newAccessToken) return 
 
-                // reintentamos con token nuevo
                 response = await fetch(`${API_BASE_URL}/sold_tickets_for_event/`, {
                     method: 'POST',
                     headers: {
@@ -141,7 +137,6 @@ export default function EntradasPage() {
                 }, body: JSON.stringify({ reserva_uuid: reserva_uuid, reserva_status: estado })
             })
             if (response.status === 401) {
-                console.log('response status en update status = 401')
                 // intentamos refrescar
                 const newAccessToken = await refreshTokenIfNeeded()
                 if (!newAccessToken) return // no se pudo refrescar
@@ -253,7 +248,7 @@ export default function EntradasPage() {
                                                     maxHeight: '12rem',
                                                     maxWidth: '12rem',
                                                     objectFit: 'scale-down',
-                                                    margin: '0 auto', // centrar
+                                                    margin: '0 auto',
                                                     display: 'block',
                                                 }}
                                         />

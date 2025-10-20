@@ -18,8 +18,6 @@ export default function CrearEventoPageChooseOption() {
 
     useEffect(() => {
         async function fetchTemplates() {
-
-
             try {
                 var response = await fetch(API_BASE_URL + '/templates/', {
                     method: 'GET',

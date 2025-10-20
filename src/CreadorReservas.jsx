@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Form, Row, Col } from 'react-bootstrap';
 import CamposForm from './CamposForm.jsx';
+import { backgroundColor, logoColor } from './constants.js';
 
 export default function CreadorReservas({ onGuardar , onCancelar}) {
     const [formData, setFormData] = useState({
@@ -159,19 +160,19 @@ export default function CreadorReservas({ onGuardar , onCancelar}) {
             <div className="d-flex justify-content-between mt-4 px-4">
                 <button
                     type="button"
-                    className="btn fw-light fs-5"
+                    className="btn"
                     onClick={handleAceptar}
-                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', border:'0px', backgroundColor:'#FA7239' }}
+                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', fontSize:'25px', fontWeight:800, border:'0px', color:'white',backgroundColor:logoColor}}
                 >
-                    Aceptar
+                    ACEPTAR
                 </button>
                 <button
                     type="button"
-                    className="btn fw-light fs-5"
+                    className="btn"
                     onClick={onCancelar}
-                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px', backgroundColor:'#491a13b3' }}
+                    style={{ padding: '0.5rem 2rem', borderRadius: '20px', border: '0px', backgroundColor:backgroundColor }}
                 >
-                    Cancelar
+                    CANCELAR
                 </button>
             </div>
         </div>

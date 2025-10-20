@@ -1,7 +1,7 @@
 
 
 
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor, orangeColor, orangeColorLight } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { useContext } from 'react'
@@ -15,8 +15,11 @@ import { Card, Button, Form, Row, Col, Modal } from 'react-bootstrap';
 import TagChip from './TagChip.jsx';
 import { useLocation } from 'react-router-dom';
 
+import ojitos_gif from './assets/ojitos.gif';
 
 export default function CrearEventoFromScratch() {
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate()
     const location = useLocation();
@@ -80,10 +83,7 @@ export default function CrearEventoFromScratch() {
                         if (response.ok) {
                             data = await response.json()
                         }
-
                     }
-
-
                     setFormData({
                         tipoEvento: data.tipoEvento,
                         titulo: data.values.nombre,
@@ -97,7 +97,7 @@ export default function CrearEventoFromScratch() {
                     setEsGratis(data.values.gratis)
                     setNecesitaReserva(data.values.reserva_necesaria)
                     setCentralizarEntradas(data.values.control_entradas)
-        
+
                     if (data?.values?.reservas_forms?.length > 0) {
                         const nuevasReservas = data.values.reservas_forms.map((reserva_form) => ({
                             tipoReserva: reserva_form.nombre,
@@ -141,10 +141,10 @@ export default function CrearEventoFromScratch() {
         }));
         setErrors(prev => ({ ...prev, [name]: '' }));  // neteja errors quan sobreescrius
 
-        if(name === 'tipoEvento' && value !== '0'){
+        if (name === 'tipoEvento' && value !== '0') {
             setEsGratis(true);
         }
-        if(name === 'tipoEvento' && value === '2'){
+        if (name === 'tipoEvento' && value === '2') {
             setNecesitaReserva(false);
         }
     }
@@ -240,17 +240,17 @@ export default function CrearEventoFromScratch() {
         }
         if (ubicacion.direccion === '') newErrors.locationError = 'Campo obligatorio';
 
-        setErrors(newErrors);   
+        setErrors(newErrors);
         console.log('new erors:', newErrors);
 
         return Object.keys(newErrors).length === 0;
     }
 
     const submitCrearEvento = async (e) => {
-        console.log('submit');
         e.preventDefault();
 
         if (!validate()) return;
+
 
         const formDataToSend = new FormData();
         formDataToSend.append('fromGoLocalWeb', true);
@@ -291,6 +291,8 @@ export default function CrearEventoFromScratch() {
             formDataToSend.append('endTime', formData.endTime);
         }
         try {
+
+            setIsLoading(true); 
             var response = await fetch(`${API_BASE_URL}/createevent/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
@@ -329,7 +331,9 @@ export default function CrearEventoFromScratch() {
 
         } catch (error) {
             console.error('Error al enviar:', error);
-        }
+        }finally {
+    setIsLoading(false); 
+  }
 
 
         if (createTemplate === true) {
@@ -356,6 +360,7 @@ export default function CrearEventoFromScratch() {
             formDataForTemplate.append("values", JSON.stringify(valuesJson))
 
             try {
+                setIsLoading(true)
                 var response = await fetch(`${API_BASE_URL}/templates/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
@@ -393,7 +398,9 @@ export default function CrearEventoFromScratch() {
 
             } catch (error) {
                 console.error('Error al enviar:', error);
-            }
+            }finally {
+    setIsLoading(false); 
+  }
         }
 
         if (response.status === 201) {
@@ -402,12 +409,12 @@ export default function CrearEventoFromScratch() {
     };
 
 
-    return <div style={{backgroundColor:backgroundColor, marginTop:'56px', width: '100%', height: '100%' }}>
+    return <div style={{ backgroundColor: backgroundColor, paddingTop: '56px', width: '100%', height: 'calc(100vh-56px)' }}>
         <Form /* onSubmit={handleSubmit} */ className="d-flex align-items-center w-100 px-0 mt-3 g-0" style={{ height: '100%' }}>
             <div className="w-50 " style={{ marginLeft: '100px', paddingTop: '50px' }}>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row' }}>
-                    <Form.Label className='fw-light fs-5'>¿Qué tipo de evento es?</Form.Label>
-                    <Form.Select name="tipoEvento" value={formData.tipoEvento} onChange={handleChange} isInvalid={!!errors.tipoEvento}>
+                    <Form.Label className='fs-4' style={{color:logoColor}}>¿Qué tipo de evento es?</Form.Label>
+                    <Form.Select name="tipoEvento" value={formData.tipoEvento} onChange={handleChange} isInvalid={!!errors.tipoEvento} className='fs-4' style={{color:logoColor}}>
                         <option value="">Tipo de evento</option>
                         <option value="0">Plan</option>
                         <option value="1">Promo</option>
@@ -419,8 +426,9 @@ export default function CrearEventoFromScratch() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5'>Título</Form.Label>
+                    <Form.Label className='mt-2 fs-4'style={{color:logoColor}}>Título</Form.Label>
                     <Form.Control
+                        className='fs-4' style={{color:logoColor}}
                         type="text"
                         name="titulo"
                         value={formData.titulo}
@@ -432,8 +440,9 @@ export default function CrearEventoFromScratch() {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5'>Descripción corta</Form.Label>
+                    <Form.Label className='mt-2 fs-4' style={{color:logoColor}}>Descripción corta</Form.Label>
                     <Form.Control
+                    className='fs-4' style={{color:logoColor}}
                         type="text"
                         name="shortDesc"
                         value={formData.shortDesc}
@@ -442,9 +451,10 @@ export default function CrearEventoFromScratch() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5'>Descripción del evento</Form.Label>
+                    <Form.Label className='mt-2 fs-4' style={{color:logoColor}}>Descripción del evento</Form.Label>
                     <Form.Control
                         as="textarea"
+                        className='fs-4' style={{color:logoColor}}
                         name="descripcion"
                         rows={6}
                         value={formData.descripcion}
@@ -457,10 +467,11 @@ export default function CrearEventoFromScratch() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='fw-light fs-5'>Fecha del evento</Form.Label>
+                    <Form.Label className='fs-4' style={{color:logoColor}}>Fecha del evento</Form.Label>
                     <Form.Control
                         type="date"
                         name="fecha"
+                        className='fs-4' style={{color:logoColor}}
                         value={formData.fecha}
                         onChange={handleChange}
                         isInvalid={!!errors.fecha}
@@ -471,10 +482,11 @@ export default function CrearEventoFromScratch() {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='fw-light fs-5'>Hora del evento</Form.Label>
+                    <Form.Label className='fs-4' style={{color:logoColor}}>Hora del evento</Form.Label>
                     <Form.Control
                         type="time"
                         name="startTime"
+                        className='fs-4' style={{color:logoColor}}
                         value={formData.startTime}
                         onChange={handleChange}
                         isInvalid={!!errors.startTime}
@@ -488,8 +500,8 @@ export default function CrearEventoFromScratch() {
 
                 {formData.tipoEvento === '1' && (
                     <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <Form.Label className='fw-light fs-5'>Hora de fin de la promo</Form.Label>
-                        <Form.Control type="time" name="endTime" value={formData.endTime} onChange={handleChange} isInvalid={!!errors.endTime} />
+                        <Form.Label className='fs-4' style={{color:logoColor}}>Hora de fin de la promo</Form.Label>
+                        <Form.Control type="time" name="endTime" value={formData.endTime} className='fs-4' style={{color:logoColor}} onChange={handleChange} isInvalid={!!errors.endTime} />
                         <Form.Control.Feedback type="invalid">
                             {errors.endTime}
                         </Form.Control.Feedback>
@@ -504,7 +516,7 @@ export default function CrearEventoFromScratch() {
                             name={tag.name}
                             selected={selectedTags.includes(tag.id)}
                             onClick={() => toggleTag(tag.id)}
-                            size="md"
+                            size="xl"
 
                         />
                     ))}
@@ -520,12 +532,12 @@ export default function CrearEventoFromScratch() {
                     <div className="form-check form-switch" style={{ position: 'absolute', right: '2rem' }}>
                         <input className="form-check-input"
                             type="checkbox" role="switch"
-                            id="switchCheckDefault" style={{ fontSize: '22px' }}
+                            id="switchCheckDefault" style={{ fontSize: '25px', backgroundColor:orangeColor, borderColor:'transparent'}}
 
                             checked={createTemplate}
                             onChange={handleCreateTemplateChange}
                         />
-                        <label className="form-check-label fw-light fs-5" htmlFor="switchCheckDefault">Crear plantilla de este evento</label>
+                        <label className="form-check-label fs-4" htmlFor="switchCheckDefault" style={{color:logoColor}}>Crear plantilla de este evento</label>
                     </div>
                 </div>
 
@@ -543,83 +555,85 @@ export default function CrearEventoFromScratch() {
                         alignItems: 'center',
                     }}
                 >
-                    <Form.Label className="fw-light fs-5">Subí una imagen</Form.Label>
+                    <Form.Label className="fs-4" style={{color:logoColor, fontWeight:800}}>Subí una imagen</Form.Label>
                     <Form.Control
                         type="file"
                         name="imagen"
+                        className='fs-5' style={{backgroundColor:backgroundColor,color:logoColor,maxWidth: '300px'}}
 
                         onChange={(e) =>
                             setFormData({ ...formData, imagen: e.target.files[0] })
                         }
-                        style={{ maxWidth: '300px' }} 
+                       
                     />
                 </Form.Group>
                 {formData.tipoEvento === '0' && (
-                <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5'>¿Es gratis?</Form.Label>
-                    <div className="d-flex gap-5 align-items-center">
-                        <Form.Check
-                            type="radio"
-                            label={<span className="fw-light fs-5" style={{ marginLeft: '10px', paddingTop: '3rem' }}>sí</span>}
-                            name="gratis"
-                            value="si"
-                            checked={esGratis === true}
-                            onChange={handleEsGratisChange}
-                            isInvalid={!!errors.gratis}
-                        />
-                        <Form.Check
-                            type="radio"
-                            label={<span className="fw-light fs-5" style={{ marginLeft: '20px', paddingTop: '3rem' }}>no</span>}
-                            name="gratis"
-                            value="pago"
-                            checked={esGratis === false}
-                            onChange={handleEsGratisChange}
-                            isInvalid={!!errors.gratis}
-                        />
-
-                    </div>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.gratis}
-                    </Form.Control.Feedback>
-
-                </Form.Group>)}
-
-                {esGratis === true && formData.tipoEvento !== '2' && (  <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5'>¿Se necesita hacer una reserva?</Form.Label>
-                    <div className="d-flex gap-5 align-items-center">
-                        <Form.Check
-                            type="radio"
-                                label={<span className="fw-light fs-5" style={{ marginLeft: '20px' }}>sí</span>}
-                                name="reserva"
-                                value="conReserva"
-                                checked={necesitaReserva === true}
-                                onChange={handleReservaChange}
-                                isInvalid={!!errors.necesitaReserva}
+                    <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
+                        <Form.Label className='mt-2 fs-4' style={{color:logoColor, fontWeight:800}}>¿Es gratis?</Form.Label>
+                        <div className="d-flex gap-5 align-items-center">
+                            <Form.Check
+                                type="radio"
+                                label={<span className="fs-4" style={{ marginLeft: '10px', paddingTop: '3rem', color:logoColor }}>SÍ</span>}
+                                name="gratis"
+                                value="si"
+                                checked={esGratis === true}
+                                onChange={handleEsGratisChange}
+                                isInvalid={!!errors.gratis}
                             />
                             <Form.Check
                                 type="radio"
-                                label={<span className="fw-light fs-5" style={{ marginLeft: '20px' }}>no</span>}
-                                name="reseva"
-                                value="sinReserva"
-                                checked={necesitaReserva === false}
-                                onChange={handleReservaChange}
-                                isInvalid={!!errors.necesitaReserva}
+                                label={<span className="fs-4" style={{ marginLeft: '20px', paddingTop: '3rem' , color:logoColor}}>NO</span>}
+                                name="gratis"
+                                value="pago"
+                                checked={esGratis === false}
+
+                                onChange={handleEsGratisChange}
+                                isInvalid={!!errors.gratis}
                             />
 
                         </div>
                         <Form.Control.Feedback type="invalid">
-                            {errors.necesitaReserva}
+                            {errors.gratis}
                         </Form.Control.Feedback>
-                    </Form.Group>
+
+                    </Form.Group>)}
+
+                {esGratis === true && formData.tipoEvento !== '2' && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
+                    <Form.Label className='mt-2 fs-4' style={{fontWeight:800, color:logoColor}}>¿Se necesita hacer una reserva?</Form.Label>
+                    <div className="d-flex gap-5 align-items-center">
+                        <Form.Check
+                            type="radio"
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>SÍ</span>}
+                            name="reserva"
+                            value="conReserva"
+                            checked={necesitaReserva === true}
+                            onChange={handleReservaChange}
+                            isInvalid={!!errors.necesitaReserva}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label={<span className="fs-4" style={{ marginLeft: '20px',color:logoColor }}>NO</span>}
+                            name="reseva"
+                            value="sinReserva"
+                            checked={necesitaReserva === false}
+                            onChange={handleReservaChange}
+                            isInvalid={!!errors.necesitaReserva}
+                        />
+
+                    </div>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.necesitaReserva}
+                    </Form.Control.Feedback>
+                </Form.Group>
 
 
                 )}
                 {esGratis === false && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fw-light fs-5' >¿Quieres centralizar las entradas con GoLocal?</Form.Label>
+                    <Form.Label className='mt-2 fs-4' style={{fontWeight:800, color:logoColor}} >¿Quieres centralizar las entradas con GoLocal?</Form.Label>
                     <div className="d-flex gap-5 align-items-center">
                         <Form.Check
                             type="radio"
-                            label={<span className="fw-light fs-5" style={{ marginLeft: '20px' }}>Sí, quiero centralizar</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>SÍ, quiero centralizar</span>}
                             name="controlarEntradas"
                             value="si"
                             checked={centralizarEntradas === true}
@@ -628,7 +642,7 @@ export default function CrearEventoFromScratch() {
                         />
                         <Form.Check
                             type="radio"
-                            label={<span className="fw-light fs-5" style={{ marginLeft: '20px' }}>Quiero seguir usando mi ticketera</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>NO, quiero seguir usando mi ticketera</span>}
                             name="controlarEntradas"
                             value="no"
                             checked={centralizarEntradas === false}
@@ -666,17 +680,17 @@ export default function CrearEventoFromScratch() {
                 {entradas.map((entrada, index) => (
                     <div
                         key={index}
-                        className="p-3 py-3 my-1 border rounded mx-4"
-                        style={{ width: '95%', backgroundColor: '#FA7239', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+                        className="p-3 py-3 my-1 border mx-4"
+                        style={{ width: '95%', backgroundColor: orangeColorLight, borderRadius: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
                         <div className="d-flex flex-column" style={{ flex: 1 }}>
-                            <p className="mb-1 fs-4"><strong>{entrada.nombre}</strong></p>
-                            <p className="mb-1 fw-light fs-6">{entrada.descripcion}</p>
+                            <p className="mb-1" style={{fontSize:'30px', fontWeight:800, color:logoColor}}> <strong>{entrada.nombre.toUpperCase()}</strong></p>
+                            <p className="mb-1" style={{fontSize:'25px', color:logoColor, fontWeight:300}}>{entrada.descripcion}</p>
 
 
                         </div>
 
-                        <span className='fw-light fs-5'>Precio: ${entrada.precio} | Cantidad: {entrada.cantidad}</span>
+                        <span style={{fontSize:'30px',color:logoColor, fontWeight:300}}>Precio: <span style={{fontWeight:800}}> ${entrada.precio}</span> | Cantidad:<span style={{fontWeight:800}}>  {entrada.cantidad}</span></span>
                     </div>
                 ))}
 
@@ -690,7 +704,7 @@ export default function CrearEventoFromScratch() {
                             lineHeight: '1.3',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             borderRadius: '10px',
-                            border: !!errors.entradas ? '2px solid rgba(255, 0, 0, 0.5)' : '2px solid rgba(0,0,0,0.5)',
+                            border: !!errors.entradas ? '2px solid black' : '2px solid '+logoColor,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -700,8 +714,8 @@ export default function CrearEventoFromScratch() {
                         }}
 
                     >
-                        <i className="bi bi-plus-lg" style={{ color: !!errors.entradas ? 'rgba(255, 0, 0,1)' : 'inherit' }}></i>
-                        <span style={{ color: !!errors.entradas ? 'rgba(255, 0, 0, 1)' : 'inherit' }}>Crear nueva entrada</span>
+                        <i className="bi bi-plus-lg" style={{ color: !!errors.entradas ? 'black' : logoColor }}></i>
+                        <span style={{ color: !!errors.entradas ? 'black' : logoColor,fontSize:'25px', fontWeight:800}}>CREAR NUEVA ENTRADA</span>
 
                     </div>
                 )}
@@ -713,20 +727,20 @@ export default function CrearEventoFromScratch() {
                 {reservas.map((reserva, index) => (
                     <div
                         key={index}
-                        className="p-3 py-3 my-1 border rounded mx-4"
-                        style={{ width: '95%', backgroundColor: '#FA7239', borderRadius: '50px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+                        className="p-3 py-3 my-1 mx-4"
+                        style={{ width: '95%', backgroundColor: orangeColorLight, borderRadius: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
                         <div className="d-flex flex-column" style={{ flex: 3 }}>
-                            <p className="mb-1 fs-4"><span className='fw-lighter fs-5' style={{ marginRight: '10px' }}>tipo de reserva: </span><strong>{reserva.tipoReserva}</strong></p>
-                            <p className="mb-1 fw-lighter fs-5">cantidad: <span className='fw-light'>{reserva.cantidad}</span></p>
+                            <p className="mb-1"><span style={{ marginRight: '10px', color:logoColor, fontSize:'20px', fontWeight:400 }}>TIPO DE RESERVA: </span><span style={{color:logoColor, fontWeight:800, fontSize:'30px'}}>{reserva.tipoReserva.toUpperCase()}</span></p>
+                            <p className="mb-1" style={{fontWeight:400, fontSize:'20px', color:logoColor}}>CANTIDAD: <span style={{color:logoColor, fontWeight:800, fontSize:'25px'}}>{reserva.cantidad}</span></p>
                         </div>
 
                         <div className="d-flex flex-column" style={{ flex: 2 }}>
-                            <p className="mb-1 fw-light fs-6">Campos personalizados:</p>
+                            <p className="mb-1" style={{fontWeight:400, fontSize:'20px', color:logoColor}}>CAMPOS PERSONALIZADOS:</p>
                             <ul>
                                 {reserva.campos.map((campo, idx) => (
-                                    <li key={idx}>
-                                        {campo.label}
+                                    <li key={idx} style={{fontSize:'18px', color:logoColor, fontWeight:800}}>
+                                        {campo.label.toUpperCase()}
                                     </li>
                                 ))}
                             </ul>
@@ -734,7 +748,7 @@ export default function CrearEventoFromScratch() {
 
                     </div>
                 ))}
-    {/*
+                {/*
                 <Modal show={showModalFreePlanes} onHide={() => setShowModalFreePlanes(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title> 😔 Sin planes gratuitos</Modal.Title>
@@ -763,19 +777,19 @@ export default function CrearEventoFromScratch() {
                             lineHeight: '1.3',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             borderRadius: '10px',
-                            border: !!errors.reservas ? '2px solid rgba(255, 0, 0, 0.5)' : '2px solid rgba(0,0,0,0.5)',
+                            border: !!errors.reservas ? '2px solid black' : '2px solid '+logoColor,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
                             marginLeft: '100px',
                             cursor: 'pointer',
-                            marginTop:'1rem'
+                            marginTop: '1rem'
                         }}
 
                     >
-                        <i className="bi bi-plus-lg" style={{ color: !!errors.reservas ? 'rgba(255, 0, 0, 1)' : 'inherit' }}></i>
-                        <span style={{ color: !!errors.reservas ? 'rgba(255, 0, 0, 1)' : 'inherit' }}>Crear nuevo formulario de reserva</span>
+                        <i className="bi bi-plus-lg" style={{ color: !!errors.reservas ? 'black' : logoColor }}></i>
+                        <span style={{ color: !!errors.reservas ? 'black' : logoColor , fontSize:'25px', fontWeight:800}}>CREAR NUEVO FORMULARIO DE RESERVA</span>
 
                     </div>
                 )}
@@ -783,8 +797,8 @@ export default function CrearEventoFromScratch() {
                 {(necesitaReserva === true && mostrarNuevaReserva) && <CreadorReservas onGuardar={guardarReserva} onCancelar={cancelarReserva} />}
 
 
-                <button className='mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', width:'window.innerWidth * 0.80', height:'5rem', position: 'absolute', right: '25px', backgroundColor:'#FA7239', fontSize:'50px', fontWeight:'lighter', display:'flex', justifyContent:'center', alignItems:'center' }} type="submit">
-                    Crear tu evento
+                <button className='mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', width: 'window.innerWidth * 0.80', height: '5rem', position: 'absolute', right: '25px', backgroundColor: logoColor, fontSize: '40px', fontWeight: 300, display: 'flex', color:backgroundColor,justifyContent: 'center', alignItems: 'center' }} type="submit">
+                    CREAR TU EVENTO
                 </button>
 
 
@@ -792,6 +806,24 @@ export default function CrearEventoFromScratch() {
 
 
         </Form>
+        {isLoading && (
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 9999
+                }}
+            >
+                <img src={ojitos_gif} style={{ width: '150px', height: '150px' }} />
+            </div>
+        )}
 
     </div>;
 }
