@@ -248,7 +248,7 @@ export default function EntradasPage() {
                                                     maxHeight: '12rem',
                                                     maxWidth: '12rem',
                                                     objectFit: 'scale-down',
-                                                    margin: '0 auto', // centrar
+                                                    margin: '0 auto',
                                                     display: 'block',
                                                 }}
                                         />

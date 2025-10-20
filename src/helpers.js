@@ -11,7 +11,6 @@ export function formatDate(dateInput) {
 
   const fechaFormateada = new Intl.DateTimeFormat('es-AR', {
     weekday: 'long',
-    year: 'numeric',
     month: 'long',
     day: 'numeric',
   }).format(date)
@@ -19,6 +18,7 @@ export function formatDate(dateInput) {
   const horaFormateada = date.toLocaleTimeString('es-AR', {
     hour: '2-digit',
     minute: '2-digit',
+    hour12: false
   })
 
   const dia = date.getUTCDate();

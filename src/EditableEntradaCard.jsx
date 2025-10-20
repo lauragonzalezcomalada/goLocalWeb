@@ -34,7 +34,7 @@ export default function EditableEntradaCard({ initialData }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE_URL}/update_entrada/`, {
+      var response = await fetch(`${API_BASE_URL}/update_entrada/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',

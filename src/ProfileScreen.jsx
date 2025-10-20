@@ -311,6 +311,7 @@ export default function ProfileScreen() {
         case "0":
             content = <Container >
                 <Form>
+                  
                     <Form.Group className="mb-3 d-flex align-items-center fs-4">
                         <Form.Label className='mt-2 fs-3' style={{color:logoColor, fontWeight:800}}>NOMBRE: </Form.Label>
                         <Form.Control

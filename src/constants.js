@@ -6,6 +6,7 @@ export const API_BASE_URL = `${SERVER_IP}/api`
 export const TOKEN_STORAGE_KEY = "access"
 export const REFRESH_TOKEN_STORAGE_KEY = "refresh"
 export const logoColor = "#FA5039" 
+export const logoColorLight = "#fb7260"
 export const backgroundColor= "#FEEDEB"
 export const orangeColor ='#FA9339'
 export const orangeColorLight =  '#FBA860'

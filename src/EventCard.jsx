@@ -33,7 +33,7 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
           <img
             src={imageUrl}
             alt={name}
-            style={{ width: '100%', height: '100%', objectFit: 'expand' }}
+            style={{ width: '100%', maxHeight: '150px', objectFit: 'cover' }}
           />
         ) : (
           <div style={{ width: '100%', height: '100%', backgroundColor: '#ffc14577' }} />
@@ -43,7 +43,7 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
         >
           <div className="ms-2 px-2 d-flex gap-2 align-items-center" style={{
             backgroundColor: 'rgba(255,255,255,0.7)',
-            border: '1px solid #FA7239', // Bootstrap primary
+            border: '1px solid #FA7239',
             borderRadius: '18px',
             fontSize: '15px',
             lineHeight: '2',
