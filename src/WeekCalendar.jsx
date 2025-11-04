@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import EventCard from './EventCard'
 import React, { useMemo, useEffect } from 'react'
+import { logoColor } from './constants'
 
 function obtenerFechasSemanaActual(esteLunes) {
     const hoy = new Date(esteLunes)
@@ -32,7 +33,7 @@ const WeekCalendar = React.memo(function WeekCalendar({ esteLunes, eventos }) {
                 boxSizing: 'border-box',
                 overflowX: 'auto',
                 margin: '0 auto',
-                color: '#491a13ff'
+                color: logoColor
             }}
         >
             <Container fluid style={{ minHeight: '40vh' }}>
@@ -43,15 +44,14 @@ const WeekCalendar = React.memo(function WeekCalendar({ esteLunes, eventos }) {
                             key={day}
                             className="d-flex flex-column align-items-center"
                             style={{ padding: '0.5rem', 
-                                color:'#491a13ff',
-                                 borderLeft: index === 0 ? 'none' : '0.5px solid #491a13ff',
-        borderRight: index === fechas.length - 1 ? 'none' : '0.5px solid #491a13ff', }}
+                                color:'black',
+                                 borderLeft: index === 0 ? 'none' : '1px solid '+logoColor,
+        borderRight: index === fechas.length - 1 ? 'none' : '1px solid '+logoColor, }}
                         >
-                            <div className="fw-lighter mb-2 fs-2" style={{ color: '#491a13ff' }}>{day}</div>
+                            <div className="mb-2" style={{ color: logoColor, fontWeight:400, fontSize:'30px' }}>{day}</div>
                           
                             {(eventos[day] || []).map((evento, index) => {
-                                console.log('hay eventos');
-                                console.log('evento:', evento);
+                              
                                 return (
                                     <EventCard
                                         tipo={evento.tipo}
@@ -74,9 +74,9 @@ const WeekCalendar = React.memo(function WeekCalendar({ esteLunes, eventos }) {
                         </Col>
                     ))}
                       {Object.values(eventos).every(arr => arr.length === 0) && (
-                                <Card className="text-center mt-5"  style={{ width: '100%', height: '100%', backgroundColor:'transparent' }}>
+                                <Card className="text-center mt-5"  style={{ width: '100%', height: '100%', backgroundColor:'transparent', color: logoColor, fontWeight:800, fontSize:'30px' }}>
                                     <Card.Body>
-                                        <Card.Text>No hay eventos para esta semana</Card.Text>
+                                        <Card.Text>NO HAY EVENTOS CREADOS PARA ESTA SEMANA</Card.Text>
                                     </Card.Body>
                                 </Card>
                             )}

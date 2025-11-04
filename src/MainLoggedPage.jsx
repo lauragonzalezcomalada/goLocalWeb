@@ -1,6 +1,6 @@
 // HomePage.jsx
 
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
 import { Container, Card, Button } from 'react-bootstrap';
@@ -130,13 +130,13 @@ export default function MainLoggedPage() {
                     <i
                         className="bi bi-caret-left"
                         onClick={() => cambiarSemana(-7)}
-                        style={{ color: '#491a13ff', fontSize: '2rem', cursor: 'pointer' }}
+                        style={{ color: logoColor, fontSize: '2.5rem', cursor: 'pointer' }}
                         title="Semana anterior"
                     />
                     <i
                         className="bi bi-caret-right"
                         onClick={() => cambiarSemana(7)}
-                        style={{ color: '#491a13ff', fontSize: '2rem', cursor: 'pointer', marginLeft: '2rem' }}
+                        style={{ color: logoColor, fontSize: '2.5rem', cursor: 'pointer', marginLeft: '2rem' }}
                         title="Semana siguiente"
                     />
                 </div>

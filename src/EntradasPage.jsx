@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor, orangeColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
 import { Container, Card, Button } from 'react-bootstrap';
@@ -125,7 +125,7 @@ export default function EntradasPage() {
         }
     }
 
-    async function handleStatusChange(evento_uuid, reservaNameKey, reserva_uuid, reserva_status) {
+    async function handleStatusReservaChange(evento_uuid, reservaNameKey, reserva_uuid, reserva_status) {
 
         var estado = reserva_status === true ? '1' : '0'
 
@@ -186,6 +186,17 @@ export default function EntradasPage() {
         } catch (error) { console.log(error) }
     }
 
+    const  handleOpenEvent = (uuid, tipo) => {
+        console.log('handle open event clicked');
+        navigate('/eventDetail', { state: { uuid, tipo } })
+
+    }
+    async function handleStatusTicketChange(evento) {
+
+     //   update_ticket_status
+        console.log('status del change : ', e);
+    }
+
 
     function fetchEntradaTypeDetail(entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image) {
         navigate('/entradaDetail', { state: { entrada_uuid, evento_tipo, entrada_name, evento_fecha, entrada_shortDesc, entrada_vendidas, entrada_disponibles, entrada_max_disp, entrada_porcentajedeventas, entrada_precio, evento_image } })
@@ -208,7 +219,7 @@ export default function EntradasPage() {
         )
     }
 
-    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto', backgroundColor: backgroundColor }}>
+    return <div style={{ marginTop: '56px', width: '100%', minHeight: '100vh', overflowY: 'auto',paddingBottom:'5vh', backgroundColor: backgroundColor }}>
         {Object.entries(referencias)?.map(([fecha, listaEntradas]) => {
             return (<div>
                 <div style={{
@@ -216,8 +227,8 @@ export default function EntradasPage() {
                     alignItems: 'center',
                     margin: '2rem 2rem'
                 }}>
-                    <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
-                    <span style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>{fecha}</span>
+                    <div style={{ flex: 1, height: '2px', backgroundColor: orangeColor }}></div>
+                    <span style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: orangeColor, fontSize: '30px', fontWeight: 400 }}>{fecha}</span>
                 </div>
                 {listaEntradas?.map((evento, index) => {
                     if (evento.tracking_tipo === 0) { //plan con entradas
@@ -233,7 +244,7 @@ export default function EntradasPage() {
                         <div key={evento.event_uuid} className="card mx-3 mb-1" style={{ borderRadius: '20px' }}>
                             <div className="row g-0">
                                 <div className="col-md-2">
-                                    <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }}>
+                                    <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }} onClick={() => handleOpenEvent(evento.event_uuid, evento.tracking_tipo)}>
                                         <img
                                             src={evento.event_imageUrl ? evento.event_imageUrl : noPicture}
                                             className="img-fluid rounded-start"
@@ -259,7 +270,7 @@ export default function EntradasPage() {
                                                 top: 50, left: 0, right: 0, bottom: 0,
                                                 background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8))',
                                                 borderRadius: '0.25rem',
-                                                pointerEvents: 'none'  // para que no interfiera con clicks en la imagen si hay
+                                                pointerEvents: 'none' 
                                             }}
                                         />
                                         {/*EL TEXT */}
@@ -291,7 +302,7 @@ export default function EntradasPage() {
                                     evento.entradas?.map((entrada, i) => {
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} onClick={() => fetchEntradaTypeDetail(entrada.entrada_uuid, evento.tipo, entrada.entrada_name, evento.event_dateandtime, entrada.entrada_shortDesc, entrada.entrada_vendidas, entrada.entrada_disponibles, entrada.entrada_max_disp, entrada.entrada_porcentajedeventas, entrada.entrada_precio, evento.event_imageUrl)}>
 
-                                            <div className="card" style={{ width: '100%', height: '85%', color: '#491a13ff' }}>
+                                            <div className="card" style={{ width: '100%', height: '85%', color: logoColor }}>
                                                 <div className="card-body d-flex align-items-center">
                                                     <div className='col-md-8 mt-2'>
                                                         <p className="fw-bold" style={{ lineHeight: '1', fontSize: '22px' }}>{entrada.entrada_name}</p>
@@ -304,7 +315,7 @@ export default function EntradasPage() {
                                                         <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={entrada.entrada_porcentajedeventas} aria-valuemin="0" aria-valuemax="100">
                                                             <div
                                                                 className="progress-bar"
-                                                                style={{ width: `${entrada.entrada_porcentajedeventas}%`, backgroundColor: '#491a13ff' }}
+                                                                style={{ width: `${entrada.entrada_porcentajedeventas}%`, backgroundColor: logoColor }}
                                                             >{entrada.entrada_porcentajedeventas + '%'}</div>
                                                         </div>
                                                         <p style={{ fontSize: '22px' }}>{'$' + Number(entrada.entrada_dinero_recaudado).toLocaleString('es-AR')}</p>
@@ -317,15 +328,15 @@ export default function EntradasPage() {
                                 {evento.tracking_tipo === 1 &&
                                     evento.reservas?.map((reserva, i) => {
                                         return (<div key={i} className={`col-md-${anchoColumna} d-flex align-items-center`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} onClick={() => fetchReservaTypeDetail(reserva.uuid, evento.tipo, reserva.nombre, evento.event_dateandtime, reserva.confirmadas, reserva.max_disponibilidad, reserva.porcentaje_reservado, reserva.campos, evento.event_imageUrl)}>
-                                            <div className="card" style={{ width: '100%', height: '100%', color: '#491a13ff' }}>
+                                            <div className="card" style={{ width: '100%', height: '100%', color: logoColor }}>
                                                 <div className="card-body d-flex align-items-center">
                                                     <div className='col-md-6 mt-2'>
                                                         <p className="fw-bold" style={{ lineHeight: '1', fontSize: '22px' }}>{reserva.nombre}</p>
                                                         <p style={{ fontSize: '22px' }}>{reserva.confirmadas + '/' + reserva.max_disponibilidad}</p>
-                                                        <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={reserva.porcentaje_reservado} aria-valuemin="0" aria-valuemax="100">
+                                                        <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example"aria-valuenow={reserva.porcentaje_reservado} aria-valuemin="0" aria-valuemax="100">
                                                             <div
                                                                 className="progress-bar"
-                                                                style={{ width: `${reserva.porcentaje_reservado}%` }}
+                                                                style={{ width: `${reserva.porcentaje_reservado}%`, backgroundColor:logoColor }}
                                                             >{reserva.porcentaje_reservado + '%'}</div>
                                                         </div>
                                                     </div>
@@ -334,7 +345,7 @@ export default function EntradasPage() {
                                                             return <div
 
                                                                 className="p-2 mb-1 mx-2"
-                                                                style={{ flex: '2 0 auto', gap: '2rem', border: '2px solid #491a13ff', borderRadius: '10px' }}
+                                                                style={{ flex: '2 0 auto', gap: '2rem', border: '2px solid '+logoColor, borderRadius: '10px' }}
                                                             >
                                                                 <span style={{ fontSize: '18px', fontWeight: 'light' }}>{campo.label}</span>
                                                             </div>
@@ -348,11 +359,11 @@ export default function EntradasPage() {
                                 {/*Evento gratis sin reserva*/}
                                 {evento.tracking_tipo === 2 && (
                                     <div key={'sin_resereva'} className={`col-md-8 d-flex align-items-center justify-content-center p-5`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
-                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column', color: logoColor }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> gratuito</span></span>
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}> sin</span> reservas</span>
                                         </div>
-                                        <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center', color: '#491a13ff' }} >
+                                        <div id="views-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center', color: logoColor }} >
                                             <OverlayTrigger
                                                 placement="top" // posición del tooltip
                                                 overlay={
@@ -362,11 +373,11 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: logoColor }} />
 
                                                 </span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -378,11 +389,11 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: logoColor }} />
 
                                                 </span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.shares}</span>
                                         </div>
                                     </div>
 
@@ -390,7 +401,7 @@ export default function EntradasPage() {
                                 {/*Evento de pago con link externo*/}
                                 {evento.tracking_tipo === 3 && (
                                     <div key={'sin_entradas_centr'} className={`col-md-8 d-flex align-items-center justify-content-center p-3`} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '1rem', marginBottom: '1rem' }} >
-                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column', color: '#491a13ff' }}>
+                                        <div style={{ position: 'absolute', right: '5rem', display: 'flex', flexDirection: 'column', color: logoColor }}>
                                             <span className='fw-light fs-4'> Evento <span style={{ fontWeight: 'bold' }}> pago</span></span>
                                             <span className='fw-light fs-4'><span style={{ fontWeight: 'bold' }}>ticketera</span> externa</span>
                                         </div>
@@ -402,7 +413,7 @@ export default function EntradasPage() {
                                                 <div
                                                     role="button"
                                                     tabIndex={0}
-                                                    style={{ color: '#491a13ff', cursor: 'pointer' }}
+                                                    style={{ color: logoColor, cursor: 'pointer' }}
                                                     onClick={() => fetchExternalTicketsLinkDetail(
                                                         evento.tipo,
                                                         evento.event_dateandtime,
@@ -411,7 +422,7 @@ export default function EntradasPage() {
                                                         evento.event_imageUrl
                                                     )}
                                                 >
-                                                    Link a las entradas:
+                                                    LINK A LAS ENTRADAS:
                                                     <span className="fw-bold fs-4 px-1">{evento.tickets_link}</span>
                                                 </div>
                                             </OverlayTrigger>
@@ -427,11 +438,11 @@ export default function EntradasPage() {
                                                         }
                                                     >
                                                         <span>
-                                                            <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                            <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: logoColor }} />
 
                                                         </span>
                                                     </OverlayTrigger>
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.views}</span>
                                                 </div>
                                                 <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
 
@@ -444,11 +455,11 @@ export default function EntradasPage() {
                                                         }
                                                     >
                                                         <span>
-                                                            <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                            <Icono className="bi bi-send" style={{ fontSize: '2rem', color: logoColor }} />
                                                         </span>
 
                                                     </OverlayTrigger>
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.shares}</span>
                                                 </div>
                                                 <div id="external-link-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                                     <OverlayTrigger
@@ -460,10 +471,10 @@ export default function EntradasPage() {
                                                         }
                                                     >
                                                         <span>
-                                                            <Icono className="bi bi-hand-index" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                            <Icono className="bi bi-hand-index" style={{ fontSize: '2rem', color: logoColor }} />
                                                         </span>
                                                     </OverlayTrigger>
-                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
+                                                    <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.shares}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -481,10 +492,10 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                    <Icono className="bi bi-eye-fill" style={{ fontSize: '2rem', color: logoColor }} />
                                                 </span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.views}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.views}</span>
                                         </div>
                                         <div id="shares-block" style={{ display: "flex", flexDirection: "row", marginLeft: '2rem', justifyContent: 'center', alignItems: 'center' }} >
                                             <OverlayTrigger
@@ -496,17 +507,17 @@ export default function EntradasPage() {
                                                 }
                                             >
                                                 <span>
-                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: '#491a13ff' }} />
+                                                    <Icono className="bi bi-send" style={{ fontSize: '2rem', color: logoColor }} />
                                                 </span>
                                             </OverlayTrigger>
-                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: '#491a13ff' }}> {evento.shares}</span>
+                                            <span className=' px-4' style={{ fontSize: "1.5rem", fontWeight: 'light', color: logoColor }}> {evento.shares}</span>
                                         </div>
                                         <span
                                             role="button"
                                             onClick={() => toggleExpandTickets(evento.event_uuid, evento.tipo, evento.tracking_tipo)}
                                             style={{ cursor: 'pointer', marginLeft: '2rem' }}
                                         >
-                                            <Icono className="bi bi-chevron-down" style={{ fontSize: '1.5rem', color: '#491a13ff' }} />
+                                            <Icono className="bi bi-chevron-down" style={{ fontSize: '1.5rem', color: logoColor }} />
                                         </span>
 
                                     </div>)}
@@ -545,7 +556,7 @@ export default function EntradasPage() {
                                                         </td>
                                                         <td>{'$' + Number(ticket.precio).toLocaleString('es-AR')}</td>
                                                         <td>
-                                                            <input className="form-check-input p-3" type="checkbox" checked={ticket.status === 1} id="checkDefault" style={{ accentColor: '#red' }} /*onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)}*/ />
+                                                            <input className="form-check-input p-3" type="checkbox" checked={ticket.status === 1} id="checkDefault" style={{ accentColor: '#red' }} onChange={(e) => handleStatusTicketChange(e)} />
                                                         </td>
 
                                                         <td>
@@ -554,7 +565,7 @@ export default function EntradasPage() {
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                             >
-                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem', color: '#FA7239' }}></i>
+                                                                <i className="bi bi-qr-code px-2" style={{ fontSize: '1.5rem', color: orangeColor }}></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -590,7 +601,7 @@ export default function EntradasPage() {
                                                                             <td className="text-uppercase" key={i}>{valor}</td>
                                                                         ))}
                                                                         <td>
-                                                                            <input className="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{ accentColor: '#red' }} onChange={(e) => handleStatusChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
+                                                                            <input className="form-check-input p-3" type="checkbox" checked={reserva.status === 1} id="checkDefault" style={{ accentColor: '#red' }} onChange={(e) => handleStatusReservaChange(evento.event_uuid, nombreFormulario, reserva.uuid, e.target.checked)} />
                                                                         </td>
                                                                     </tr>
                                                                 ))}

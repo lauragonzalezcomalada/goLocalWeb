@@ -1,7 +1,7 @@
 
 
 
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor, orangeColor, orangeColorLight } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor, orangeColor, orangeColorLight, cardColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { useContext } from 'react'
@@ -16,6 +16,7 @@ import TagChip from './TagChip.jsx';
 import { useLocation } from 'react-router-dom';
 
 import ojitos_gif from './assets/ojitos.gif';
+import soloCarita from './assets/solocarita.png';
 
 export default function CrearEventoFromScratch() {
 
@@ -53,7 +54,9 @@ export default function CrearEventoFromScratch() {
         startTime: '',
         endTime: '',
         urlCompraEntradas: '',
-        imagen: null, // Para manejar la imagen subida
+        imagen: null,
+        aLaGorra: null,
+        recommendedAmount: ''
     });
 
     if (uuid) {
@@ -68,6 +71,7 @@ export default function CrearEventoFromScratch() {
                         },
                     })
                     var data = await response.json()
+                    console.log('data: ', data)
                     if (response.status === 401) {
                         console.log('response status = 401')
                         // intentamos refrescar
@@ -85,7 +89,7 @@ export default function CrearEventoFromScratch() {
                         }
                     }
                     setFormData({
-                        tipoEvento: data.tipoEvento,
+                        tipoEvento: data.tipoEvento.toString(),
                         titulo: data.values.nombre,
                         shortDesc: data.values.shortDesc,
                         descripcion: data.values.descripcion,
@@ -100,8 +104,8 @@ export default function CrearEventoFromScratch() {
 
                     if (data?.values?.reservas_forms?.length > 0) {
                         const nuevasReservas = data.values.reservas_forms.map((reserva_form) => ({
-                            tipoReserva: reserva_form.nombre,
-                            cantidad: reserva_form.max_disponibilidad,
+                            tipoReserva: reserva_form.tipoReserva,
+                            cantidad: reserva_form.cantidad,
                             campos: reserva_form.campos?.map(campo => ({
                                 uuid: campo.uuid,
                                 label: campo.label
@@ -187,11 +191,6 @@ export default function CrearEventoFromScratch() {
         setMostrarNuevaReserva(false); // Oculta el form sin guardar
     }
 
-    const handleRedirectToCompraBono = () => {
-        setShowModalFreePlanes(false);
-        navigate("/comprarBono"); // redirigir a la página de compra de bonos
-    };
-
 
 
     useEffect(() => {
@@ -217,7 +216,6 @@ export default function CrearEventoFromScratch() {
     };
 
     const validate = () => {
-        console.log('validate')
         let newErrors = {};
 
         if (!formData.tipoEvento) newErrors.tipoEvento = 'Selecciona un tipo de evento';
@@ -227,6 +225,7 @@ export default function CrearEventoFromScratch() {
         if (!formData.startTime) newErrors.startTime = 'Campo obligatorio';
         if (formData.tipoEvento === '1' && !formData.endTime) newErrors.endTime = 'Campo obligatorio';
         if (esGratis === null) newErrors.gratis = 'Campo obligatorio';
+        if (esGratis === true && formData.aLaGorra === null) newErrors.aLaGorra = 'Campo obligatorio';
         if (esGratis === true && necesitaReserva === null) newErrors.necesitaReserva = 'Campo obligatorio';
         if (esGratis === false && centralizarEntradas === null) newErrors.centralizarEntradas = 'Campo obligatorio';
         if (esGratis === true && necesitaReserva === true && reservas.length === 0) {
@@ -266,6 +265,12 @@ export default function CrearEventoFromScratch() {
         formDataToSend.append('lat', ubicacion.lat);
         formDataToSend.append('lng', ubicacion.lng);
         formDataToSend.append('direccion', ubicacion.direccion);
+        formDataToSend.append('aLaGorra', formData.aLaGorra);
+
+        if (formData.recommendedAmount !== '' && formData.recommendedAmount !== null && formData.recommendedAmount !== undefined) {
+            formDataToSend.append('recommendedAmount', formData.recommendedAmount);
+        }
+
 
         // Imagen
         if (formData.imagen) {
@@ -292,7 +297,7 @@ export default function CrearEventoFromScratch() {
         }
         try {
 
-            setIsLoading(true); 
+            setIsLoading(true);
             var response = await fetch(`${API_BASE_URL}/createevent/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
@@ -304,12 +309,10 @@ export default function CrearEventoFromScratch() {
 
             var result = await response.json();
             if (response.status === 401) {
-                console.log('response status = 401')
-                // intentamos refrescar
-                const newAccessToken = await refreshTokenIfNeeded()
-                if (!newAccessToken) return // no se pudo refrescar
 
-                // reintentamos con token nuevo
+                const newAccessToken = await refreshTokenIfNeeded()
+                if (!newAccessToken) return
+
                 response = await fetch(`${API_BASE_URL}/createevent/`, {
                     headers: {
                         Authorization: `Bearer ${newAccessToken}`
@@ -331,9 +334,9 @@ export default function CrearEventoFromScratch() {
 
         } catch (error) {
             console.error('Error al enviar:', error);
-        }finally {
-    setIsLoading(false); 
-  }
+        } finally {
+            setIsLoading(false);
+        }
 
 
         if (createTemplate === true) {
@@ -374,7 +377,10 @@ export default function CrearEventoFromScratch() {
                     console.log('response status = 401')
                     // intentamos refrescar
                     const newAccessToken = await refreshTokenIfNeeded()
-                    if (!newAccessToken) return // no se pudo refrescar
+                    if (!newAccessToken) {
+                        console.log('no se puede referscar el token');
+                        return;
+                    } // no se pudo refrescar
 
                     // reintentamos con token nuevo
                     response = await fetch(`${API_BASE_URL}/templates/`, {
@@ -398,9 +404,9 @@ export default function CrearEventoFromScratch() {
 
             } catch (error) {
                 console.error('Error al enviar:', error);
-            }finally {
-    setIsLoading(false); 
-  }
+            } finally {
+                setIsLoading(false);
+            }
         }
 
         if (response.status === 201) {
@@ -409,12 +415,12 @@ export default function CrearEventoFromScratch() {
     };
 
 
-    return <div style={{ backgroundColor: backgroundColor, paddingTop: '56px', width: '100%', height: 'calc(100vh-56px)' }}>
+    return <div style={{ backgroundColor: backgroundColor, paddingTop: '56px', width: '100%', paddingBottom: '5vh', marginRight: '5vw', height: 'calc(100vh-56px)' }}>
         <Form /* onSubmit={handleSubmit} */ className="d-flex align-items-center w-100 px-0 mt-3 g-0" style={{ height: '100%' }}>
-            <div className="w-50 " style={{ marginLeft: '100px', paddingTop: '50px' }}>
+            <div className="w-50 " style={{ marginLeft: '5vw', paddingTop: '50px' }}>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row' }}>
-                    <Form.Label className='fs-4' style={{color:logoColor}}>¿Qué tipo de evento es?</Form.Label>
-                    <Form.Select name="tipoEvento" value={formData.tipoEvento} onChange={handleChange} isInvalid={!!errors.tipoEvento} className='fs-4' style={{color:logoColor}}>
+                    <Form.Label className='fs-4' style={{ color: logoColor, fontWeight: 800 }}>¿Qué tipo de evento es?</Form.Label>
+                    <Form.Select name="tipoEvento" value={formData.tipoEvento} onChange={handleChange} isInvalid={!!errors.tipoEvento} className='fs-4' style={{ color: logoColor }}>
                         <option value="">Tipo de evento</option>
                         <option value="0">Plan</option>
                         <option value="1">Promo</option>
@@ -425,10 +431,10 @@ export default function CrearEventoFromScratch() {
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fs-4'style={{color:logoColor}}>Título</Form.Label>
+                <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px', fontWeight: 800 }}>
+                    <Form.Label className='mt-2 fs-4' style={{ color: logoColor }}>Título</Form.Label>
                     <Form.Control
-                        className='fs-4' style={{color:logoColor}}
+                        className='fs-4' style={{ color: logoColor }}
                         type="text"
                         name="titulo"
                         value={formData.titulo}
@@ -440,9 +446,9 @@ export default function CrearEventoFromScratch() {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fs-4' style={{color:logoColor}}>Descripción corta</Form.Label>
+                    <Form.Label className='mt-2 fs-4' style={{ color: logoColor, fontWeight: 800 }}>Descripción corta</Form.Label>
                     <Form.Control
-                    className='fs-4' style={{color:logoColor}}
+                        className='fs-4' style={{ color: logoColor }}
                         type="text"
                         name="shortDesc"
                         value={formData.shortDesc}
@@ -451,10 +457,10 @@ export default function CrearEventoFromScratch() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fs-4' style={{color:logoColor}}>Descripción del evento</Form.Label>
+                    <Form.Label className='mt-2 fs-4' style={{ color: logoColor, fontWeight: 800 }}>Descripción del evento</Form.Label>
                     <Form.Control
                         as="textarea"
-                        className='fs-4' style={{color:logoColor}}
+                        className='fs-4' style={{ color: logoColor }}
                         name="descripcion"
                         rows={6}
                         value={formData.descripcion}
@@ -467,11 +473,11 @@ export default function CrearEventoFromScratch() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='fs-4' style={{color:logoColor}}>Fecha del evento</Form.Label>
+                    <Form.Label className='fs-4' style={{ color: logoColor, fontWeight: 800 }}>Fecha del evento</Form.Label>
                     <Form.Control
                         type="date"
                         name="fecha"
-                        className='fs-4' style={{color:logoColor}}
+                        className='fs-4' style={{ color: logoColor }}
                         value={formData.fecha}
                         onChange={handleChange}
                         isInvalid={!!errors.fecha}
@@ -482,11 +488,11 @@ export default function CrearEventoFromScratch() {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='fs-4' style={{color:logoColor}}>Hora del evento</Form.Label>
+                    <Form.Label className='fs-4' style={{ color: logoColor, fontWeight: 800 }}>Hora del evento</Form.Label>
                     <Form.Control
                         type="time"
                         name="startTime"
-                        className='fs-4' style={{color:logoColor}}
+                        className='fs-4' style={{ color: logoColor }}
                         value={formData.startTime}
                         onChange={handleChange}
                         isInvalid={!!errors.startTime}
@@ -500,8 +506,8 @@ export default function CrearEventoFromScratch() {
 
                 {formData.tipoEvento === '1' && (
                     <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <Form.Label className='fs-4' style={{color:logoColor}}>Hora de fin de la promo</Form.Label>
-                        <Form.Control type="time" name="endTime" value={formData.endTime} className='fs-4' style={{color:logoColor}} onChange={handleChange} isInvalid={!!errors.endTime} />
+                        <Form.Label className='fs-4' style={{ color: logoColor, fontWeight: 800 }}>Hora de fin de la promo</Form.Label>
+                        <Form.Control type="time" name="endTime" value={formData.endTime} className='fs-4' style={{ color: logoColor }} onChange={handleChange} isInvalid={!!errors.endTime} />
                         <Form.Control.Feedback type="invalid">
                             {errors.endTime}
                         </Form.Control.Feedback>
@@ -532,12 +538,12 @@ export default function CrearEventoFromScratch() {
                     <div className="form-check form-switch" style={{ position: 'absolute', right: '2rem' }}>
                         <input className="form-check-input"
                             type="checkbox" role="switch"
-                            id="switchCheckDefault" style={{ fontSize: '25px', backgroundColor:orangeColor, borderColor:'transparent'}}
+                            id="switchCheckDefault" style={{ fontSize: '25px', backgroundColor: orangeColor, borderColor: 'transparent' }}
 
                             checked={createTemplate}
                             onChange={handleCreateTemplateChange}
                         />
-                        <label className="form-check-label fs-4" htmlFor="switchCheckDefault" style={{color:logoColor}}>Crear plantilla de este evento</label>
+                        <label className="form-check-label fs-4" htmlFor="switchCheckDefault" style={{ color: logoColor }}>Crear plantilla de este evento</label>
                     </div>
                 </div>
 
@@ -555,25 +561,25 @@ export default function CrearEventoFromScratch() {
                         alignItems: 'center',
                     }}
                 >
-                    <Form.Label className="fs-4" style={{color:logoColor, fontWeight:800}}>Subí una imagen</Form.Label>
+                    <Form.Label className="fs-4" style={{ color: logoColor, fontWeight: 800 }}>Subí una imagen</Form.Label>
                     <Form.Control
                         type="file"
                         name="imagen"
-                        className='fs-5' style={{backgroundColor:backgroundColor,color:logoColor,maxWidth: '300px'}}
+                        className='fs-5' style={{ backgroundColor: backgroundColor, color: logoColor, maxWidth: '300px' }}
 
                         onChange={(e) =>
                             setFormData({ ...formData, imagen: e.target.files[0] })
                         }
-                       
+
                     />
                 </Form.Group>
                 {formData.tipoEvento === '0' && (
                     <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <Form.Label className='mt-2 fs-4' style={{color:logoColor, fontWeight:800}}>¿Es gratis?</Form.Label>
+                        <Form.Label className='mt-2 fs-4' style={{ color: logoColor, fontWeight: 800 }}>¿Es gratis o a la gorra?</Form.Label>
                         <div className="d-flex gap-5 align-items-center">
                             <Form.Check
                                 type="radio"
-                                label={<span className="fs-4" style={{ marginLeft: '10px', paddingTop: '3rem', color:logoColor }}>SÍ</span>}
+                                label={<span className="fs-4" style={{ marginLeft: '10px', paddingTop: '3rem', color: logoColor }}>SÍ</span>}
                                 name="gratis"
                                 value="si"
                                 checked={esGratis === true}
@@ -582,7 +588,7 @@ export default function CrearEventoFromScratch() {
                             />
                             <Form.Check
                                 type="radio"
-                                label={<span className="fs-4" style={{ marginLeft: '20px', paddingTop: '3rem' , color:logoColor}}>NO</span>}
+                                label={<span className="fs-4" style={{ marginLeft: '20px', paddingTop: '3rem', color: logoColor }}>NO</span>}
                                 name="gratis"
                                 value="pago"
                                 checked={esGratis === false}
@@ -592,18 +598,76 @@ export default function CrearEventoFromScratch() {
                             />
 
                         </div>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.gratis}
-                        </Form.Control.Feedback>
+                        {errors.gratis && (
+                            <Form.Control.Feedback
+                                type="invalid"
+                                style={{ display: 'block', fontSize: '0.9rem' , marginLeft:'1rem'}}
+                            >
+                                {errors.gratis}
+                            </Form.Control.Feedback>
+                        )}
 
                     </Form.Group>)}
+                {formData.tipoEvento === '0' && esGratis === true && (
+                    <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px', alignItems:'center' }}>
+                        <Form.Label className='mt-2 fs-4' style={{ color: logoColor, fontWeight: 800 }}>¿A la gorra?</Form.Label>
+                        <div className="d-flex gap-5 align-items-center">
+                            <Form.Check
+                                type="radio"
+                                label={<span className="fs-4" style={{ marginLeft: '10px', paddingTop: '3rem', color: logoColor }}>SÍ</span>}
+                                name="aLaGorra"
+                                value='true'
+                                checked={formData.aLaGorra === 'true'}
+                                onChange={handleChange}
+                                isInvalid={!!errors.aLaGorra}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label={<span className="fs-4" style={{ marginLeft: '20px', paddingTop: '3rem', color: logoColor }}>NO</span>}
+                                name="aLaGorra"
+                                value="false"
+                                checked={formData.aLaGorra === 'false'}
+                                onChange={handleChange}
+                                isInvalid={!!errors.aLaGorra}
+                            />
 
-                {esGratis === true && formData.tipoEvento !== '2' && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fs-4' style={{fontWeight:800, color:logoColor}}>¿Se necesita hacer una reserva?</Form.Label>
+                        </div>
+                        {errors.aLaGorra && (
+                            <Form.Control.Feedback
+                                type="invalid"
+                                style={{ display: 'block', fontSize: '0.9rem' , marginLeft:'1rem'}}
+                            >
+                                {errors.aLaGorra}
+                            </Form.Control.Feedback>
+                        )}
+
+                    </Form.Group>)}
+                {formData.tipoEvento === '0' && esGratis === true && formData.aLaGorra == 'true' && (
+                    <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1', display: 'flex', justifyContent:'space-between', gap: '20px', fontWeight: 800 }}>
+                        <Form.Label className='mt-2 fs-4' style={{ color: logoColor }}>¿Algún valor recomendado?</Form.Label>
+                        <Form.Control
+                            className='fs-4' style={{ color: logoColor , width: '20vw'}}
+                            type="number"
+                            name="recommendedAmount"
+                            value={formData.recommendedAmount}
+                            onChange={handleChange}
+                            isInvalid={!!errors.recommendedAmount}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.recommendedAmount}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+
+                )}
+
+
+
+                {esGratis === true && formData.tipoEvento !== '2' && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' , alignItems:'center'}}>
+                    <Form.Label className='mt-2 fs-4' style={{ fontWeight: 800, color: logoColor }}>¿Se necesita hacer una reserva?</Form.Label>
                     <div className="d-flex gap-5 align-items-center">
                         <Form.Check
                             type="radio"
-                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>SÍ</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color: logoColor }}>SÍ</span>}
                             name="reserva"
                             value="conReserva"
                             checked={necesitaReserva === true}
@@ -612,7 +676,7 @@ export default function CrearEventoFromScratch() {
                         />
                         <Form.Check
                             type="radio"
-                            label={<span className="fs-4" style={{ marginLeft: '20px',color:logoColor }}>NO</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color: logoColor }}>NO</span>}
                             name="reseva"
                             value="sinReserva"
                             checked={necesitaReserva === false}
@@ -621,19 +685,24 @@ export default function CrearEventoFromScratch() {
                         />
 
                     </div>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.necesitaReserva}
-                    </Form.Control.Feedback>
+                   {errors.necesitaReserva && (
+                            <Form.Control.Feedback
+                                type="invalid"
+                                style={{ display: 'block', fontSize: '0.9rem' , marginLeft:'1rem'}}
+                            >
+                                {errors.necesitaReserva}
+                            </Form.Control.Feedback>
+                        )}
                 </Form.Group>
 
 
                 )}
-                {esGratis === false && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <Form.Label className='mt-2 fs-4' style={{fontWeight:800, color:logoColor}} >¿Quieres centralizar las entradas con GoLocal?</Form.Label>
+                {esGratis === false && (<Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1', display: 'flex', flexDirection: 'row', gap: '20px', alignItems:'center' }}>
+                    <Form.Label className='mt-2 fs-4' style={{ fontWeight: 800, color: logoColor }} >¿Quieres centralizar las entradas con GoLocal?</Form.Label>
                     <div className="d-flex gap-5 align-items-center">
                         <Form.Check
                             type="radio"
-                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>SÍ, quiero centralizar</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color: logoColor }}>SÍ, quiero centralizar</span>}
                             name="controlarEntradas"
                             value="si"
                             checked={centralizarEntradas === true}
@@ -642,7 +711,7 @@ export default function CrearEventoFromScratch() {
                         />
                         <Form.Check
                             type="radio"
-                            label={<span className="fs-4" style={{ marginLeft: '20px', color:logoColor }}>NO, quiero seguir usando mi ticketera</span>}
+                            label={<span className="fs-4" style={{ marginLeft: '20px', color: logoColor }}>NO, quiero seguir usando mi ticketera</span>}
                             name="controlarEntradas"
                             value="no"
                             checked={centralizarEntradas === false}
@@ -651,9 +720,14 @@ export default function CrearEventoFromScratch() {
                         />
 
                     </div>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.centralizarEntradas}
-                    </Form.Control.Feedback>
+                    {errors.centralizarEntradas && (
+                            <Form.Control.Feedback
+                                type="invalid"
+                                style={{ display: 'block', fontSize: '0.9rem' , marginLeft:'1rem'}}
+                            >
+                                {errors.centralizarEntradas}
+                            </Form.Control.Feedback>
+                        )}
                 </Form.Group>)}
 
                 {centralizarEntradas === false && (
@@ -684,13 +758,13 @@ export default function CrearEventoFromScratch() {
                         style={{ width: '95%', backgroundColor: orangeColorLight, borderRadius: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
                         <div className="d-flex flex-column" style={{ flex: 1 }}>
-                            <p className="mb-1" style={{fontSize:'30px', fontWeight:800, color:logoColor}}> <strong>{entrada.nombre.toUpperCase()}</strong></p>
-                            <p className="mb-1" style={{fontSize:'25px', color:logoColor, fontWeight:300}}>{entrada.descripcion}</p>
+                            <p className="mb-1" style={{ fontSize: '30px', fontWeight: 800, color: logoColor }}> <strong>{entrada.nombre.toUpperCase()}</strong></p>
+                            <p className="mb-1" style={{ fontSize: '25px', color: logoColor, fontWeight: 300 }}>{entrada.descripcion}</p>
 
 
                         </div>
 
-                        <span style={{fontSize:'30px',color:logoColor, fontWeight:300}}>Precio: <span style={{fontWeight:800}}> ${entrada.precio}</span> | Cantidad:<span style={{fontWeight:800}}>  {entrada.cantidad}</span></span>
+                        <span style={{ fontSize: '30px', color: logoColor, fontWeight: 300 }}>Precio: <span style={{ fontWeight: 800 }}> ${entrada.precio}</span> | Cantidad:<span style={{ fontWeight: 800 }}>  {entrada.cantidad}</span></span>
                     </div>
                 ))}
 
@@ -704,7 +778,7 @@ export default function CrearEventoFromScratch() {
                             lineHeight: '1.3',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             borderRadius: '10px',
-                            border: !!errors.entradas ? '2px solid black' : '2px solid '+logoColor,
+                            border: !!errors.entradas ? '2px solid black' : '2px solid ' + logoColor,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -715,7 +789,7 @@ export default function CrearEventoFromScratch() {
 
                     >
                         <i className="bi bi-plus-lg" style={{ color: !!errors.entradas ? 'black' : logoColor }}></i>
-                        <span style={{ color: !!errors.entradas ? 'black' : logoColor,fontSize:'25px', fontWeight:800}}>CREAR NUEVA ENTRADA</span>
+                        <span style={{ color: !!errors.entradas ? 'black' : logoColor, fontSize: '25px', fontWeight: 800 }}>CREAR NUEVA ENTRADA</span>
 
                     </div>
                 )}
@@ -731,15 +805,15 @@ export default function CrearEventoFromScratch() {
                         style={{ width: '95%', backgroundColor: orangeColorLight, borderRadius: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                     >
                         <div className="d-flex flex-column" style={{ flex: 3 }}>
-                            <p className="mb-1"><span style={{ marginRight: '10px', color:logoColor, fontSize:'20px', fontWeight:400 }}>TIPO DE RESERVA: </span><span style={{color:logoColor, fontWeight:800, fontSize:'30px'}}>{reserva.tipoReserva.toUpperCase()}</span></p>
-                            <p className="mb-1" style={{fontWeight:400, fontSize:'20px', color:logoColor}}>CANTIDAD: <span style={{color:logoColor, fontWeight:800, fontSize:'25px'}}>{reserva.cantidad}</span></p>
+                            <p className="mb-1"><span style={{ marginRight: '10px', color: logoColor, fontSize: '20px', fontWeight: 400 }}>TIPO DE RESERVA: </span><span style={{ color: logoColor, fontWeight: 800, fontSize: '30px' }}>{reserva.tipoReserva.toUpperCase()}</span></p>
+                            <p className="mb-1" style={{ fontWeight: 400, fontSize: '20px', color: logoColor }}>CANTIDAD: <span style={{ color: logoColor, fontWeight: 800, fontSize: '25px' }}>{reserva.cantidad}</span></p>
                         </div>
 
                         <div className="d-flex flex-column" style={{ flex: 2 }}>
-                            <p className="mb-1" style={{fontWeight:400, fontSize:'20px', color:logoColor}}>CAMPOS PERSONALIZADOS:</p>
+                            <p className="mb-1" style={{ fontWeight: 400, fontSize: '20px', color: logoColor }}>CAMPOS PERSONALIZADOS:</p>
                             <ul>
                                 {reserva.campos.map((campo, idx) => (
-                                    <li key={idx} style={{fontSize:'18px', color:logoColor, fontWeight:800}}>
+                                    <li key={idx} style={{ fontSize: '18px', color: logoColor, fontWeight: 800 }}>
                                         {campo.label.toUpperCase()}
                                     </li>
                                 ))}
@@ -777,7 +851,7 @@ export default function CrearEventoFromScratch() {
                             lineHeight: '1.3',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             borderRadius: '10px',
-                            border: !!errors.reservas ? '2px solid black' : '2px solid '+logoColor,
+                            border: !!errors.reservas ? '2px solid black' : '2px solid ' + logoColor,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -789,15 +863,214 @@ export default function CrearEventoFromScratch() {
 
                     >
                         <i className="bi bi-plus-lg" style={{ color: !!errors.reservas ? 'black' : logoColor }}></i>
-                        <span style={{ color: !!errors.reservas ? 'black' : logoColor , fontSize:'25px', fontWeight:800}}>CREAR NUEVO FORMULARIO DE RESERVA</span>
+                        <span style={{ color: !!errors.reservas ? 'black' : logoColor, fontSize: '25px', fontWeight: 800 }}>CREAR NUEVO FORMULARIO DE RESERVA</span>
 
                     </div>
                 )}
                 {/* Formulario de nueva entrada */}
                 {(necesitaReserva === true && mostrarNuevaReserva) && <CreadorReservas onGuardar={guardarReserva} onCancelar={cancelarReserva} />}
 
+                {/* <div style={{marginLeft:'5vw', overflow:'hidden', borderRadius:'20px', width:'80%', border:'2px solid red', height:'35vh', display: 'flex', flexDirection:'column'}}>
 
-                <button className='mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', width: 'window.innerWidth * 0.80', height: '5rem', position: 'absolute', right: '25px', backgroundColor: logoColor, fontSize: '40px', fontWeight: 300, display: 'flex', color:backgroundColor,justifyContent: 'center', alignItems: 'center' }} type="submit">
+                <div style={{flex:1, height:'18vh'}}>
+                     {formData.imagen != null && (
+                        <img src={formData.imagen} style={{width:'100%', height:'auto', boxFit:'cover', justifyContent:'center'}}></img>
+                     )}
+                     {formData.imagen == null && (
+                        <img src={soloCarita}></img>
+                     )}
+                </div>
+                <div style={{flex:1,backgroundColor:logoColor, height:'100% '}}>parte inferior </div>
+
+                </div> */}
+
+                <div
+                    style={{
+                        width: "80%",
+                        minHeight: "22vh",
+                        margin: "1rem auto",
+                        display: "flex",
+                        borderRadius: '20px',
+                        flexDirection: "column",
+                    }}
+                >
+                    <div style={{ position: "relative" }}>
+                        <div
+                            style={{
+                                height: "11vh",
+                                width: "100%",
+                                borderTopLeftRadius: "20px",
+                                borderTopRightRadius: "20px",
+                                overflow: "hidden",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        ><img
+                                src={
+                                    formData.imagen
+                                        ? typeof formData.imagen === "string"
+                                            ? formData.imagen // si viene del backend (URL)
+                                            : URL.createObjectURL(formData.imagen) // si es File recién cargado
+                                        : soloCarita // fallback por defecto
+                                }
+                                alt="plan"
+                                style={{
+                                    width: formData.imagen
+                                        ? "100%" : 'auto',
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    display: "block",
+                                    alignSelf: 'center'
+                                }}
+                            />
+
+                        </div>
+
+                        {/* Etiqueta “GRATIS” */}
+                        {esGratis && formData.tipoEvento !== "2" && (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    padding: "2px 8px",
+                                    backgroundColor: "rgba(255,255,255,0.7)",
+                                    border: `2px solid ${logoColor}`,
+                                    borderRadius: "12px",
+                                }}
+                            >
+                                <span style={{ fontSize: "15px" }}>GRATIS</span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div
+                        style={{
+                            backgroundColor: cardColor,
+                            borderBottomLeftRadius: "20px",
+                            borderBottomRightRadius: "20px",
+                            minHeight: "11vh",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "8px",
+                        }}
+                    >
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                width: "100%",
+                            }}
+                        >
+
+
+                            {formData.fecha ? (
+                                <div
+                                    style={{
+                                        width: "70px",
+                                        height: "90px",
+                                        borderRadius: "16px",
+                                        backgroundColor: "rgba(0,0,0,0.5)",
+                                        color: "white",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginRight: "8px",
+                                        lineHeight: 1,
+                                    }}
+                                >
+                                    <span style={{ fontSize: "30px", fontWeight: 500 }}>
+                                        {new Date(`${formData.fecha}T${formData.startTime || new Date().toTimeString().slice(0, 5)}:00`).toLocaleDateString("es-AR", {
+                                            day: "2-digit",
+                                        })}
+                                    </span>
+                                    <span style={{ fontSize: "20px", fontWeight: 600 }}>
+                                        {new Date(`${formData.fecha}T${formData.startTime || new Date().toTimeString().slice(0, 5)}:00`).toLocaleDateString("es-AR", {
+                                            month: "short",
+                                        }).toUpperCase()}
+                                    </span>
+                                    <span style={{ fontSize: "20px", fontWeight: 600 }}>
+                                        {new Date(`${formData.fecha}T${formData.startTime || new Date().toTimeString().slice(0, 5)}:00`).toLocaleTimeString("es-AR", {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            hour12: false
+                                        })}
+                                    </span>
+                                </div>
+                            ) : (
+                                <div
+                                    style={{
+                                        width: "70px",
+                                        height: "90px",
+                                        borderRadius: "16px",
+                                        backgroundColor: "rgba(0,0,0,0.5)",
+                                        color: "white",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginRight: "8px",
+                                        lineHeight: 1,
+                                    }}
+                                >
+                                    <span style={{ fontSize: "30px" }}>DIA</span>
+                                    <span style={{ fontSize: "20px" }}>MES</span>
+                                    <span style={{ fontSize: "20px" }}>HORA</span>
+                                </div>
+                            )}
+
+                            {/* 📝 Texto del plan */}
+                            <div style={{ flex: 1 }}>
+                                <div
+                                    style={{
+                                        fontSize: "25px",
+                                        fontWeight: 700,
+                                        overflowWrap: "break-word",
+                                    }}
+                                >
+                                    {formData.titulo || "Título del plan"}
+                                </div>
+                                <div style={{ fontSize: "20px", fontWeight: 400 }}>
+                                    {formData.shortDesc || "Descripción breve"}
+                                </div>
+
+                                {selectedTags && selectedTags.length > 0 && (
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            flexWrap: "wrap",
+                                            gap: "4px",
+                                            marginTop: "5px",
+                                        }}
+                                    >
+                                        {tags
+                                            ?.filter((tag) => selectedTags.includes(tag.id))
+                                            .map((tag, i) => (
+                                                <div
+                                                    key={i}
+                                                    style={{
+                                                        padding: "2px 6px",
+                                                        backgroundColor: "rgba(255,255,255,0.8)",
+                                                        border: `1.5px solid ${logoColor}`,
+                                                        borderRadius: "10px",
+                                                        fontSize: "12px",
+                                                        color: logoColor,
+                                                    }}
+                                                >
+                                                    {tag.name}
+                                                </div>
+                                            ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button className='mt-3' onClick={submitCrearEvento} style={{ padding: '1rem 2rem', borderRadius: '20px', width: 'window.innerWidth * 0.80', height: '5rem', position: 'absolute', right: '25px', backgroundColor: logoColor, fontSize: '40px', fontWeight: 300, display: 'flex', color: backgroundColor, justifyContent: 'center', alignItems: 'center' }} type="submit">
                     CREAR TU EVENTO
                 </button>
 
@@ -805,7 +1078,7 @@ export default function CrearEventoFromScratch() {
             </div>
 
 
-        </Form>
+        </Form >
         {isLoading && (
             <div
                 style={{
@@ -823,7 +1096,8 @@ export default function CrearEventoFromScratch() {
             >
                 <img src={ojitos_gif} style={{ width: '150px', height: '150px' }} />
             </div>
-        )}
+        )
+        }
 
-    </div>;
+    </div >;
 }

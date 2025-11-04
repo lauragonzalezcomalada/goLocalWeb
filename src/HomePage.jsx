@@ -1,7 +1,7 @@
 import screenshot from './assets/videopresentacio.mov';
 import caritaVino from './assets/vinitopainted.png';
-import solocarita from './assets/cine_chatgpt.png';
-import caritaDeportista from './assets/deportista_chatgpt.png';
+import plantilles from './assets/plantilles.png';
+import aLaGorra from './assets/aLaGorra.png';
 
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
@@ -35,9 +35,8 @@ export default function HomePage() {
 
       <div style={{ height: 'calc(100vh - 18vh)', width: '100%', position: 'relative' }}>
         <div style={{ height: '100%', width: '100%' }}>
-          <div style={{ position: 'absolute', width: '100%', top: '25%', left: '5%', zIndex: 1, maxWidth: '65vw' }}>
+          <div style={{ position: 'absolute', width: '100%',marginTop:'10vh', left: '5%', zIndex: 1, maxWidth: '65vw' }}>
             <div style={{ color: logoColor, fontSize: '70px', fontWeight: 400 }}>
-              {/* La nueva manera para encontrar eso que no sabías que querías! */}
               Publicitá, administrá y vendé tus entradas.<br />
               ¡Todo en la misma plataforma!
             </div>
@@ -60,9 +59,9 @@ export default function HomePage() {
 
           </div>
 
-          <div style={{ position: 'absolute', top: '5%', right: '10%', zIndex: 1, color: 'white', border: '6px solid black', borderRadius: '20px' }}>
+          <div style={{  height: '70vh',position: 'absolute', top: '7.5%', right: '10%', zIndex: 1, color: 'white', border: '4px solid black', borderRadius: '22px' }}>
             <video
-              style={{ height: '70vh', width: 'auto', borderRadius: '20px' }}
+              style={{ height: '100%', width: 'auto', borderRadius: '20px' }}
               src={screenshot}
               autoPlay
               loop
@@ -98,12 +97,21 @@ export default function HomePage() {
           backgroundColor: orangeColorLight,
           color: 'white',
           padding: '2% 10%',
-          display: 'inline'
+          display: 'flex',
+          flexDirection:'row',
+          justifyContent:'center',
+          alignItems:'center'
+
 
 
         }}
       >
-      XXX
+        <img src={plantilles} style={{width:'50vw'}}/>
+
+        <div className = 'px-5' style={{fontSize:'40px', color:'white', fontWeight:400}}>
+          Creá plantillas de tus planes habituales, facilita y optimiza tu proceso de publicación!
+
+        </div>
       </div>
         {/*
 
@@ -191,6 +199,7 @@ export default function HomePage() {
           alignItems: 'start'
         }}
       >
+        <img src={aLaGorra} style={{width:'20vw'}} />
         <span style={{ fontWeight: 600 }}>GOLOCAL</span>  no es una ticketera!<br />
         <span style={{ fontWeight: 600 }}>GOLOCAL</span>  es el lugar donde acudir cuando no sabes qué hacer y quieres descubrir que está pasando en ese momento en tu ciudad! <br />
         <span style={{ fontWeight: 600 }}>GOLOCAL</span>  es donde experimentar con eventos nuevos y diferentes, es donde encontrar planes de última hora, es donde ver qué está pasando cerca tuyo! <br />

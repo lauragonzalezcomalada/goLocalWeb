@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
-import { API_BASE_URL, backgroundColor, logoColor } from './constants';
+import { API_BASE_URL, backgroundColor, logoColor, orangeColorLight } from './constants';
 import DateCard from './DateCard';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
+import soloCarita from './assets/nopicture.png';
 
 
 export default function EditableEntradaCard({ initialData }) {
@@ -43,24 +44,24 @@ export default function EditableEntradaCard({ initialData }) {
       var data = await response.json()
 
       if (response.status === 401) {
-              console.log('response 401');
-              const newAccessToken = await refreshTokenIfNeeded()
-              if (!newAccessToken) return
-      
-              // Reintenta con el nuevo token
-              response = await fetch(`${API_BASE_URL}/update_entrada/`, {
-                method: 'POST',
-                headers: {
-                  Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',
-                }, body: JSON.stringify({ uuid: formData.uuid, event_type: formData.tipo, titulo: formData.nombre, descripcion: formData.descripcion, disponibles: formData.disponibles, precio: formData.precio })
-              });
+        console.log('response 401');
+        const newAccessToken = await refreshTokenIfNeeded()
+        if (!newAccessToken) return
 
-              if(response.ok){
-                data = await response.json()
-              }
-              
-            }
-      
+        // Reintenta con el nuevo token
+        response = await fetch(`${API_BASE_URL}/update_entrada/`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json',
+          }, body: JSON.stringify({ uuid: formData.uuid, event_type: formData.tipo, titulo: formData.nombre, descripcion: formData.descripcion, disponibles: formData.disponibles, precio: formData.precio })
+        });
+
+        if (response.ok) {
+          data = await response.json()
+        }
+
+      }
+
 
       if (!response.ok) throw new Error('Error al actualizar entrada');
 
@@ -70,27 +71,28 @@ export default function EditableEntradaCard({ initialData }) {
         porcentaje_ventas: data.porcentaje_ventas
 
       });
-    } catch (error) { console.error('Error en fetch:', error);}
+    } catch (error) { console.error('Error en fetch:', error); }
 
 
     setEditMode(false);
   };
 
   return (
-    <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden' , backgroundColor:backgroundColor}}>
+    <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden', backgroundColor: backgroundColor }}>
       <Card.Body className='p-0' style={{ height: '400px' }}>
         {!editMode ? (
           <>
             <div className='row g-0' style={{ height: '100%' }}>
 
               <div className="col-md-4 g-0" style={{
-                backgroundColor: 'rgba(255,10,20,1)', height: '100%', borderTopLeftRadius: '1rem',
+                height: '100%', borderTopLeftRadius: '1rem',
                 borderBottomLeftRadius: '1rem', display: 'flex',
                 flexDirection: 'column',
               }}>
 
                 <div style={{ flex: '2', overflow: 'hidden' }}>
-                  <img src={formData.imagen} style={{
+                  <img src={formData.imagen !== null ? event['image'] : soloCarita} style={{
+                    backgroundColor: backgroundColor,
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover', // rellena y recorta si es necesario
@@ -103,15 +105,17 @@ export default function EditableEntradaCard({ initialData }) {
                   className="d-flex"
                   style={{
                     flex: 1,
+                    backgroundColor: logoColor,
                     padding: '0.5rem',
                     color: 'white',
                     flexDirection: 'row',
-                    alignItems: 'center',        // centra verticalmente
-                    justifyContent: 'center',    // centra horizontalmente
-                    gap: '1rem',                 // espacio entre DateCard, icono y hora
+                    alignItems: 'center',        
+                    justifyContent: 'center',    
+                    gap: '1rem',                
                   }}
                 >
-                  <div className='mt-2 px-3'>   <DateCard
+                  <div className='mt-2 px-3'>  
+                     <DateCard
                     dia={dia}
                     mes={mes}
                   /></div>
@@ -125,26 +129,26 @@ export default function EditableEntradaCard({ initialData }) {
                 </div>
               </div>
 
-              <div className='col-md-8' style={{ backgroundColor: 'rgba(189, 125, 125, 1)' }}>
+              <div className='col-md-8' style={{ backgroundColor: orangeColorLight }}>
                 <div className='d-flex p-5 mt-5' style={{ height: '100%' }}>
-                  <div style={{ flex: 2 }}>
-                    <span style={{ fontSize: '50px', fontWeight: 'bold' }}>{formData.nombre}</span><br />
-                    <span style={{ fontSize: '30px', fontWeight: 'lighter' }}>{formData.descripcion}</span><br />
-                    <span style={{ fontSize: '40px', fontWeight: 'lighter', lineHeight: '3' }}>{'$' + formData.precio}</span>
+                  <div style={{ flex: 3 }}>
+                    <span style={{ fontSize: '60px', fontWeight: 'bold' }}>{formData.nombre}</span><br />
+                    <span style={{ fontSize: '40px', fontWeight: 'lighter' }}>{formData.descripcion}</span><br />
+                    <span style={{ fontSize: '50px', fontWeight: 'lighter', lineHeight: '3', }}>{'$' + formData.precio}</span>
                   </div>
-                  <div className="px-0" style={{ flex: 1 }}>
-                    <span className="fw-light" style={{ fontSize: '22px' }}> Disponibles: {formData.disponibles}</span><br />
-                    <span className="fw-light" style={{ fontSize: '22px' }}> Entradas vendidas: {formData.vendidas}</span><br />
-                    <span className="fw-light" style={{ fontSize: '22px' }}> Cantidad de entradas total: {formData.max_disponibilidad}</span>
+                  <div className="px-0" style={{ flex: 2 }}>
+                    <span className="fw-light" style={{ fontSize: '30px' }}> Entradas vendidas: {formData.vendidas}</span><br />
+                    <span className="fw-light" style={{ fontSize: '30px' }}> Disponibles: {formData.disponibles}</span><br />
+                    <span className="fw-light" style={{ fontSize: '30px' }}> Cantidad de entradas total: {formData.max_disponibilidad}</span>
 
-                    <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={formData.porcentaje_ventas} aria-valuemin="0" aria-valuemax="100">
+                    <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={formData.porcentaje_ventas} style={{ height: '3vh' }} aria-valuemin="0" aria-valuemax="100">
                       <div
                         className="progress-bar"
-                        style={{ width: `${formData.porcentaje_ventas}%` }}
+                        style={{ width: `${formData.porcentaje_ventas}%`, backgroundColor: logoColor, fontSize: '20px' }}
                       >{formData.porcentaje_ventas + '%'}</div>
                     </div>
 
-                    <button type="button" className="btn btn-outline-primary px-5 mt-3 mx-5" style={{ lineHeight: '2' }} onClick={handleEditClick}>Editar</button>
+                    <button type="button" className="btn btn-outline-primary px-5 mt-3 mx-5" style={{ lineHeight: '1.5', borderRadius: '20px', backgroundColor: logoColor, color: 'white', borderColor: 'transparent', fontSize: '30px', fontWeight: 400 }} onClick={handleEditClick}>EDITAR</button>
 
                   </div>
                 </div>
@@ -165,11 +169,11 @@ export default function EditableEntradaCard({ initialData }) {
             <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1' }}>
               <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Nombre</Form.Label>
               <Form.Control style={{
-    borderWidth: '2px',         
-    borderColor: logoColor,       
-    borderStyle: 'dotted',    
-  }}
-              className='fs-4 fw-light'
+                borderWidth: '2px',
+                borderColor: logoColor,
+                borderStyle: 'dotted',
+              }}
+                className='fs-4 fw-light'
                 type="text"
                 name="nombre"
                 value={formData.nombre}
@@ -178,12 +182,12 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Descripción</Form.Label>
+              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Descripción</Form.Label>
               <Form.Control style={{
-    borderWidth: '2px',         
-    borderColor: logoColor,       
-    borderStyle: 'dotted',    
-  }}
+                borderWidth: '2px',
+                borderColor: logoColor,
+                borderStyle: 'dotted',
+              }}
                 className='fs-4 fw-light'
                 as="textarea"
                 name="descripcion"
@@ -193,12 +197,12 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Precio</Form.Label>
+              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Precio</Form.Label>
               <Form.Control style={{
-    borderWidth: '2px',         
-    borderColor: logoColor,       
-    borderStyle: 'dotted',    
-  }}
+                borderWidth: '2px',
+                borderColor: logoColor,
+                borderStyle: 'dotted',
+              }}
                 className='fs-4 fw-light'
                 type="number"
                 name="precio"
@@ -207,13 +211,13 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium"  style={{ color: logoColor }}>Disponibles</Form.Label>
+              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Disponibles</Form.Label>
               <Form.Control
-              style={{
-    borderWidth: '2px',         
-    borderColor: logoColor,       
-    borderStyle: 'dotted',    
-  }}
+                style={{
+                  borderWidth: '2px',
+                  borderColor: logoColor,
+                  borderStyle: 'dotted',
+                }}
                 className="fs-4 fw-light"
                 type="number"
                 name="disponibles"
@@ -223,10 +227,10 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <div className="d-flex gap-2 px-3">
-              <Button type="submit" variant="success" className="fs-3 fw-lighter"style={{width: '20vw', height:'7vh', borderRadius:'20px', borderColor:'transparent', backgroundColor: logoColor}}>
+              <Button type="submit" variant="success" className="fs-3 fw-lighter" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent', backgroundColor: logoColor }}>
                 Guardar
               </Button>
-              <Button variant="secondary" className="fs-3 fw-lighter" style={{width: '20vw', height:'7vh', borderRadius:'20px', borderColor:'transparent'}} onClick={() => setEditMode(false)}>
+              <Button variant="secondary" className="fs-3 fw-lighter" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent' }} onClick={() => setEditMode(false)}>
                 Cancelar
               </Button>
             </div>

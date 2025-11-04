@@ -10,3 +10,4 @@ export const logoColorLight = "#fb7260"
 export const backgroundColor= "#FEEDEB"
 export const orangeColor ='#FA9339'
 export const orangeColorLight =  '#FBA860'
+export const cardColor= '#FC6E4B'

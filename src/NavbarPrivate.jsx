@@ -2,7 +2,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import logo from './assets/golocaladmin.png';
-import { API_BASE_URL, backgroundColor, logoColor, orangeColor } from './constants';
+import { API_BASE_URL, backgroundColor, logoColor, orangeColor, orangeColorLight } from './constants';
 
 export default function NavbarPrivate({ name }) {
 
@@ -163,7 +163,7 @@ export default function NavbarPrivate({ name }) {
                 fixed="top"
                 style={{
                     top: '170px', 
-                    backgroundColor: backgroundColor,
+                    backgroundColor: orangeColorLight,
                     boxShadow: 'none',
                     zIndex: 1030,
                 }}

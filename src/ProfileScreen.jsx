@@ -309,10 +309,10 @@ export default function ProfileScreen() {
     }
     switch (infoDisplay) {
         case "0":
-            content = <Container >
+            content = <Container  >
                 <Form>
                   
-                    <Form.Group className="mb-3 d-flex align-items-center fs-4">
+                    <Form.Group className="d-flex align-items-center fs-4">
                         <Form.Label className='mt-2 fs-3' style={{color:logoColor, fontWeight:800}}>NOMBRE: </Form.Label>
                         <Form.Control
                             type="text"
@@ -800,7 +800,7 @@ export default function ProfileScreen() {
     return <div style={{ marginTop: '40px', width: '100%', height: '100%', backgroundColor:backgroundColor}}>
         <div
             style={{
-                height: 'calc(100vh - 56px - 170px)',
+                height: 'calc(100vh - 40px - 170px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

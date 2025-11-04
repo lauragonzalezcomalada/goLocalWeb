@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, orangeColor } from './constants.js'
+import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, orangeColor, logoColor, orangeColorLight } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar.jsx'
 import { Container, Card } from 'react-bootstrap';
@@ -69,7 +69,7 @@ export default function CrearEventoPageChooseOption() {
                     <div
                         style={{
                             width: '50%',
-                            borderRight: '3px dotted #000000',
+                            borderRight: '5px dotted '+logoColor,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -78,9 +78,9 @@ export default function CrearEventoPageChooseOption() {
                         onClick={() => navigate('/crearEventoFromScratch')}
                     >
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <i className="bi bi-plus-lg" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
+                            <i className="bi bi-plus-lg" style={{ fontSize: '5rem',color: logoColor }}></i>
 
-                            <h1 style={{ fontWeight: 'lighter', lineHeight: '1' }}>Crear evento desde zero</h1>
+                            <h1 style={{ fontWeight: 800, color: logoColor }}>CREAR UN EVENTO DESDE ZERO</h1>
                         </div>
                     </div>
                     <div
@@ -95,8 +95,8 @@ export default function CrearEventoPageChooseOption() {
                        
                     >
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <i className="bi bi-collection" style={{ fontSize: '5rem', lineHeight: '1' }}></i>
-                            <h1 style={{ fontWeight: 'lighter', lineHeight: '1' }}>Usa una plantilla</h1>
+                            <i className="bi bi-collection" style={{ fontSize: '5rem', color: logoColor }}></i>
+                            <h1 style={{ fontWeight: 800, color:logoColor }}>USÁ UNA PLANTILLA</h1>
                         </div>
 
                         {templates.map((template) =>(
@@ -106,12 +106,12 @@ export default function CrearEventoPageChooseOption() {
                                     height:'4rem',
                                     width:'80%',
                                     borderRadius:'20px',
-                                                              border: '3px solid #FA7239',
+                                                              border: '4px solid '+logoColor,
                                                               display:'flex',
                                                               alignItems:'center',
                                                               justifyContent:'center',
                                                               marginTop:'1rem',
-                                                              backgroundColor:orangeColor
+                                                              backgroundColor:orangeColorLight
 
                                 }}
 
@@ -119,7 +119,7 @@ export default function CrearEventoPageChooseOption() {
 
                             >
 
-                                <span className='fw-lighter fs-4'>  {template.name} </span>
+                                <span  style={{fontWeight:400, fontSize:'25px', color: logoColor}}>  {template.name.toUpperCase()} </span>
                               
                             </div>
                         ))
