@@ -125,7 +125,11 @@ export default function Transacciones() {
                                 <div style={{ fontSize: '20px', fontWeight: 300 }}>  {format(parseISO(transaction['activity']['startDateandtime']), "dd/MM/yyyy HH:mm")}  </div>
                             </div>
                             <div style={{ fontSize: '30px' }}>
-                                ARS   {Intl.NumberFormat('es-ES').format(transaction['total_amount'])}
+                                ARS   {Intl.NumberFormat('es-ES', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    useGrouping: true
+  }).format(transaction['total_amount'])}
                             </div>
 
                             <div style={{ fontSize: '20px' }}>

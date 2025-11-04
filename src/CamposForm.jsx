@@ -37,21 +37,15 @@ export default function CamposForm({ campo, setCampo, onAgregar }) {
     };
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'uuid') {
-            // Buscar el campo completo por UUID
-            const selectedCampo = campos.find(c => c.uuid === value);
-            if (selectedCampo) {
-                setCampo({
-                    uuid: selectedCampo.uuid,
-                    label: selectedCampo.label,
-                });
-            }
-        } else {
-            setCampo((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
+
+        const selectedCampo = campos.find(c => c.uuid === value);
+        if (selectedCampo) {
+            setCampo({
+                uuid: selectedCampo.uuid,
+                label: selectedCampo.label,
+            });
         }
+
     };
 
     return (
@@ -64,7 +58,7 @@ export default function CamposForm({ campo, setCampo, onAgregar }) {
                 </Form.Select>
             </Form.Group>
 
-            <Button type="button" onClick={agregarCampo} className="mt-2" style={{borderRadius:'20px', backgroundColor:logoColor, borderColor:'transparent'}}>
+            <Button type="button" onClick={agregarCampo} className="mt-2" style={{ borderRadius: '20px', backgroundColor: logoColor, borderColor: 'transparent' }}>
                 AÑADIR CAMPO
             </Button>
         </div>
