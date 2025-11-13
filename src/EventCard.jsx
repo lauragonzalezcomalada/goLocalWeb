@@ -67,7 +67,7 @@ export default function EventCard({ uuid, tipo, activo, name, imageUrl, gratis, 
             className="position-absolute top-0 end-0 m-2 px-2 py-1"
             style={{
               backgroundColor: 'rgba(255,255,255,0.7)',
-              border: '2px solid #FA7239', // Bootstrap primary
+              border: '2px solid #FA7239', 
               borderRadius: '20px',
               fontSize: '15px',
               zIndex: 2,

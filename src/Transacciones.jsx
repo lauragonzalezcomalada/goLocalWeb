@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import icon from './assets/icon.png'
 import { AuthContext } from './AuthContext'
 
-import { logoColor, backgroundColor } from './constants';
+import { logoColor, backgroundColor,orangeColorLight ,logoColorLight} from './constants';
 
 export default function Transacciones() {
 
@@ -69,12 +69,12 @@ export default function Transacciones() {
         <div
             style={{
                 minHeight: '100vh',
-                marginTop: '62px', 
+                marginTop: '62px',
                 padding: '2rem',
                 width: '100vw',
                 overflowY: 'auto',
                 color: 'white',
-              
+
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: backgroundColor,
@@ -84,26 +84,26 @@ export default function Transacciones() {
 
             }}
         >
-        <div style={{display:'flex', flexDirection:'row', alignItems:'center',justifyContent:'space-between', marginRight: '10vw', marginLeft:'10vw'}}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginRight: '10vw', marginLeft: '10vw' }}>
 
-            <div style={{border:'3px solid '+logoColor, backgroundColor: backgroundColor,borderRadius:'20px', width:'35vw', height:'200px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+                <div style={{ border: '3px solid ' + logoColor, backgroundColor: backgroundColor, borderRadius: '20px', width: '35vw', height: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-                <div style={{fontSize:'30px', color: logoColor, fontWeight:300}}> Próxima fecha de pago: <span style={{fontWeight:800, fontSize:'40px'}}>{totalAmounts?.next_due_date
-        ? format(parseISO(totalAmounts.next_due_date), "dd/MM/yyyy")
-        : '—'} </span></div>
-                <div style={{fontSize:'30px', color: logoColor, fontWeight:300}}> Monto: <span style={{fontWeight:800, fontSize:'40px'}}>{Intl.NumberFormat('es-ES').format(totalAmounts['due_date_amount'])}  ARS</span></div>
+                    <div style={{ fontSize: '30px', color: logoColor, fontWeight: 300 }}> Próxima fecha de pago: <span style={{ fontWeight: 800, fontSize: '40px' }}>{totalAmounts?.next_due_date
+                        ? format(parseISO(totalAmounts.next_due_date), "dd/MM/yyyy")
+                        : '—'} </span></div>
+                    <div style={{ fontSize: '30px', color: logoColor, fontWeight: 300 }}> Monto: <span style={{ fontWeight: 800, fontSize: '40px' }}>{Intl.NumberFormat('es-ES').format(totalAmounts['due_date_amount'])}  ARS</span></div>
 
+                </div>
+                <div style={{ width: '350px', height: '350px', border: '3px solid' + logoColor, backgroundColor: logoColor, borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+
+                    <div style={{ fontSize: '40px', fontWeight: 300 }}>Ventas:<span style={{ fontWeight: 800, fontSize: '50px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['total_amount'])} ARS</span> </div>
+                    <div style={{ fontSize: '20px', fontWeight: 300 }}>Transferidos:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['payed_amount'])} ARS</span> </div>
+                    <div style={{ fontSize: '20px', fontWeight: 300 }}>Pendientes:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['pending_amount'])} ARS</span> </div>
+                    <div style={{ fontSize: '20px', fontWeight: 300 }}>Gastos de uso de GoLocal:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['app_service_payments'])} ARS</span> </div>
+
+                </div>
             </div>
-              <div style={{  width: '350px', height: '350px', border: '3px solid' + logoColor, backgroundColor: logoColor, borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-                <div style={{ fontSize: '40px', fontWeight: 300 }}>Ventas:<span style={{ fontWeight: 800, fontSize: '50px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['total_amount'])} ARS</span> </div>
-                <div style={{ fontSize: '20px', fontWeight: 300 }}>Transferidos:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['payed_amount'])} ARS</span> </div>
-                <div style={{ fontSize: '20px', fontWeight: 300 }}>Pendientes:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['pending_amount'])} ARS</span> </div>
-                <div style={{ fontSize: '20px', fontWeight: 300 }}>Gastos de uso de GoLocal:<span style={{ fontWeight: 800, fontSize: '30px' }}> {Intl.NumberFormat('es-ES').format(totalAmounts['app_service_payments'])} ARS</span> </div>
-
-            </div>
-        </div>
-          
             {Object.values(transactionsData).reverse().map((transactionSet, index) => {
                 const value = transactionsData[transactionSet];
                 return <div key={index} style={{ color: 'black', width: '100%' }}>
@@ -113,54 +113,55 @@ export default function Transacciones() {
                         margin: '2rem 0rem'
                     }}>
                         <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
-                        <span style={{ whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>{index === 0 ? 'Pendiente de pago' : 'Pagado'}</span>
+                        <span style={{ whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>{index === 0 ? ' Pendiente de pago' : ' Pagado'}</span>
                     </div>
 
                     {Object.values(transactionSet).map((transaction, subIndex) => (
-                        <div key={subIndex} className="card mx-3 mb-1" style={{ padding: '20px', color: 'black', display: 'flex', flexDirection: 'row', height: '20vh', border: '3px solid black', borderRadius: '20px', borderColor: logoColor, marginBottom: '2rem', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div key={subIndex} className="card mx-3 mb-1" style={{ padding: '20px', color: logoColor, backgroundColor: orangeColorLight , display: 'flex', flexDirection: 'row', height: '20vh', border: '3px solid black', borderRadius: '20px', borderColor: logoColor, marginBottom: '2rem', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'start' }}>
-                                <z style={{ fontSize: '25px', fontWeight: 300, lineHeight:1 }}>  Evento:  </z>
+                                <z style={{ fontSize: '25px', fontWeight: 300, lineHeight: 1 }}>  Evento:  </z>
 
-                                <div style={{ fontSize: '25px', fontWeight: 400 }}>  {transaction['activity']['name']}  </div>
+                                <div style={{ fontSize: '25px', fontWeight: 600 }}>  {transaction['activity']['name']}  </div>
                                 <div style={{ fontSize: '20px', fontWeight: 300 }}>  {format(parseISO(transaction['activity']['startDateandtime']), "dd/MM/yyyy HH:mm")}  </div>
                             </div>
                             <div style={{ fontSize: '30px' }}>
                                 ARS   {Intl.NumberFormat('es-ES', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    useGrouping: true
-  }).format(transaction['total_amount'])}
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0,
+                                    useGrouping: true
+                                }).format(transaction['total_amount'])}
                             </div>
 
-                            <div style={{ fontSize: '20px' }}>
-                                Fecha de pago: {format(parseISO(transaction['due_date']), "dd/MM/yyyy")}
+                            <div style={{ fontSize: '20px', fontWeight:300 }}>
+                                Fecha de pago: <span style={{fontWeight:600}}>{format(parseISO(transaction['due_date']), "dd/MM/yyyy")} </span>
                             </div>
+                             
                         </div>
                     ))}
                 </div>
             })}
-               <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        margin: '2rem',
-                        width:'100%',
-                        paddingLeft:'2rem'
-                    }}>
-                        <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
-                        <span style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>Pagos de uso de GoLocal</span>
-                    </div>
-                    {
-                
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                margin: '2rem',
+                width: '100%',
+                paddingLeft: '2rem'
+            }}>
+                <div style={{ flex: 1, height: '2px', backgroundColor: '#FA7239' }}></div>
+                <span style={{ margin: '0 1rem', whiteSpace: 'nowrap', color: '#FA7239', fontSize: '30px', fontWeight: 400 }}>Pagos de uso de GoLocal</span>
+            </div>
+            {
+
                 Object.values(appPayments).map((payment) => (
-                    <div style={{width:'100%'}}>
-                        <div  className="card mx-3 mb-1" style={{ padding: '20px', margin:'1rem', color: 'black', display: 'flex', flexDirection: 'row',  border: '3px solid black', borderRadius: '20px', borderColor: logoColor, justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{fontSize:'20px', fontWeight:400}}>{payment['descripcion'] ? payment['descripcion']: 'No especificado'} </div>  
-                        <div style={{fontSize:'20px', fontWeight:300}}>Fecha de pago: {format(parseISO(payment['updated_at']), "dd/MM/yyyy HH:mm")} </div>  
-                        <div style={{fontSize:'20px', fontWeight:300}}>Transacción nº: <span style={{fontWeight:400}}>{payment['payment_id']} </span>  </div>  
-                        <div style={{fontSize:'20px', fontWeight:300}}>Estado: <span style={{fontWeight:400}}>{payment['status'] === 'approved' ? 'Pagado':'Pendiente'} </span>  </div>  
+                    <div style={{ width: '100%' }}>
+                        <div className="card mx-3 mb-1" style={{ padding: '20px', margin: '1rem', color: 'black', display: 'flex', flexDirection: 'row', border: '3px solid black', borderRadius: '20px', borderColor: logoColor, justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ fontSize: '20px', fontWeight: 400 }}>{payment['descripcion'] ? payment['descripcion'] : 'No especificado'} </div>
+                            <div style={{ fontSize: '20px', fontWeight: 300 }}>Fecha de pago: {format(parseISO(payment['updated_at']), "dd/MM/yyyy HH:mm")} </div>
+                            <div style={{ fontSize: '20px', fontWeight: 300 }}>Transacción nº: <span style={{ fontWeight: 400 }}>{payment['payment_id']} </span>  </div>
+                            <div style={{ fontSize: '20px', fontWeight: 300 }}>Estado: <span style={{ fontWeight: 400 }}>{payment['status'] === 'approved' ? 'Pagado' : 'Pendiente'} </span>  </div>
 
 
-                    </div>
+                        </div>
                     </div>
                 ))
 

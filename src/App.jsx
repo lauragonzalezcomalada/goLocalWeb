@@ -20,6 +20,7 @@ import Transacciones from './Transacciones'
 import ExtenderRangoPlanesPagos from './ExtenderRangoPlanesPagos'
 import ToMobileApp from './ToMobileApp'
 import RecoverPwd from './RecoverPwd'
+import BecomeCreator from './BecomeCreator'
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/create_profile" element={<CreateProfile />} />
           <Route path="/toMobileApp" element={<ToMobileApp />} />
           <Route path="/recoverPwd" element={<RecoverPwd />} />
+          <Route path="/becomeCreator" element={<BecomeCreator />} />
 
           
 

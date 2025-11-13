@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
-import { API_BASE_URL, backgroundColor } from './constants';
+import { API_BASE_URL, backgroundColor, logoColor, orangeColor, orangeColorLight } from './constants';
 import DateCard from './DateCard';
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
+import soloCarita from './assets/nopicture.png';
 
 
 export default function Reserva({ initialData }) {
@@ -94,21 +95,23 @@ export default function Reserva({ initialData }) {
     };
 
     return (
-        <Card className="m-3 p-0" style={{ height: '400px', width: '100%', borderRadius: '1rem', overflow: 'hidden', backgroundColor:backgroundColor }}>
+        <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden', backgroundColor:backgroundColor,borderColor:'transparent' }}>
             <Card.Body className='p-0' style={{ height: '400px' }}>
                 {!editMode ? (
                     <>
                         <div className='row g-0' style={{ height: '100%' }}>
                             <div className="col-md-4 g-0" style={{
-                                backgroundColor: 'rgba(255,10,20,1)', height: '100%', borderTopLeftRadius: '1rem',
-                                borderBottomLeftRadius: '1rem', display: 'flex',
+                                height: '100%',
+                                borderTopLeftRadius: '1rem',
+                                borderBottomLeftRadius: '1rem', 
+                                display: 'flex',
                                 flexDirection: 'column',
                             }}>
                                 <div style={{ flex: '2', overflow: 'hidden' }}>
-                                    <img src={formData.imagen} style={{
+                                    <img src={formData.imagen !== null ? formData.imagen : soloCarita} style={{
                                         width: '100%',
                                         height: '100%',
-                                        objectFit: 'cover', // rellena y recorta si es necesario
+                                        objectFit: 'cover',
                                         display: 'block'
                                     }}></img>
                                 </div>
@@ -116,12 +119,13 @@ export default function Reserva({ initialData }) {
                                     className="d-flex"
                                     style={{
                                         flex: 1,
+                                        backgroundColor:logoColor,
                                         padding: '0.5rem',
                                         color: 'white',
                                         flexDirection: 'row',
-                                        alignItems: 'center',        // centra verticalmente
-                                        justifyContent: 'center',    // centra horizontalmente
-                                        gap: '1rem',                 // espacio entre DateCard, icono y hora
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '1rem',
                                     }}
                                 >
                                     <div className='mt-2 px-3'>   <DateCard
@@ -138,12 +142,12 @@ export default function Reserva({ initialData }) {
                                 </div>
                             </div>
                             {/*aquí comença la part de descripció de la reserva */}
-                            <div className='col-md-8' style={{ backgroundColor: 'rgba(189, 125, 125, 1)' }}>
-                                <div className='d-flex p-5 mt-5' style={{ height: '100%' }}>
-                                    <div style={{ flex: 3 }}>
+                            <div className='col-md-8 ' style={{ backgroundColor: orangeColorLight ,}}>
+                                <div className='d-flex p-5' style={{ height: '100%' }}>
+                                    <div style={{ flex: 3,display:'flex', flexDirection:'column', justifyContent:'center' }}>
                                         <span style={{ fontSize: '50px', fontWeight: 'bold' }}>{formData.nombre}</span><br />
-                                        <span className="fw-light" style={{ fontSize: '22px' }}> Confirmadas: {formData.confirmadas}</span><br />
-                                        <span className="fw-light" style={{ fontSize: '22px' }}> Cantidad de entradas total: {formData.max_disponibilidad}</span>
+                                        <span className="fw-light fs-4"> Confirmadas: {formData.confirmadas}</span><br />
+                                        <span className="fw-light fs-4"> Cantidad de entradas total: {formData.max_disponibilidad}</span>
                                         <div className="progress mt-3 mb-3" role="progressbar" aria-label="Basic example" aria-valuenow={formData.porcentaje_reservas} aria-valuemin="0" aria-valuemax="100">
                                             <div
                                                 className="progress-bar"
@@ -151,26 +155,26 @@ export default function Reserva({ initialData }) {
                                             >{formData.porcentaje_ventas + '%'}</div>
                                         </div>
                                     </div>
-                                    <div className="px-0" style={{ flex: 3 }}>
+                                    <div className="px-0" style={{ flex: 3,display:'flex', flexDirection:'column', justifyContent:'center'}}>
                                         {formData.campos.map((campo) => {
                                             return <div
-
-                                                className="p-2 border rounded mb-1 mx-2"
-                                                style={{ flex: '1 0 auto', gap: '2rem' }}
+                                                className="p-2 rounded mb-1 mx-2"
+                                                style={{ flex: 'auto 0 auto', gap: '2rem',  border: '2px solid '+logoColor, backgroundColor: logoColor
+                                                }}
                                             >
-                                                <span style={{ fontSize: '18px', fontWeight: 'lighter' }}>{campo.label}</span>
+                                                <span style={{ fontSize: '18px', fontWeight: 'bold' , color: 'white'}}>{campo.label}</span>
                                             </div>
                                         })}
-                                        <button type="button" className="btn btn-outline-primary px-5 mt-3 mx-5" style={{ lineHeight: '2', position: 'absolute', bottom: '2rem', right: '2rem' }} onClick={handleEditClick}>Editar</button>
+                                        <button type="button" className="btn btn-outline-primary px-5 mx-5" style={{marginTop:'1rem', lineHeight: '1.5', borderRadius: '20px', backgroundColor: logoColor, color: 'white', borderColor: 'transparent', fontSize: '30px', fontWeight: 400 }}  onClick={handleEditClick}>EDITAR</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </>
                 ) : (
-                    <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100 px-2 mt-3" style={{ height: '100%', overflowY: 'auto' }}>
-                        <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1' }}>
-                            <Form.Label>Nombre</Form.Label>
+                    <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100" style={{ height: '100%', backgroundColor: orangeColorLight }}>
+                        <Form.Group className="mb-3 w-100 mt-4 px-3" style={{ lineHeight: '1' }}>
+                            <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>NOMBRE</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="nombre"
@@ -179,7 +183,7 @@ export default function Reserva({ initialData }) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-                            <Form.Label>Reservas máximas para el evento</Form.Label>
+                            <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>RESERVAS MÁXIMAS PARA EL EVENTO</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="max_disponibilidad"
@@ -211,11 +215,12 @@ export default function Reserva({ initialData }) {
 
                         {/* Campos de reserva */}
                         <Form.Group className="mb-3 px-3 w-100">
-                            <Form.Label>Campos de la reserva</Form.Label>
+                            <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>CAMPOS DE LA RESERVA</Form.Label>
                             {camposPosibles.map((campo) => {
                                 const isChecked = formData.campos.some(c => c.uuid === campo.uuid);
                                 return (
                                     <Form.Check
+                                    className="fs-6" style={{ color: logoColor, checkColor: logoColor , accentColor: logoColor,}}
                                         key={campo.id}
                                         type="checkbox"
                                         label={campo.label}
@@ -239,12 +244,12 @@ export default function Reserva({ initialData }) {
                                 );
                             })}
                         </Form.Group>
-                        <div className="d-flex gap-2 px-3">
-                            <Button type="submit" variant="success">
-                                Guardar
+                        <div className="d-flex gap-2">
+                            <Button type="submit" variant="success" className="fs-3 fw-bolder" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent', backgroundColor: logoColor }}>
+                                GUARDAR
                             </Button>
-                            <Button variant="secondary" onClick={() => setEditMode(false)}>
-                                Cancelar
+                            <Button variant="secondary" className="fs-3 fw-bolder" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent' }} onClick={() => setEditMode(false)}>
+                                CANCELAR
                             </Button>
                         </div>
                         <div className="mb-5" />

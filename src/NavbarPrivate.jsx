@@ -147,8 +147,9 @@ export default function NavbarPrivate({ name }) {
                             cursor: 'pointer',
                             marginLeft: '0.5rem',
                             fontSize:'30px'
+
                         }}
-                        onMouseOver={(e) => (e.target.style.color = 'red')}
+                        onMouseOver={(e) => (e.target.style.color = logoColor)}
                         onMouseOut={(e) => (e.target.style.color = 'white')}
                     >
                         {name}!

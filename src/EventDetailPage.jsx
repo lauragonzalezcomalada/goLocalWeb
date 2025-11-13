@@ -75,14 +75,16 @@ export default function EventDetailPage() {
         var url = API_BASE_URL
         async function fetchEvent() {
 
-            if (tipo === 0) { // class Activity
+            if (tipo === 0) { 
                 url += '/activities/?activity_uuid='
             }
-            else if (tipo === 1) { // class Promo
+            else if (tipo === 1) {
                 url += '/promos/?promo_uuid='
             }
-            else if (tipo === 2) { // class Private Plan
+            else if (tipo === 2) { 
+                console.log('el tipo es privateplan')
                 url += '/private_plans/?privatePlanUuid='
+                console.log('url: ', url);
             }
             try {
                 var response = await fetch(url + uuid, {
@@ -108,12 +110,9 @@ export default function EventDetailPage() {
                     } catch (e) {
                         console.error('Volvió a fallar', e)
                     }
-
-
                 }
                 if (!response.ok) throw new Error('No autorizado o error')
 
-                console.log('data: ', data)
                 setEvent(data)
                 setFormData({
                     name: data['name'],
@@ -307,6 +306,7 @@ export default function EventDetailPage() {
     >
 
         <div style={{
+            marginBottom:'5vh',
             borderRadius: '30px',
             border: '10px solid black', width: '50%', minHeight: '90vh', marginTop: '100px', display: 'flex', flexDirection: 'column', overflow: 'hidden'
         }}>
@@ -568,11 +568,7 @@ export default function EventDetailPage() {
 
                 </div>
             )}
-            {/* editMode && (
-                <button>
-                    ADD TAGS
-                </button>
-            ) */}
+            
             <div style={{ margin: '1rem 1rem' }}>
                 <MapaDesdeBackend
                     lat={event['lat']}
@@ -580,8 +576,6 @@ export default function EventDetailPage() {
                     direccion={event['direccion']}
                 />
             </div>
-
-
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20vh', marginLeft: '5vw', textAlign: 'start', width: '40vw' }}>
 

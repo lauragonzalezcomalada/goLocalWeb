@@ -27,7 +27,6 @@ export default function EditableEntradaCard({ initialData }) {
   };
 
 
-
   const handleEditClick = () => {
     setEditMode(true);
   };
@@ -57,11 +56,13 @@ export default function EditableEntradaCard({ initialData }) {
         });
 
         if (response.ok) {
-          data = await response.json()
+          data = await response.json();
+        
+        }else{
+          throw new Error('Error al actualizar entrada');
         }
 
       }
-
 
       if (!response.ok) throw new Error('Error al actualizar entrada');
 
@@ -78,7 +79,7 @@ export default function EditableEntradaCard({ initialData }) {
   };
 
   return (
-    <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden', backgroundColor: backgroundColor }}>
+    <Card className="m-3 p-0" style={{ height: '500px', width: '80%', borderRadius: '1rem', overflow: 'hidden', backgroundColor: backgroundColor, borderColor:'transparent' }}>
       <Card.Body className='p-0' style={{ height: '400px' }}>
         {!editMode ? (
           <>
@@ -165,9 +166,9 @@ export default function EditableEntradaCard({ initialData }) {
 
           </>
         ) : (
-          <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100 px-2 mt-3" style={{ height: '100%' }}>
-            <Form.Group className="mb-3 w-100 mt-3 px-3" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Nombre</Form.Label>
+          <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-center w-100" style={{ height: '100%', backgroundColor: orangeColorLight }}>
+            <Form.Group className="mb-3 w-100 mt-4 px-3" style={{ lineHeight: '1' }}>
+              <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>NOMBRE</Form.Label>
               <Form.Control style={{
                 borderWidth: '2px',
                 borderColor: logoColor,
@@ -182,7 +183,7 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Descripción</Form.Label>
+              <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>DESCRIPCIÓN</Form.Label>
               <Form.Control style={{
                 borderWidth: '2px',
                 borderColor: logoColor,
@@ -197,7 +198,7 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Precio</Form.Label>
+              <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>PRECIO</Form.Label>
               <Form.Control style={{
                 borderWidth: '2px',
                 borderColor: logoColor,
@@ -211,7 +212,7 @@ export default function EditableEntradaCard({ initialData }) {
               />
             </Form.Group>
             <Form.Group className="mb-3 px-3 w-100" style={{ lineHeight: '1' }}>
-              <Form.Label className="fs-4 fw-medium" style={{ color: logoColor }}>Disponibles</Form.Label>
+              <Form.Label className="fs-4 fw-bold" style={{ color: logoColor }}>DISPONIBLES</Form.Label>
               <Form.Control
                 style={{
                   borderWidth: '2px',
@@ -227,11 +228,11 @@ export default function EditableEntradaCard({ initialData }) {
             </Form.Group>
 
             <div className="d-flex gap-2 px-3">
-              <Button type="submit" variant="success" className="fs-3 fw-lighter" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent', backgroundColor: logoColor }}>
-                Guardar
+              <Button type="submit" variant="success" className="fs-3 fw-bolder" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent', backgroundColor: logoColor }}>
+                GUARDAR
               </Button>
-              <Button variant="secondary" className="fs-3 fw-lighter" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent' }} onClick={() => setEditMode(false)}>
-                Cancelar
+              <Button variant="secondary" className="fs-3 fw-bolder" style={{ width: '20vw', height: '7vh', borderRadius: '20px', borderColor: 'transparent' }} onClick={() => setEditMode(false)}>
+                CANCELAR
               </Button>
             </div>
           </Form>

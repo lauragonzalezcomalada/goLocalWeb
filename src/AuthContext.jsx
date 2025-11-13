@@ -68,14 +68,18 @@ export const AuthProvider = ({ children }) => {
 
   //FUNCIÓ DE LOGIN QUE POT SER REUTILITZADA
   const login = async (username, password) => {
-    const response = await fetch(`${API_BASE_URL}/token/`, {
+    const response = await fetch(`${API_BASE_URL}/token/creador/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, require_creador: true }),
     })
-    if (!response.ok) throw new Error('Login inválido')
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const message = errorData.detail || 'Error desconocido al iniciar sesión';
+      return message; 
+    }
 
     const data = await response.json()
     localStorage.setItem(TOKEN_STORAGE_KEY, data.access)
@@ -84,6 +88,7 @@ export const AuthProvider = ({ children }) => {
     setAccessToken(data.access)
     setRefreshToken(data.refresh)
     await fetchUserInfo(data.access)
+    return null; // -> null vol dir que és exitòs
   }
 
   const logout = () => {

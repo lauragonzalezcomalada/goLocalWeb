@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import { backgroundColor, logoColor } from './constants'
+import { TbSettingsStar } from 'react-icons/tb'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -19,11 +20,13 @@ export default function LoginPage() {
   
     e.preventDefault()
     setError(null)
-    try {
-      //aquest login es el login de authcontext
-   
-      await login(username, password)
-      navigate('/mainlogged')
+    try {   
+      const errorMessage = await login(username, password);
+      if (!errorMessage){
+        navigate('/mainlogged')
+      }else{
+        setError(errorMessage);
+      }
     } catch (e) {
       console.error(e)
       setError('Email o contraseña incorrectos.')
@@ -89,7 +92,11 @@ export default function LoginPage() {
           </div>
         </div>
         <button className="mt-3" type="submit" style={{ justifyContent: 'center', padding: '0.5rem', fontSize: '30px', color: 'white', fontWeight: 900, backgroundColor: logoColor, borderRadius: '20px', border: '2px solid' + logoColor }} >ENTRÁ!</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}            </form>
+        {error && <p style={{ color: logoColor, fontSize:'20px', textAlign:'center', marginTop:'2rem', marginBottom:'0rem',lineHeight:1}}>{error}</p>}   
+        {error == 'Este usuario no tiene permisos de creador' &&
+          <button onClick={() => navigate('/becomeCreator')} style={{ justifyContent: 'center', backgroundColor:'transparent',fontSize: '18px', marginTop:'0rem',color: logoColor, fontWeight: 400,lineHeight:1, padding:0,borderRadius:'20px'}}>¿Querés ser creador de eventos?<span style={{fontWeight:'800'}}>  ¡Entrá aquí!</span></button>
+        }
+                 </form>
 
     </div>
 

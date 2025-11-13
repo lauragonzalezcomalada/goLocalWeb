@@ -887,7 +887,7 @@ export default function CrearEventoFromScratch() {
                 <div
                     style={{
                         width: "80%",
-                        minHeight: "22vh",
+                        minHeight: "30vh",
                         margin: "1rem auto",
                         display: "flex",
                         borderRadius: '20px',
@@ -897,7 +897,7 @@ export default function CrearEventoFromScratch() {
                     <div style={{ position: "relative" }}>
                         <div
                             style={{
-                                height: "11vh",
+                                height: "15vh",
                                 width: "100%",
                                 borderTopLeftRadius: "20px",
                                 borderTopRightRadius: "20px",
@@ -950,7 +950,7 @@ export default function CrearEventoFromScratch() {
                             backgroundColor: cardColor,
                             borderBottomLeftRadius: "20px",
                             borderBottomRightRadius: "20px",
-                            minHeight: "11vh",
+                            minHeight: "15vh",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -1023,7 +1023,6 @@ export default function CrearEventoFromScratch() {
                                 </div>
                             )}
 
-                            {/* 📝 Texto del plan */}
                             <div style={{ flex: 1 }}>
                                 <div
                                     style={{

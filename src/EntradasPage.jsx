@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY, backgroundColor, logoColor, orangeColor } from './constants.js'
+import { API_BASE_URL, backgroundColor, logoColor, orangeColor } from './constants.js'
 import { useState, useEffect } from 'react'
 import WeekCalendar from './WeekCalendar'
 import { Container, Card, Button } from 'react-bootstrap';
@@ -187,7 +187,6 @@ export default function EntradasPage() {
     }
 
     const  handleOpenEvent = (uuid, tipo) => {
-        console.log('handle open event clicked');
         navigate('/eventDetail', { state: { uuid, tipo } })
 
     }
@@ -244,7 +243,7 @@ export default function EntradasPage() {
                         <div key={evento.event_uuid} className="card mx-3 mb-1" style={{ borderRadius: '20px' }}>
                             <div className="row g-0">
                                 <div className="col-md-2">
-                                    <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }} onClick={() => handleOpenEvent(evento.event_uuid, evento.tracking_tipo)}>
+                                    <div style={{ position: 'relative', minHeight: '12rem', width: '100%' }} onClick={() => handleOpenEvent(evento.event_uuid, evento.tipo)}>
                                         <img
                                             src={evento.event_imageUrl ? evento.event_imageUrl : noPicture}
                                             className="img-fluid rounded-start"
@@ -422,7 +421,7 @@ export default function EntradasPage() {
                                                         evento.event_imageUrl
                                                     )}
                                                 >
-                                                    LINK A LAS ENTRADAS:
+                                                    <span style={{fontSize:'20px'}}> LINK A LAS ENTRADAS:</span>  
                                                     <span className="fw-bold fs-4 px-1">{evento.tickets_link}</span>
                                                 </div>
                                             </OverlayTrigger>

@@ -53,7 +53,8 @@ export default function EntradaTypeDetail() {
       style={{ 
         backgroundColor:backgroundColor,
         width: '100%', 
-        minHeight: 'calc(100vh - 56px - 170px)' // altura total menos el margin-top
+        minHeight: 'calc(100vh - 56px - 170px)', // altura total menos el margin-top
+        marginTop: '56px'
       }}
     >
         <EditableEntradaCard initialData={{tipo:evento_tipo, uuid: entrada_uuid, nombre: entrada_name , descripcion: entrada_shortDesc, imagen : evento_image, fecha: evento_fecha, precio: entrada_precio, disponibles: entrada_disponibles, max_disponibilidad: entrada_max_disp, vendidas: entrada_vendidas, porcentaje_ventas:entrada_porcentajedeventas}} />

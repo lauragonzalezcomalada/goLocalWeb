@@ -17,7 +17,8 @@ export default function ReservaTypeDetail() {
       style={{ 
         backgroundColor:backgroundColor,
         width: '100%', 
-        minHeight: 'calc(100vh - 56px - 170px)' // altura total menos el margin-top
+        minHeight: 'calc(100vh - 56px - 170px)', // altura total menos el margin-top
+        marginTop:'56px'
       }}
     >
         <EditableReservaCard initialData={{ tipo: evento_tipo, uuid: reserva_uuid, nombre: reserva_nombre, imagen: evento_image, fecha: evento_fecha, confirmadas: reserva_confirmadas, max_disponibilidad: reserva_max_disponibilidad, porcentaje_ventas: reserva_porcentaje_reservado, campos: reserva_campos }} />
